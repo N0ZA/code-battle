@@ -1,0 +1,41 @@
+//for logout button
+<form action="includes/logout.inc.php" method="POST">
+                <button type="submit">Log Out</button>
+</form>
+
+INSERT INTO scores (T_id, H_id, J_id, CR_id)
+SELECT 
+    team_data.T_id,
+    team_data.H_id,
+    judges_category.J_id,
+    criteria_data.CR_id
+FROM 
+    team_data
+JOIN 
+    judges_category ON team_data.C_id = judges_category.C_id
+JOIN 
+    criteria_data ON team_data.H_id = criteria_data.H_id;
+
+SELECT 
+    team_data.T_id,
+    team_data.H_id,
+    judges_data.J_id,
+    criteria_data.CR_id
+FROM 
+    team_data
+CROSS JOIN 
+    (
+        SELECT DISTINCT J_id FROM judges_data WHERE H_id = (SELECT H_id FROM team_data LIMIT 1)
+    ) AS judges_data
+CROSS JOIN 
+    (
+        SELECT DISTINCT CR_id FROM criteria_data WHERE H_id = (SELECT H_id FROM team_data LIMIT 1)
+    ) AS criteria_data;
+
+
+flow
+judge //shows cat cards,on click sends the cat name to the team page in url
+team //get the cat name,store that as a session cname, check if this cname = to which category and find those teams accordingly,on click of a team card ,sends the T_id to the grading page in url
+   
+grading //gets the T_id from the url sets that as a session T_id,display Criterias specific to that session hackathon,feilds to enter scores.sends these scores to insert.scores.php
+insert.scores.php //gets the criterias available,uses the CRName and CR_id,stores the score 
