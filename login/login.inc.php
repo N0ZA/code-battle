@@ -50,7 +50,6 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
                 header("Location: ../admin/admin.php?login=success");
                 $pdo=null;
                 $stmt=null;
-    
                 die();
             }
             else if($result['admin']==2){

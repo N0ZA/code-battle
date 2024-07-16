@@ -10,8 +10,8 @@
             $stmt=null;
             die();
         }
-        else if($result['admin']==2 || $result['admin']==3 || $result['admin']==4 ){ 
-            header("Location: dashboard.php");
+        else if($_SESSION["user_isadmin"]==2 || $_SESSION["user_isadmin"]==3 || $_SESSION["user_isadmin"]==4 ){
+            header("Location: login/dashboard.php");
             $pdo=null;
             $stmt=null;
             die();
@@ -21,7 +21,6 @@
             $pdo=null;
             $stmt=null;
             die();
-
         }
         exit();
     }
