@@ -30,6 +30,8 @@
 </head>
 
 <body>
+    <a href="../logout.php">Logout</a>
+
     <h1> DASHBOARD DEMO </h1>
 
     <p> HACKATHON 1</p>
