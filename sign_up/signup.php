@@ -145,7 +145,7 @@
           <?php
               check_signup_errors();
           ?>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary" name="SignUp">Submit</button>
         </form>
       </div>
       <div id="teacher" style="display:none">
@@ -177,7 +177,7 @@
           <?php
               check_signup_errors();
           ?>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary" name="SignUp">Submit</button>
         </form>
       </div>
       <div id="student" style="display:none">
@@ -213,7 +213,7 @@
           <?php
               check_signup_errors();
           ?>
-          <button type="submit" class="btn btn-primary">Submit</button>
+          <button type="submit" class="btn btn-primary" name="SignUp">Submit</button>
         </form>
       </div>
     </div>
