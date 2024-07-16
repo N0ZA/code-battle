@@ -66,11 +66,27 @@ function check_login_errors(){
     }
     else if(isset($_GET["login"])&&$_GET["login"]==="success"){
         if($_SESSION["user_isadmin"]==1){
-
             header("Location: ../admin/admin.php?login=success");
             $pdo=null;
             $stmt=null;
-
+            die();
+        }
+        else if($_SESSION["user_isadmin"]==2){
+            header("Location: dashboard.php?login=success");
+            $pdo=null;
+            $stmt=null;
+            die();
+        }
+        else if($_SESSION["user_isadmin"]==3){
+            header("Location: dashboard.php?login=success");
+            $pdo=null;
+            $stmt=null;
+            die();
+        }
+        else if($_SESSION["user_isadmin"]==4){
+            header("Location: dashboard.php?login=success");
+            $pdo=null;
+            $stmt=null;
             die();
         }
         else{
