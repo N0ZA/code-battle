@@ -6,8 +6,8 @@ require 'phpmailer/src/Exception.php';
 require 'phpmailer/src/PHPMailer.php';
 require 'phpmailer/src/SMTP.php';
 
-require_once 'includes/dbh.inc.php';
-require_once 'includes/config_session.inc.php';
+require_once '../includes/dbh.inc.php';
+require_once '../includes/config_session.inc.php';
 
 if (isset($_POST['SignUp'])) {
     //store the form enteries as session variables
