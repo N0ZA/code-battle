@@ -53,8 +53,8 @@ if (isset($_POST['SignUp'])) {
         $mail->isSMTP();
         $mail->Host='SMTP.gmail.com';
         $mail->SMTPAuth=true;
-        $mail->Username='ksyeda2003@gmail.com'; // Your gmail
-        $mail->Password='qmkainjucuqjymka'; // Your gmail app password 
+        $mail->Username='@gmail.com'; // Your gmail
+        $mail->Password=''; // Your gmail app password 
         $mail->SMTPSecure='tls';
         $mail->Port=587;
         $mail->setFrom('ksyeda2003@gmail.com'); // Your gmail
