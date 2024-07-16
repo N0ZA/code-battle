@@ -47,11 +47,28 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
             $_SESSION["user_isadmin"]=htmlspecialchars($result['admin']);
             
             if($result['admin']==1){
-
                 header("Location: ../admin/admin.php?login=success");
                 $pdo=null;
                 $stmt=null;
     
+                die();
+            }
+            else if($result['admin']==2){
+                header("Location: ../dashboard/hdata.php?login=success");
+                $pdo=null;
+                $stmt=null;
+                die();
+            }
+            else if($result['admin']==3){
+                header("Location: ../dashboard/hdata.php?login=success");
+                $pdo=null;
+                $stmt=null;
+                die();
+            }
+            else if($result['admin']==4){
+                header("Location: ../dashboard/hdata.php?login=success");
+                $pdo=null;
+                $stmt=null;
                 die();
             }
             else{
