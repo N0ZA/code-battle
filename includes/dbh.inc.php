@@ -30,4 +30,3 @@ try{
     die( "CONEECTION FAILED: ".$e->getMessage());
 */
     
-}
