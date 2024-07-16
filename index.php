@@ -8,9 +8,14 @@
             header("Location: admin/admin.php");
             $pdo=null;
             $stmt=null;
-
             die();
         }
+        else if($result['admin']==2 || $result['admin']==3 || $result['admin']==4 ){ 
+            header("Location: dashboard.php");
+            $pdo=null;
+            $stmt=null;
+            die();
+        } 
         else{
             header("Location: judge/judge.php");
             $pdo=null;
