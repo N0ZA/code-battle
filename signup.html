@@ -1,3 +1,14 @@
+<?php
+    require_once "send_mail.php";
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (isset($_SESSION['Reg_CREATED'])){
+        header("Location:index.php");
+        die();
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -104,96 +115,104 @@
         </label>
       </div>
       <div id="parent">
-        <form>
+        <form action="send_mail.php" method="POST" class="createParentForm">
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
           </div>
           <div class="form-group">
           </div>
           <div class="form-group">
             <label for="ph-num">Contact Number</label>
-            <input type="number" class="form-control" id="ph-num" name="ph-num" placeholder="Enter your contact number">
+            <input type="number" class="form-control" id="ph-num" name="ph-num" placeholder="Enter your contact number" required>
           </div>
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
           </div>
           <div class="form-group">
             <label for="school-name">School Name</label>
-            <input type="text" class="form-control" id="school-name" name="school-name" placeholder="Enter your school name">
+            <input type="text" class="form-control" id="school-name" name="school-name" placeholder="Enter your school name" required>
           </div>
           <div class="form-group">
             <label for="Username">Username</label>
-            <input type="text" class="form-control" id="Username" name="Username" placeholder="Choose a username">
+            <input type="text" class="form-control" id="Username" name="Username" placeholder="Choose a username" required>
           </div>
           <div class="form-group">
             <label for="pwd">Password</label>
-            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password">
+            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required>
           </div>
+          <?php
+              check_signup_errors();
+          ?>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
       <div id="teacher" style="display:none">
-        <form>
+        <form action="send_mail.php" method="POST" class="createTeacherForm">
           <div class="form-group">
             <label for="name">Name:</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
           </div>
           <div class="form-group">
             <label for="ph-num">Contact Number:</label>
-            <input type="number" class="form-control" id="ph-num" name="ph-num" placeholder="Enter your contact number">
+            <input type="number" class="form-control" id="ph-num" name="ph-num" placeholder="Enter your contact number" required>
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
           </div>
           <div class="form-group">
             <label for="school-name">School Name:</label>
-            <input type="text" class="form-control" id="school-name" name="school-name" placeholder="Enter your school name">
+            <input type="text" class="form-control" id="school-name" name="school-name" placeholder="Enter your school name" required>
           </div>
           <div class="form-group">
             <label for="Username">Username:</label>
-            <input type="text" class="form-control" id="Username" name="Username" placeholder="Choose a username">
+            <input type="text" class="form-control" id="Username" name="Username" placeholder="Choose a username" required>
           </div>
           <div class="form-group">
             <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password">
+            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required>
           </div>
+          <?php
+              check_signup_errors();
+          ?>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
       <div id="student" style="display:none">
-        <form>
-          
+        <form action="send_mail.php" method="POST" class="createStudentForm">
           <div class="form-group">
             <label for="name">Full Name:</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name">
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
           </div>
           <div class="form-group">
             <label for="ph-num">Contact Number:</label>
-            <input type="number" class="form-control" id="ph-num" name="ph-num" placeholder="Enter your contact number">
+            <input type="number" class="form-control" id="ph-num" name="ph-num" placeholder="Enter your contact number" required>
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
-            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email">
+            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
           </div>
           <div class="form-group">
             <label for="school-name">School Name:</label>
-            <input type="text" class="form-control" id="school-name" name="school-name" placeholder="Enter your school name">
+            <input type="text" class="form-control" id="school-name" name="school-name" placeholder="Enter your school name" required>
           </div>
           <div class="form-group">
             <label for="class">Class/Grade:</label>
-            <input type="number" class="form-control" id="class" name="class" min="1" max="13" placeholder="Enter your grade">
+            <input type="number" class="form-control" id="class" name="class" min="1" max="13" placeholder="Enter your grade" required>
           </div>
           <div class="form-group">
             <label for="username">Username:</label>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Choose a username">
+            <input type="text" class="form-control" id="Username" name="Username" placeholder="Choose a username" required>
           </div>
           <div class="form-group">
             <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password">
+            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required>
           </div>
+          <?php
+              check_signup_errors();
+          ?>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>
       </div>
