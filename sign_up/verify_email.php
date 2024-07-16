@@ -33,20 +33,20 @@ if (isset($_POST['verify'])) {
 
                 session_unset();
                 $_SESSION['Reg_CREATED']=1;
-                header("Location:index.php");
+                header("Location: ../index.php");
             }
             else {
                 session_unset();
-                header("Location:signup.php");}
+                header("Location: signup.php");}
         } 
         else{
             $_SESSION['errors_signup']='Incorect OTP! Please Try Again';
-            header("Location:enter_otp.php");
+            header("Location: enter_otp.php");
         }     
     }
     else {
         session_unset();
-        header("Location:signup.php");}
+        header("Location: signup.php");}
 }
 
 function check_otp_errors(){

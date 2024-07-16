@@ -4,7 +4,7 @@
         session_start();
     }
     if (isset($_SESSION['Reg_CREATED'])){
-        header("Location:index.php");
+        header("Location: ../index.php");
         die();
     }
 ?>
@@ -145,6 +145,7 @@
           <?php
               check_signup_errors();
           ?>
+          <input type="hidden" name="is_admin" value="2">  
           <button type="submit" class="btn btn-primary" name="SignUp">Submit</button>
         </form>
       </div>
@@ -177,6 +178,7 @@
           <?php
               check_signup_errors();
           ?>
+          <input type="hidden" name="is_admin" value="3">
           <button type="submit" class="btn btn-primary" name="SignUp">Submit</button>
         </form>
       </div>
@@ -213,7 +215,9 @@
           <?php
               check_signup_errors();
           ?>
+          <input type="hidden" name="is_admin" value="4">
           <button type="submit" class="btn btn-primary" name="SignUp">Submit</button>
+          <p  style="text-align: center; color: red;">Already have an account? <a href="../index.php">Log In</a></p>
         </form>
       </div>
     </div>
