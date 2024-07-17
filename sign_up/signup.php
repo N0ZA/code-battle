@@ -124,7 +124,7 @@
           </div>
           <div class="form-group">
             <label for="ph-num">Contact Number</label>
-            <input type="number" class="form-control" id="ph-num" name="ph-num" placeholder="Enter your contact number" required>
+            <input type="number" class="form-control" id="ph-num" name="ph-num" pattern="^\d{3}-\d{7}$" placeholder="Enter your contact number" required>
           </div>
           <div class="form-group">
             <label for="email">Email</label>
@@ -146,7 +146,8 @@
               check_signup_errors();
           ?>
           <input type="hidden" name="is_admin" value="2">  
-          <button type="submit" class="btn btn-primary" name="SignUp">Submit</button>
+          <button type="submit" class="btn btn-primary" name="SignUp">Submit</button><br></br>
+          <p  style="font-size:large; text-align: center; color: red;">Already have an account? <a href="../index.php">Log In</a></p>
         </form>
       </div>
       <div id="teacher" style="display:none">
@@ -157,7 +158,7 @@
           </div>
           <div class="form-group">
             <label for="ph-num">Contact Number:</label>
-            <input type="number" class="form-control" id="ph-num" name="ph-num" placeholder="Enter your contact number" required>
+            <input type="number" class="form-control" id="ph-num" name="ph-num" pattern="^\d{3}-\d{7}$" placeholder="Enter your contact number" required>
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
@@ -179,7 +180,8 @@
               check_signup_errors();
           ?>
           <input type="hidden" name="is_admin" value="3">
-          <button type="submit" class="btn btn-primary" name="SignUp">Submit</button>
+          <button type="submit" class="btn btn-primary" name="SignUp">Submit</button><br></br>
+          <p  style="font-size:large; text-align: center; color: red;">Already have an account? <a href="../index.php">Log In</a></p>
         </form>
       </div>
       <div id="student" style="display:none">
@@ -190,7 +192,7 @@
           </div>
           <div class="form-group">
             <label for="ph-num">Contact Number:</label>
-            <input type="text" class="form-control" id="ph-num" name="ph-num" pattern="^\d{3}-\d{7}$" placeholder="Enter your contact number (050-1234567)" pattern="^\d{3}-\d{7}$" required>
+            <input type="text" class="form-control" id="ph-num" name="ph-num" pattern="^\d{3}-\d{7}$" placeholder="Enter your contact number (050-1234567)" required>
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
