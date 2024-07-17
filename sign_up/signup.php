@@ -117,29 +117,25 @@
       <div id="parent">
         <form action="send_mail.php" method="POST" class="createParentForm">
           <div class="form-group">
-            <label for="name">Name</label>
+            <label for="name">Name:</label>
             <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
           </div>
           <div class="form-group">
           </div>
           <div class="form-group">
-            <label for="ph-num">Contact Number</label>
-            <input type="text" class="form-control" id="ph-num" name="ph-num" pattern="^\d{3}-\d{7}$" placeholder="Enter your contact number" required>
+            <label for="ph-num">Contact Number:</label>
+            <input type="text" class="form-control" id="ph-num" name="ph-num" pattern="^\d{3}-\d{7}$" placeholder="Enter your contact number (050-1234567)" required>
           </div>
           <div class="form-group">
-            <label for="email">Email</label>
+            <label for="email">Email:</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
           </div>
           <div class="form-group">
-            <label for="school-name">School Name</label>
-            <input type="text" class="form-control" id="school-name" name="school-name" placeholder="Enter your school name" required>
-          </div>
-          <div class="form-group">
-            <label for="Username">Username</label>
+            <label for="Username">Username:</label>
             <input type="text" class="form-control" id="Username" name="Username" placeholder="Choose a username" required>
           </div>
           <div class="form-group">
-            <label for="pwd">Password</label>
+            <label for="pwd">Password:</label>
             <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required>
           </div>
           <?php
@@ -158,7 +154,7 @@
           </div>
           <div class="form-group">
             <label for="ph-num">Contact Number:</label>
-            <input type="text" class="form-control" id="ph-num" name="ph-num" pattern="^\d{3}-\d{7}$" placeholder="Enter your contact number" required>
+            <input type="text" class="form-control" id="ph-num" name="ph-num" pattern="^\d{3}-\d{7}$" placeholder="Enter your contact number (050-1234567)" required>
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
@@ -187,8 +183,8 @@
       <div id="student" style="display:none">
         <form action="send_mail.php" method="POST" class="createStudentForm">
           <div class="form-group">
-            <label for="name">Full Name:</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
           </div>
           <div class="form-group">
             <label for="ph-num">Contact Number:</label>
