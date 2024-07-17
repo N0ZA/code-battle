@@ -124,7 +124,7 @@
           </div>
           <div class="form-group">
             <label for="ph-num">Contact Number</label>
-            <input type="number" class="form-control" id="ph-num" name="ph-num" pattern="^\d{3}-\d{7}$" placeholder="Enter your contact number" required>
+            <input type="text" class="form-control" id="ph-num" name="ph-num" pattern="^\d{3}-\d{7}$" placeholder="Enter your contact number" required>
           </div>
           <div class="form-group">
             <label for="email">Email</label>
@@ -158,7 +158,7 @@
           </div>
           <div class="form-group">
             <label for="ph-num">Contact Number:</label>
-            <input type="number" class="form-control" id="ph-num" name="ph-num" pattern="^\d{3}-\d{7}$" placeholder="Enter your contact number" required>
+            <input type="text" class="form-control" id="ph-num" name="ph-num" pattern="^\d{3}-\d{7}$" placeholder="Enter your contact number" required>
           </div>
           <div class="form-group">
             <label for="email">Email:</label>
