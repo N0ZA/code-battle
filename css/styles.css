@@ -1,0 +1,608 @@
+@font-face {
+    font-family: 'Montserrat';
+    src: url('fonts/Montserrat/Montserrat-Regular.woff2') format('woff2'),
+         url('fonts/Montserrat/Montserrat-Regular.woff') format('woff'),
+         url('fonts/Montserrat/Montserrat-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Lalezar';
+    src: url('fonts/Lalezar/Lalezar-Regular.woff2') format('woff2'),
+         url('fonts/Lalezar/Lalezar-Regular.woff') format('woff'),
+         url('fonts/Lalezar/Lalezar-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+body {
+    font-family: Montserrat,Lalezar, sans-serif;
+    background: url(https://github.com/N0ZA/code-battle/blob/main/Images/grids.jpeg?raw=true) no-repeat center center fixed;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    margin: 0;
+    padding-top: 50px;
+    color: #333;
+    height: 100vh;
+    background-color: #000000;
+    overflow-x: hidden;
+    display: flex;
+    flex-direction: column;
+}
+.main-container {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    padding-bottom: 70px;
+    justify-content: center;
+}
+
+a {
+    text-decoration: none;
+}
+
+input {
+    display: none;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f44134;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 40px;
+    margin-right: 20px;
+}
+
+.nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav li {
+    display: inline;
+    margin: 0 15px;
+}
+
+.nav li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.nav li a:hover {
+    text-decoration: underline;
+}
+
+.header-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.profile-icon {
+    height: 40px;
+    cursor: pointer;
+    padding-right: 30px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    top: 50px;
+    right: 0;
+    background-color: white;
+    min-width: 160px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.show {
+    display: block;
+}
+.welcome-container {
+    padding: 10px 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.welcome {
+    text-align: left;
+    color: black;
+    text-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+.welcome p{
+    font-weight: 500;
+    text-shadow: 0 0 2px rgba(0,0,0,0.2);
+}
+.username {
+    color: #f44134;
+}
+
+.content {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: fit-content;
+    overflow-y: auto;
+}
+/*About us card styling */
+.about-us-card {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    text-align: center;
+    font-weight: 600;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+}
+
+.about-us-card h2 {
+    margin-top: 0;
+}
+
+/*registered events styling*/
+.eventreg-title {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    margin: auto;
+    width: 40%;
+    font-size: larger;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    color: black;
+}
+
+.events {
+    display: flex;
+    overflow-x: auto;
+    justify-content: center;
+    gap: 40px;
+    padding: 40px 0;
+    overflow-x: hidden;
+}
+
+.events-card {
+    position: relative;
+    flex: 0 0 auto;
+    width: 400px;
+    height: fit-content;
+    background-color: #000000;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+    transition: transform 0.3s;
+    cursor: pointer;
+}
+
+.events-card img {
+    width: 100%;
+    height: 400px;
+    object-fit: cover;
+}
+
+.card-details {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding-top: 20px;
+    transform: translateY(100%);
+    transition: transform 0.3s;
+    text-align: center;
+    
+}
+
+.events-card:hover .card-details {
+    transform: translateY(0);
+}
+
+.card-details h3 {
+    margin: 0 0 15px;
+}
+
+.card-details ul {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px;
+}
+
+.card-details ul li {
+    margin-bottom: 5px;
+}
+.card-details .qr-code {
+    width: 100px; 
+    height: auto; 
+    margin-top: 10px; 
+}
+
+.card-details button {
+    display: block;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    margin: auto;
+    margin-bottom: 15px;
+    font-size: 16px;
+    background-color: #f44134;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.card-details button:hover {
+    background-color: #fe0000;
+}
+
+/* events carousel styling */
+
+/* events cards behaviour */
+#s1:checked~.cards #slide4,
+#s2:checked~.cards #slide5,
+#s3:checked~.cards #slide1,
+#s4:checked~.cards #slide2,
+#s5:checked~.cards #slide3{
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.45%);
+    transform: translate3d(-70%, 0, -220px);
+    --current-color1: #eceaed;
+    --currente-color2: #404457;
+}
+
+
+#s1:checked~.cards #slide5,
+#s2:checked~.cards #slide1,
+#s3:checked~.cards #slide2,
+#s4:checked~.cards #slide3,
+#s5:checked~.cards #slide4 {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45%);
+    transform: translate3d(-35%, 0, -120px);
+    --current-color1: #eceaed;
+    --currente-color2: #404457;
+}
+
+#s1:checked~.cards #slide1,
+#s2:checked~.cards #slide2,
+#s3:checked~.cards #slide3,
+#s4:checked~.cards #slide4,
+#s5:checked~.cards #slide5 {
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.50%);
+    transform: translate3d(0, 0, 0);
+    --current-color1: #F5CCA0   ;
+    --currente-color2: #4D0F1F;  /*previous carousel card color #4D0F1F */
+}
+/* #4D0F1F - color for button and title */
+
+#s1:checked~.cards #slide2,
+#s2:checked~.cards #slide3,
+#s3:checked~.cards #slide4,
+#s4:checked~.cards #slide5,
+#s5:checked~.cards #slide1 {
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45%);
+    transform: translate3d(35%, 0, -120px);
+    --current-color1: #eceaed;
+    --currente-color2: #404457;
+}
+
+#s1:checked~.cards #slide3,
+#s2:checked~.cards #slide4,
+#s3:checked~.cards #slide5,
+#s4:checked~.cards #slide1,
+#s5:checked~.cards #slide2{
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.45%);
+    transform: translate3d(70%, 0, -220px);
+    --current-color1: #eceaed;
+    --currente-color2: #404457;
+}
+
+/* events carousel card styling */
+.events-carousel {
+    width: 100%;
+    height: 100%;
+    max-height: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+    flex-direction: column;
+    padding-bottom: 200px;
+
+}
+
+.cards {
+    height: 500px;
+    width: 430px;
+    margin-bottom: 20px;
+    perspective: 1000px;
+    transform-style: preserve-3d;
+    
+}
+
+.cards label {
+    position: absolute;
+    width: 430px;
+    left: 0;
+    right: 0;
+    margin: auto;
+    cursor: pointer;
+    transition: transform 0.55s ease;
+}
+
+.cards .card {
+    position: relative;
+    height: 100%;
+    background-color: #f44134; /* previous carousel card color #800D00 */
+    border-radius: 10px;
+    padding: 30px 30px;
+    box-shadow: 0px 15px 40px rgba(0, 0, 0, 50%);
+}
+
+.cards .image {
+    display: flex;
+    justify-content: space-between;
+}
+
+.cards .image img{
+    border-radius: 5px;
+    box-shadow: 15px 15px 40px rgba(0, 0, 0, 50%);
+    margin-top: 23px;
+    width: 100%;
+    height: 220px;
+    object-fit: cover;
+    transition: all 0.7s;
+}
+.cards .image img:hover{
+    transform: scale(1.05);
+}
+.cards .infos{
+    display: block;
+    text-align: start;
+    left: 0;
+    padding-top: 40px;
+
+}
+.cards .infos span{
+    display: block;
+}
+.infos .name{
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 30px;
+    color: var(--current-color1);
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+    transition: all .6s ease;
+}
+.infos .det{
+    font-size: 16px;
+    color: #eceaed;
+    letter-spacing: 3px;
+}
+.card .btn-details{
+    width: 100%;
+    height: 60px;
+    margin: 35px auto;
+    border-radius: 5px;
+    background-color: var(--current-color1);
+    box-shadow: 0px 10px 40px rgba(0, 0, 0, 50%);
+    display: flex;
+    border-color: #000000;
+    border-width: 2px;
+    align-items: center;
+    justify-content: center;
+    color: var(--currente-color2);
+    font-size: 25px;
+    letter-spacing: 5px;
+    font-weight: 700;
+    transition: all .7s ease;
+
+}
+.card .btn-details:hover {
+    background-color: #fe0000; /* previous button hover color #b32100db or #BE270E */
+    transform: scale(1.07);
+}
+
+.footer {
+    display: flex;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    justify-content: center;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    left: 0;
+    max-height: fit-content;
+}
+
+/* discard teams cards */
+.teams-title {
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 10px;
+    margin: auto;
+    width: 40%;
+    font-size: larger;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    color: black;
+}
+.team-card-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    justify-content: center;
+    padding: 20px;
+}
+
+.team-card {
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: 350px;
+    height: 400px;
+    padding: 20px;
+    box-sizing: border-box;
+    transition: transform 0.2s;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+    background-color: #f44134;
+    text-align: center;
+    
+}
+
+.team-card:hover {
+    transform: translateY(-5px);
+}
+
+.team-card h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    color: #333;
+    font-size: 1.5em;
+    
+}
+.team-card button{
+    
+    display: block;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 15px;
+    font-size: 16px;
+    background-color: white;
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s; 
+}
+.team-card button:hover{
+    background-color: #ff7f69;
+}
+
+.team-card p {
+    margin: 5px 0;
+    color: white;
+    font-weight: 500;
+    font-family: Lalezar;
+}
+
+.member-list {
+    list-style-type: none;
+    padding: 0;
+    margin: 10px 0 0 0;
+    text-align: center;
+    
+}
+
+.member-list li {
+    font-family: Montserrat;
+    font-weight: 500;
+    background-color: #f8f8f8;
+    margin: 5px 0;
+    padding: 10px;
+    border-radius: 5px;
+    color: #333;
+}
+
+
+/* Media Queries */
+@media (max-width: 768px) {
+    .header, .footer {
+        text-align: center;
+    }
+
+    .header-left, .header-right {
+        margin-bottom: 10px;
+    }
+
+    .nav li {
+        display: flexbox;
+        padding: 10px;
+        margin: 5px 0;
+    }
+
+    .welcome-container, .content {
+        padding: 20px;
+    }
+
+    .about-us-card, .carousel-title {
+        width: 80%;
+    }
+
+    .events-card {
+        width: 90%;
+        margin: 10px 0;
+    }
+
+    .cards {
+        width: 90%;
+    }
+
+    .events-carousel {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo {
+        height: 30px;
+    }
+
+    .profile-icon {
+        height: 30px;
+    }
+
+    .nav li a {
+        font-size: 14px;
+    }
+
+    .about-us-card, .events-title {
+        width: 90%;
+    }
+
+    .events-card {
+        width: 100%;
+    }
+
+    .cards {
+        width: 100%;
+    }
+}
