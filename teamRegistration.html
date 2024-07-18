@@ -52,13 +52,13 @@
         }
         .form-control, .form-check-input {
 
-    color: #ffffff;
-    border: 1px solid #555555;
-    font-size: 1rem;
-    padding: 0.5rem 1rem; 
-    border-radius: 25px; 
-    margin-bottom: 1rem;
-    width: 100%;
+            color: #ffffff;
+            border: 1px solid #555555;
+            font-size: 1rem;
+            padding: 0.5rem 1rem; 
+            border-radius: 25px; 
+            margin-bottom: 1rem;
+            width: 100%;
         }
         .form-control::placeholder {
             color: #aaaaaa;
@@ -84,14 +84,14 @@
         }
         .btn-dark-red {
                 background-color: #F73634;
-    border: none;
-    border-radius: 25px;
-    color: #ffffff;
-    font-size: 1rem;
-    padding: 0.5rem;
-    width: 100%;
-    margin-top: 2rem;
-    margin-bottom: 0%;
+            border: none;
+            border-radius: 25px;
+            color: #ffffff;
+            font-size: 1rem;
+            padding: 0.5rem;
+            width: 100%;
+            margin-top: 2rem;
+            margin-bottom: 0%;
         }
         .btn-dark-red:hover {
             background-color: #000000;
@@ -110,7 +110,6 @@
             position: absolute;
             opacity: 0;
             cursor: pointer;
-            
         }
         .form-check-label {
             position: relative;
@@ -147,6 +146,16 @@
         }
         .form-check-input:checked ~ .form-check-label::after {
             opacity: 1;
+        }
+        .disabled {
+            color: #cecece;
+            font-weight: 400;
+        }
+        .enabled {
+            font-weight: 400;
+        }
+        .available-seats-disabled {
+            color: #cecece;
         }
     </style>
 </head>
@@ -194,21 +203,21 @@
                                     <input type="radio" id="cadet" name="category" class="form-check-input">
                                     <label for="cadet" class="form-check-label">Cadet</label>
                                 </div>
-                                <span>Available seats: 10</span>
+                                <span class="available-seats">Available seats: 1</span>
                             </div>
                             <div class="category-container">
                                 <div class="form-check">
                                     <input type="radio" id="captain" name="category" class="form-check-input">
                                     <label for="captain" class="form-check-label">Captain</label>
                                 </div>
-                                <span>Available seats: 5</span>
+                                <span class="available-seats">Available seats: 5</span>
                             </div>
                             <div class="category-container">
                                 <div class="form-check">
                                     <input type="radio" id="colonel" name="category" class="form-check-input">
                                     <label for="colonel" class="form-check-label">Colonel</label>
                                 </div>
-                                <span>Available seats: 2</span>
+                                <span class="available-seats">Available seats: 1</span>
                             </div>
                         </div>
                         <div class="submit-button">
@@ -226,5 +235,24 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll('.category-container').forEach(function(container) {
+                const seatsText = container.querySelector('.available-seats').innerText;
+                const availableSeats = parseInt(seatsText.match(/\d+/)[0], 10);
+                const radioInput = container.querySelector('.form-check-input');
+                const label = container.querySelector('.form-check-label');
+                const seatsSpan = container.querySelector('.available-seats');
+                
+                if (availableSeats === 1) {
+                    radioInput.disabled = true;
+                    label.classList.add('disabled');
+                    seatsSpan.classList.add('available-seats-disabled');
+                } else {
+                    label.classList.add('enabled');
+                }
+            });
+        });
+    </script>
 </body>
 </html>
