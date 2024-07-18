@@ -10,7 +10,7 @@
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background: url(https://github.com/N0ZA/code-battle/blob/main/images/grids.jpeg?raw=true) no-repeat center center fixed;
+            background: url(https://github.com/N0ZA/code-battle/blob/main/Images/grids.jpeg?raw=true) no-repeat center center fixed;
             background-size: cover;
             overflow: hidden; /* Prevent scrolling while preloader is shown */
         }

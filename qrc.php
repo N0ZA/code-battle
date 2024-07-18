@@ -11,7 +11,7 @@
             margin: 0;
             padding: 0;
             background-color: #E3E3E3;
-            background-image: url('http://localhost/images/grids.jpeg');
+            background-image: url('images/grids.jpeg');
             background-size: cover;
             overflow-x: hidden;
         }
@@ -158,7 +158,7 @@
 
     <div class="container">
         <div class="logo">
-            <img src="http://localhost/images/logob.png" alt="CodeBattle Image">
+            <img src="images/logob.png" alt="CodeBattle Image">
         </div>
         
         <div class="form-container">
