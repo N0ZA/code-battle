@@ -6,7 +6,6 @@ $users = [
     ["name" => "Alice Johnson", "role" => "Computer Science Teacher"]
 ];
 
-// For simplicity, let's assume the first user is logged in
 $logged_in_user = $users[2];
 
 // Mock event data
@@ -48,7 +47,7 @@ $events = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <script>
         function toggleDropdown() {
@@ -66,9 +65,16 @@ $events = [
                 }
             }
         }
+        window.addEventListener('load', function(){
+            const preloader = document.querySelector('.preloader');
+            preloader.style.display = 'none';
+        });
     </script>
 </head>
 <body>
+    <div class="preloader">
+        <div class="loader"></div>
+    </div>
     <div class="main-container">
 
     <div class="header">
@@ -77,14 +83,16 @@ $events = [
             <ul class="nav">
                 <li><a href="home.php">Home</a></li>
                 <li><a href="registeredevents.php">Registered Events</a></li>
-                <li><a href="edit-teams.php">Edit Teams</a></li>
             </ul>
         </div>
         <div class="header-right">
-            <img src="images/profile-icon.png" alt="Profile" class="profile-icon" onclick="toggleDropdown()">
+        <ul class="nav">
+                <li><a href="signin.php">Logout</a></li>
+            </ul>
+            <!--<img src="images/profile-icon.png" alt="Profile" class="profile-icon" onclick="toggleDropdown()">
             <div id="profile-dropdown" class="dropdown-content">
-                <a href="#">Logout</a>
-            </div>
+                <a href="#">Logout</a> 
+            </div>-->
         </div>
     </div>
     <div class="welcome-container">
@@ -105,11 +113,11 @@ $events = [
                 <img src="<?php echo $event['image']; ?>" alt="<?php echo $event['name']; ?>">
                 <div class="card-details">
                     <h3><?php echo $event['name']; ?></h3>
-                    <img src="images/qr.png" alt="QR Code" class="qr-code">
+                    <!--<img src="images/qr.png" alt="QR Code" class="qr-code">-->
                     <?php if ($event['type'] == "CodeBattle"): ?>
                         <button>Add Teams</button>
                         <button>Edit Teams</button>
-                        <button>Delete Teams</button>
+                        <!--<button>Delete Teams</button>-->
                     <?php elseif ($event['type'] == "CodeNova"): ?>
                         <button>Add Member</button>
                         <button>Discard Member</button>

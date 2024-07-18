@@ -39,7 +39,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #E3E3E3;
-    background-image: url(Images/grids.jpeg);
+    background-image: url(images/grids.jpeg);
     
     background-size: cover;
     overflow-x: hidden;
@@ -228,7 +228,7 @@ footer {
          
          <div class="logo">
    
-                <img src="Images/logob.png" alt="CodeBattle Image" >
+                <img src="images/logob.png" alt="CodeBattle Image" >
            
 </div>
               <h1><font color = "Black">Welcome</font> <font color = "#F73634">Back!</font></h1>

@@ -56,7 +56,7 @@
       min-height: 100vh;
       margin: 0;
       padding: 0;
-      background-image: url(../Images/grids.jpeg);
+      background-image: url(../images/grids.jpeg);
       background-size: cover;
     }
     
@@ -301,7 +301,7 @@
   <div class="all-cards">
   <!-- <div class="card cadet" id="cadet-card" style="display: none;"> -->
     <div class="card cadet" id="cadet-card" style="display: none;" value="Jr_Cadet" onclick="divClick(this)">
-        <div class="card-image" style="background-image: url('../Images/3.png');"></div>
+        <div class="card-image" style="background-image: url('../images/3.png');"></div>
         <div class="card-text">
           <h2>Jr Cadet</h2>
           <p>The Jr Cadet category in the hackathon is designed for young minds brimming with potential, specifically targeting students from Grades 1 to 4.</p>
@@ -310,7 +310,7 @@
     
 
     <div class="card colonel" id="colonel-card" style="display: none;" value="Jr_Colonel" onclick="divClick(this)">
-        <div class="card-image" style="background-image: url('../Images/1.png');"></div>
+        <div class="card-image" style="background-image: url('../images/1.png');"></div>
         <div class="card-text">
           <h2>Jr Colonel</h2>
           <p>The Jr Colonel category in the hackathon welcomes high schoolers and young minds embarking on their undergraduate journeys, encompassing students from Grades 9-12 and first-year undergraduates.</p>
@@ -318,7 +318,7 @@
     </div>
 
     <div class="card captain" id="captain-card" style="display: none;" value="Jr_Captain" onclick="divClick(this)">
-        <div class="card-image" style="background-image: url('../Images/2.png');"></div>
+        <div class="card-image" style="background-image: url('../images/2.png');"></div>
         <div class="card-text">
           <h2>Jr Captain</h2>
           <p>The Jr Captain category in the hackathon sets sail for students in Grades 5-8, a period marked by burgeoning independence, intellectual curiosity, and a thirst for exploration.</p>

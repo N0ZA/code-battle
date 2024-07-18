@@ -18,7 +18,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
     body {
-      background-image: url(https://github.com/N0ZA/code-battle/blob/main/Images/grids.jpeg?raw=true);
+      background-image: url(https://github.com/N0ZA/code-battle/blob/main/images/grids.jpeg?raw=true);
       background-size: cover;
       display: flex;
       flex-direction: column;

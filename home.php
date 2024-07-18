@@ -45,7 +45,7 @@ $events = [
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hackathon Dashboard</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="stylesheet" href="css/styles.css">
     <script>
         function toggleDropdown() {
@@ -63,9 +63,16 @@ $events = [
                 }
             }
         }
+        window.addEventListener('load', function(){
+            const preloader = document.querySelector('.preloader');
+            preloader.style.display = 'none';
+        });
     </script>
 </head>
 <body>
+    <div class="preloader">
+        <div class="loader"></div>
+    </div>
     <div class=".main-container">
 
         <div class="header">
@@ -74,14 +81,16 @@ $events = [
                 <ul class="nav">
                     <li><a href="home.php">Home</a></li>
                     <li><a href="registeredevents.php">Registered Events</a></li>
-                    <li><a href="edit-teams.php">Edit Teams</a></li>
                 </ul>
             </div>
             <div class="header-right">
-                <img src="images/profile-icon.png" alt="Profile" class="profile-icon" onclick="toggleDropdown()">
+                <ul class="nav">
+                    <li><a href="signin.php">Logout</a></li>
+                </ul>
+                <!--<img src="images/profile-icon.png" alt="Profile" class="profile-icon" onclick="toggleDropdown()">
                 <div id="profile-dropdown" class="dropdown-content">
-                    <a href="#">Logout</a>
-                </div>
+                    <a href="#">Logout</a> 
+                </div>-->
             </div>
         </div>
         <div class="welcome-container">

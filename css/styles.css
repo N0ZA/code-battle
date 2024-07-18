@@ -17,7 +17,7 @@
 }
 body {
     font-family: Montserrat,Lalezar, sans-serif;
-    background: url(https://github.com/N0ZA/code-battle/blob/main/Images/grids.jpeg?raw=true) no-repeat center center fixed;
+    background: url(https://github.com/N0ZA/code-battle/blob/main/images/grids.jpeg?raw=true) no-repeat center center fixed;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -93,6 +93,7 @@ input {
     position: relative;
     display: flex;
     align-items: center;
+    padding-right: 30px;
 }
 
 .profile-icon {
@@ -449,7 +450,7 @@ input {
     max-height: fit-content;
 }
 
-/* discard teams cards */
+/* team details cards */
 .teams-title {
     background-color: rgba(255, 255, 255, 0.8);
     padding: 10px;
@@ -464,77 +465,94 @@ input {
 .team-card-container {
     display: flex;
     flex-wrap: wrap;
-    gap: 20px;
     justify-content: center;
+    gap: 20px;
     padding: 20px;
 }
 
 .team-card {
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    width: 350px;
+    width: 300px;
     height: 400px;
-    padding: 20px;
-    box-sizing: border-box;
-    transition: transform 0.2s;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
-    background-color: #f44134;
-    text-align: center;
-    
-}
-
-.team-card:hover {
-    transform: translateY(-5px);
-}
-
-.team-card h3 {
-    margin-top: 0;
-    margin-bottom: 10px;
-    color: #333;
-    font-size: 1.5em;
-    
-}
-.team-card button{
-    
-    display: block;
-    justify-content: center;
-    align-items: center;
-    width: 50%;
-    margin: auto;
-    margin-top: 20px;
-    margin-bottom: 15px;
-    font-size: 16px;
-    background-color: white;
-    color: black;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
+    perspective: 1000px;
     cursor: pointer;
-    transition: background-color 0.3s; 
-}
-.team-card button:hover{
-    background-color: #ff7f69;
+    position: relative;
+    border-radius: 15px;
+    margin: 10px;
 }
 
-.team-card p {
-    margin: 5px 0;
+.team-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+    border-radius: 15px;
+    transition: box-shadow 0.2s 0.48s; /* 0.5s delay for box-shadow */
+}
+
+.card-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+}
+
+.team-card:hover .card-inner {
+    transform: rotateY(180deg);
+}
+
+.team-card:hover::before {
+    box-shadow: none;
+    transition: box-shadow 0.1s; /* immediate change when hovering */
+}
+
+
+
+.card-front, .card-back {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border-radius: 16px;
+}
+
+.card-front {
+    background: #fff;
+}
+
+.card-back {
+    background: #f44134;
     color: white;
-    font-weight: 500;
-    font-family: Lalezar;
+    transform: rotateY(180deg);
+}
+
+.card-text {
+    padding: 20px;
+}
+
+#team-image img {
+    width: 100%;
+    height: 290px;
+    border-top-right-radius: 16px;
+    border-top-left-radius: 16px;
+}
+
+.card-members {
+    padding: 20px;
+    height: 66%;
 }
 
 .member-list {
     list-style-type: none;
     padding: 0;
-    margin: 10px 0 0 0;
-    text-align: center;
-    
+    margin: 0;
 }
 
 .member-list li {
-    font-family: Montserrat;
-    font-weight: 500;
     background-color: #f8f8f8;
     margin: 5px 0;
     padding: 10px;
@@ -542,6 +560,57 @@ input {
     color: #333;
 }
 
+.card-actions {
+    height: 33%;
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    padding-bottom: 15px;
+    margin-bottom: 10px;
+
+}
+
+.card-actions .icon-link {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.card-actions .icon-link:hover {
+    color: #ddd; /* Change color on hover for better UX */
+}
+
+
+
+.preloader {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #272727;
+    color:#F73634;
+    font-size: x-large;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loader {
+    border: 8px solid #0000007c;
+    border-top: 8px solid #F73634;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 
 /* Media Queries */
 @media (max-width: 768px) {
