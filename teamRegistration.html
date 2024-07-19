@@ -1,3 +1,20 @@
+<?php
+    require_once 'includes/dbh.inc.php';
+    require_once 'accept_team_data.php';
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+
+    if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
+        header("Location: index.php");
+        exit();
+    }
+    if(isset($_SESSION['T_CREATED'])){
+    //  header("Location: MemberRegistration.php");
+    //  die();
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
