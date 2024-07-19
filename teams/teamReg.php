@@ -1,7 +1,7 @@
 <?php
     require_once '../includes/dbh.inc.php';
     require_once 'accept_team_data.php';
-    
+
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
@@ -70,7 +70,7 @@
         }
         .form-control, .form-check-input {
 
-            color: #ffffff;
+            color: #272727;
             border: 1px solid #555555;
             font-size: 1rem;
             padding: 0.5rem 1rem; 
@@ -208,36 +208,56 @@
                     <div class="form-body">
                         <div class="form-group">
                             <label for="teamName">Team Name</label>
-                            <input type="text" id="teamName" name="teamName" class="form-control" placeholder="Enter team name">
+                            <input type="text" id="teamName" name="teamName" class="form-control" placeholder="Enter team name" required>
                         </div>
                         <div class="form-group">
                             <label for="noMembers">Number of Members</label>
-                            <input type="number" id="noMembers" name="noMembers" class="form-control" placeholder="Enter number of members">
+                            <input type="number" id="noMembers" name="noMembers" class="form-control" placeholder="Enter number of members" required>
                         </div>
+                        <?php
+                            //$_Session['hackathon'] shud be taken from the dashboard, based on which hackathon user chooses to register;
+                            $_SESSION['hackathon']='276';
+                            if (isset($_SESSION['hackathon'])){
+                                $query="SELECT * from hackathon_data where H_id=:H_id";
+                                $stmt=$pdo->prepare($query);
+                                $stmt->bindParam(":H_id", $_SESSION['hackathon']);
+                                $stmt->execute();
+                                $result=$stmt->fetch();
+                                $jrCadet=$result['Jr_Cadet'];
+                                $jrCaptain=$result['Jr_Captain'];
+                                $jrColonel=$result['Jr_Colonel'];
+                                $maxP=$result['MaxP'];
+                            }
+                            ?>
+
                         <div class="form-group">
                             <label for="category">Category</label>
                             <div class="category-container">
                                 <div class="form-check">
-                                    <input type="radio" id="cadet" name="category" class="form-check-input">
+                                    <input type="radio" id="cadet" name="category" class="form-check-input"  value="1" <?php if ($jrCadet == 0) echo 'disabled'; ?> required>
                                     <label for="cadet" class="form-check-label">Cadet</label>
                                 </div>
-                                <span class="available-seats">Available seats: 1</span>
+                                <span>Available seats: <?php echo $jrCadet; ?> </span>
                             </div>
                             <div class="category-container">
                                 <div class="form-check">
-                                    <input type="radio" id="captain" name="category" class="form-check-input">
+                                    <input type="radio" id="captain" name="category" class="form-check-input"  value="2" <?php if ($jrCaptain == 0) echo 'disabled'; ?> required>
                                     <label for="captain" class="form-check-label">Captain</label>
                                 </div>
-                                <span class="available-seats">Available seats: 5</span>
+                                <span>Available seats: <?php echo $jrCaptain; ?> </span>
                             </div>
                             <div class="category-container">
                                 <div class="form-check">
-                                    <input type="radio" id="colonel" name="category" class="form-check-input">
+                                    <input type="radio" id="colonel" name="category" class="form-check-input" value="3" <?php if ($jrColonel == 0) echo 'disabled'; ?> required>
                                     <label for="colonel" class="form-check-label">Colonel</label>
                                 </div>
-                                <span class="available-seats">Available seats: 1</span>
+                                <span>Available seats:  <?php echo $jrColonel; ?> </span>
                             </div>
                         </div>
+                        <input type="hidden" name="maxP" value="<?php echo $maxP; ?>">
+                        <?php
+                                check_team_errors();
+                        ?>
                         <div class="submit-button">
                             <button type="submit" class="btn btn-dark-red">Next</button>
                         </div>
@@ -253,24 +273,6 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            document.querySelectorAll('.category-container').forEach(function(container) {
-                const seatsText = container.querySelector('.available-seats').innerText;
-                const availableSeats = parseInt(seatsText.match(/\d+/)[0], 10);
-                const radioInput = container.querySelector('.form-check-input');
-                const label = container.querySelector('.form-check-label');
-                const seatsSpan = container.querySelector('.available-seats');
-                
-                if (availableSeats === 1) {
-                    radioInput.disabled = true;
-                    label.classList.add('disabled');
-                    seatsSpan.classList.add('available-seats-disabled');
-                } else {
-                    label.classList.add('enabled');
-                }
-            });
-        });
-    </script>
+
 </body>
 </html>
