@@ -15,18 +15,18 @@ if (isset($_POST['verify'])) {
             //otp matched
             if ((time() - $otp_time) <= $otp_time_limit){
                 //otp isnt expired, add account to database
-                $query="INSERT INTO registration_data(TRName,Email,Phone,School,username) VALUES (:TRName,:Email,:Phone,:School,:username);";
+                $query="INSERT INTO registration_data(RName,REmail,RPhone,RSchool,Rusername) VALUES (:RName,:REmail,:RPhone,:RSchool,:Rusername);";
                 $stmt=$pdo->prepare($query);
-                $stmt->bindParam(":TRName",$_SESSION['TRName']);
-                $stmt->bindParam(":Email",$_SESSION['Email']);
-                $stmt->bindParam(":Phone",$_SESSION['Phone']);
-                $stmt->bindParam(":School",$_SESSION['School']);
-                $stmt->bindParam(":username",$_SESSION['username']);
+                $stmt->bindParam(":RName",$_SESSION['RName']);
+                $stmt->bindParam(":REmail",$_SESSION['REmail']);
+                $stmt->bindParam(":RPhone",$_SESSION['RPhone']);
+                $stmt->bindParam(":RSchool",$_SESSION['RSchool']);
+                $stmt->bindParam(":Rusername",$_SESSION['Rusername']);
                 $stmt->execute();
 
                 $query2="INSERT INTO login(username,pwd,admin) VALUES (:username,:password,:admin);";
                 $stmt2=$pdo->prepare($query2);
-                $stmt2->bindParam(":username",$_SESSION['username']);
+                $stmt2->bindParam(":username",$_SESSION['Rusername']);
                 $stmt2->bindParam(":password",$_SESSION['password']);
                 $stmt2->bindParam(":admin", $_SESSION['is_admin']);
                 $stmt2->execute();

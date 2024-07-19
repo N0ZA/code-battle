@@ -131,6 +131,10 @@
             <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
           </div>
           <div class="form-group">
+            <label for="school-name">School Name:</label>
+            <input type="text" class="form-control" id="school-name" name="school-name" placeholder="Enter your school name" required>
+          </div> 
+          <div class="form-group">
             <label for="Username">Username:</label>
             <input type="text" class="form-control" id="Username" name="Username" placeholder="Choose a username" required>
           </div>
@@ -197,11 +201,7 @@
           <div class="form-group">
             <label for="school-name">School Name:</label>
             <input type="text" class="form-control" id="school-name" name="school-name" placeholder="Enter your school name" required>
-          </div>
-          <div class="form-group">
-            <label for="class">Class/Grade:</label>
-            <input type="number" class="form-control" id="class" name="class" min="1" max="13" placeholder="Enter your grade" required>
-          </div>
+          </div>  
           <div class="form-group">
             <label for="username">Username:</label>
             <input type="text" class="form-control" id="Username" name="Username" placeholder="Choose a username" required>
