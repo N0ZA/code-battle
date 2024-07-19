@@ -1,8 +1,8 @@
 <?php
 declare(strict_types=1);
 
-require_once 'includes/dbh.inc.php';
-require_once 'includes/config_session.inc.php';
+require_once '../includes/dbh.inc.php';
+require_once '../includes/config_session.inc.php';
 
 if ($_SERVER["REQUEST_METHOD"]=="POST"){
     //store the form enteries 

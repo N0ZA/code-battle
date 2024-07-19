@@ -1,6 +1,7 @@
 <?php
     require_once '../includes/dbh.inc.php';
-    require_once '../accept_team_data.php';
+    require_once 'accept_team_data.php';
+    
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }

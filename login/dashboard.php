@@ -34,9 +34,9 @@
 
     <h1> DASHBOARD DEMO </h1>
 
-    <p> HACKATHON 1</p>
-    <p> HACKATHON 2 </p>
-    <P> HACKATHON 3</P>
+    <a href="../teams/teamReg.php"> HACKATHON 1</a>
+    <a href="../teams/teamReg.php"> HACKATHON 2</a>
+    <a href="../teams/teamReg.php"> HACKATHON 3</a>
 
 </body>
 
