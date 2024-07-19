@@ -202,7 +202,7 @@
     <div class="container-fluid container-custom">
         <div class="row flex-grow-1">
             <div class="form-wrapper">
-                <form>
+                <form action="accept_team_data.php" method="POST">
                     <h2>Enter <font color="#F73634">Team Details</font></h2>
                     <div class="form-header text-center mb-4"></div>
                     <div class="form-body">

@@ -16,7 +16,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
 
     if ($_SESSION['noMembers'] > $maxP){
         $_SESSION['errors_signup'] = 'The hackathon allows only ' . $maxP . ' members';
-        header("Location:teamRegistration.php");
+        header("Location:teamReg.php");
     }
     else{
         $query="INSERT INTO team_data(H_id,C_id,TName,TMembers) VALUES (:hackathon,:category,:teamName,:noMembers);";
@@ -28,7 +28,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
         $stmt->execute();
 
         $_SESSION['T_CREATED']=1;
-        header("Location: memberRegistration.php");
+        header("Location: memberReg.php");
         exit();
     }
 }
