@@ -165,12 +165,12 @@
             <h2>Enter <span>Member Details</span></h2>
             <form id="memberForm">
                 <div class="form-group">
-                    <label for="school">School</label>
-                    <input type="text" id="school" name="school" placeholder="Enter your school name" required>
+                    <label for="Name">Name</label>
+                    <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
                 </div>
                 <div class="form-group">
-                    <label for="firstName">First Name</label>
-                    <input type="text" id="firstName" name="firstName" placeholder="Enter your first name" required>
+                    <label for="school">School</label>
+                    <input type="text" id="school" name="school" placeholder="Enter your school name" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>

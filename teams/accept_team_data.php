@@ -9,10 +9,9 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
     $_SESSION['teamName'] = $_POST['teamName'];
     $_SESSION['noMembers'] = $_POST['noMembers'];
     $category=$_POST['category'];
-    //when hackathon selected, its h_ID will need to be made as session variable
-    $hackathon='276';
-
     $maxP = $_POST['maxP'];
+    //when hackathon selected, its h_ID will need to be made as session variable
+    $hackathon=$_SESSION['hackathon'];
 
     if ($_SESSION['noMembers'] > $maxP){
         $_SESSION['errors_signup'] = 'The hackathon allows only ' . $maxP . ' members';
@@ -27,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
         $stmt->bindParam(":noMembers",$_SESSION['noMembers']);
         $stmt->execute();
 
+        $_SESSION['currentMember'] = 1;
         $_SESSION['T_CREATED']=1;
         header("Location: memberReg.php");
         exit();

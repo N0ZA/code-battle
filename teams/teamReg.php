@@ -11,8 +11,8 @@
         exit();
     }
     if(isset($_SESSION['T_CREATED'])){
-    //  header("Location: MemberRegistration.php");
-    //  die();
+        //header("Location: memberRegistration.php");
+        //die();
     }
 ?>
 
@@ -21,7 +21,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign Up Page</title>
+    <title>Team Registeration</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
