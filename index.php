@@ -11,7 +11,7 @@
             die();
         }
         else if($_SESSION["user_isadmin"]==2 || $_SESSION["user_isadmin"]==3 || $_SESSION["user_isadmin"]==4 ){
-            header("Location: login/dashboard.php");
+            header("Location: home.php");
             $pdo=null;
             $stmt=null;
             die();
@@ -245,6 +245,7 @@ footer {
                 </div>
                 <!--<hr>-->
                 <button type="submit">Log In</button>
+                <p  style="font-size:large; text-align: center; color: red;">Don't have an account? <a href="sign_up/signup.php">Sign up</a></p>
             </form>
             <?php
                 check_login_errors();

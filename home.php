@@ -1,4 +1,14 @@
 <?php
+    require_once "includes/dbh.inc.php";
+    require_once 'includes/config_session.inc.php';
+
+ 
+    //get user details
+    $query='SELECT RName FROM registration_data WHERE R_id = :user_id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id",$_SESSION['user_id']);
+    $stmt->execute();
+    $users=fetch()
 // Mock user data
 $users = [
     ["name" => "John Doe", "role" => "Math Teacher"],
@@ -85,7 +95,7 @@ $events = [
             </div>
             <div class="header-right">
                 <ul class="nav">
-                    <li><a href="signin.php">Logout</a></li>
+                    <li><a href="logout.php">Logout</a></li>
                 </ul>
                 <!--<img src="images/profile-icon.png" alt="Profile" class="profile-icon" onclick="toggleDropdown()">
                 <div id="profile-dropdown" class="dropdown-content">

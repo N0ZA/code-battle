@@ -24,8 +24,11 @@ if (isset($_POST['verify'])) {
                 $stmt->bindParam(":Rusername",$_SESSION['Rusername']);
                 $stmt->execute();
 
-                $query2="INSERT INTO login(username,pwd,admin) VALUES (:username,:password,:admin);";
+                $user_id = $pdo->lastInsertId();
+
+                $query2="INSERT INTO login(user_id,username,pwd,admin) VALUES (:user_id,:username,:password,:admin);";
                 $stmt2=$pdo->prepare($query2);
+                $stmt2->bindParam(":user_id", $user_id);
                 $stmt2->bindParam(":username",$_SESSION['Rusername']);
                 $stmt2->bindParam(":password",$_SESSION['password']);
                 $stmt2->bindParam(":admin", $_SESSION['is_admin']);
