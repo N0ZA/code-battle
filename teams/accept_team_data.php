@@ -10,13 +10,20 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
     $_SESSION['noMembers'] = $_POST['noMembers'];
     $category=$_POST['category'];
     $maxP = $_POST['maxP'];
-    //when hackathon selected, its h_ID will need to be made as session variable
-    $hackathon=$_SESSION['hackathon'];
+    $jrCadet=$_POST['jrCadet'];
+    $jrCaptain=$_POST['jrCaptain'];
+    $jrColonel=$_POST['jrColonel'];
 
-    if ($_SESSION['noMembers'] > $maxP){
-        $_SESSION['errors_signup'] = 'The hackathon allows only ' . $maxP . ' members';
-        header("Location:teamReg.php");
-    }
+    $hackathon=$_SESSION['H_id'];
+
+    if ($category == 1 && $_SESSION['noMembers']> $jrCadet) {
+        $_SESSION['errors_signup']= 'Members exceed the limit for the Cadet category.' ;} 
+    elseif ($category == 2 && $_SESSION['noMembers']> $jrCaptain) {
+        $_SESSION['errors_signup']= 'Members exceed the limit for the Captain category.';} 
+    elseif ($category == 3 && $_SESSION['noMembers']> $jrColonel) {
+        $_SESSION['errors_signup']= 'Members exceed the limit for the Colonel category.';} 
+    elseif ($_SESSION['noMembers']> $maxP) {
+        $_SESSION['errors_signup']= 'The hackathon allows only ' . $maxP . ' members';}
     else{
         $query="INSERT INTO team_data(H_id,C_id,TName,TMembers) VALUES (:hackathon,:category,:teamName,:noMembers);";
         $stmt=$pdo->prepare($query);
@@ -31,6 +38,11 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
         header("Location: memberReg.php");
         exit();
     }
+
+    if (!empty($_SESSION['errors_signup'])) {
+        header("Location: teamReg.php");
+        exit();
+    }    
 }
 
 function check_team_errors(){
@@ -38,4 +50,5 @@ function check_team_errors(){
         $errors=$_SESSION['errors_signup'];
         echo '<p style="text-align: center; color: #F73634;">' . $errors . '</p>';}
         unset($_SESSION['errors_signup']); 
+        unset($_SESSION['noMembers']);
 }

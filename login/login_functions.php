@@ -72,19 +72,19 @@ function check_login_errors(){
             die();
         }
         else if($_SESSION["user_isadmin"]==2){
-            header("Location: home.php?login=success");
+            header("Location: ../dashboard.php?login=success");
             $pdo=null;
             $stmt=null;
             die();
         }
         else if($_SESSION["user_isadmin"]==3){
-            header("Location: home.php?login=success");
+            header("Location: ../dashboard.php?login=success");
             $pdo=null;
             $stmt=null;
             die();
         }
         else if($_SESSION["user_isadmin"]==4){
-            header("Location: home.php?login=success");
+            header("Location: ../dashboard.php?login=success");
             $pdo=null;
             $stmt=null;
             die();

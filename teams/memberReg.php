@@ -18,7 +18,7 @@
     if ($currentMember > $noMembers) {
         unset($_SESSION['noMembers']);
         unset($_SESSION['currentMember']);
-        header("Location: ../login/dashboard.php"); // Redirect to a final page or completion page
+        header("Location: ../dashboard.php"); // Redirect to a final page or completion page
         exit();
     }
 ?>

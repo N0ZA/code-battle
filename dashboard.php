@@ -1,15 +1,29 @@
 <?php
+    require_once "includes/dbh.inc.php";
+    require_once 'includes/config_session.inc.php';
+    require_once 'eventreg.php';
 
-$users = [
-    ["name" => "John Doe", "role" => "Math Teacher"],
-    ["name" => "Jane Smith", "role" => "Science Teacher"],
-    ["name" => "Alice Johnson", "role" => "Computer Science Teacher"]
-];
+    function getImage($Folder = 'images/eventreg/') {
+        $images = glob($Folder.'*.{jpg,jpeg,png,gif}', GLOB_BRACE); //to get all files from image folder tht match the extensions
+        $randomImage = $images[array_rand($images)];
+        return $randomImage;
+    }
+ 
+    //get user details
+    $query='SELECT RName FROM registration_data WHERE R_id = :user_id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id",$_SESSION['user_id']);
+    $stmt->execute();
+    $user = $stmt->fetch();
 
-// For simplicity, let's assume the first user is logged in
-$logged_in_user = $users[2];
+    //get hackathon details
+    $query2='SELECT * FROM hackathon_data'; 
+    $stmt2=$pdo->prepare($query2);
+    $stmt2->execute();
+    $events=$stmt2->fetchAll();
 
-// Mock event data
+
+/* Mock event data
 $events = [
     [
         "image" => "images/eventreg/CB24Sharjah.jpg",
@@ -35,7 +49,7 @@ $events = [
         "time" => "9:00 AM",
         "venue" => "Dubai Digital Park, Silicon Oasis"
     ]
-];
+];*/
 
 ?>
 
@@ -79,7 +93,7 @@ $events = [
             <div class="header-left">
                 <img src="images/codebattlelogo.png" alt="Logo" class="logo">
                 <ul class="nav">
-                    <li><a href="home.php">Home</a></li>
+                    <li><a href="dashboard.php">Home</a></li>
                     <li><a href="registeredevents.php">Registered Events</a></li>
                 </ul>
             </div>
@@ -95,8 +109,7 @@ $events = [
         </div>
         <div class="welcome-container">
             <div class="welcome">
-                <h1>Welcome, <span class="username"><?php echo $logged_in_user['name']; ?></span></h1>
-                <p>Role: <?php echo $logged_in_user['role']; ?></p>
+                <h1>Welcome, <span class="username"><?php echo strtoupper($user['RName']); ?></span></h1> 
             </div>
         </div>
         <div class="content">
@@ -104,7 +117,6 @@ $events = [
                 <h2>About Us</h2>
                 <p>This is a coding hackathon challenge where students form teams to solve coding problems. The event encourages collaboration, problem-solving skills, and innovative thinking among students.</p>
             </div>
-    
         </div>
     
         <div>
@@ -114,16 +126,38 @@ $events = [
             <div class="events">
                 <?php foreach ($events as $event): ?>
                     <div class="events-card">
-                        <img src="<?php echo $event['image']; ?>" alt="<?php echo $event['name']; ?>">
+                        <?php 
+                            $_SESSION['H_id']=$event['H_id'];
+                        ?>
+                        <img src="<?php echo getImage(); ?>" alt="<?php echo $event['HName']; ?>">
                         <div class="card-details">
-                            <h3><?php echo $event['name']; ?></h3>
-                            <ul>
-                                <li>Category: <?php echo $event['category']; ?></li>
-                                <li>Date: <?php echo $event['date']; ?></li>
-                                <li>Time: <?php echo $event['time']; ?></li>
-                                <li>Venue: <?php echo $event['venue']; ?></li>
+                        <?php if ($event['is_team']): ?>
+                            <b>TEAM BASED </b>
+                        <?php endif; ?>
+                            <h3><?php echo $event['HName']; ?></h3>
+                            <ul>    
+                                <?php if ($event['is_team']): ?>
+                                    <li>Category: Jr Cadet= <?php echo $event['Jr_Cadet']; ?></li>
+                                    <li>Category: Jr Captain= <?php echo $event['Jr_Captain']; ?></li>
+                                    <li>Category: Jr Colonel <?php echo $event['Jr_Colonel']; ?></li>
+                                    <li>Max Number of People: <?php echo $event['MaxP']; ?></li>
+                                <?php else: ?>
+                                    <li>Category: 
+                                        <?php 
+                                            if ($event['Jr_Cadet']) echo 'Jr Cadet';
+                                            elseif ($event['Jr_Captain']) echo 'Jr Captain';
+                                            elseif ($event['Jr_Colonel']) echo 'Jr Colonel';
+                
+                                        ?>
+                                    </li
+                                <?php endif; ?>
+                                <li>Date: <?php echo $event['HDate']; ?></li>
+                                <li>Time: <?php echo $event['HTime']; ?></li>
                             </ul>
-                            <button>Register</button>
+                            <form action="eventreg.php" method="POST">
+                                <input type="hidden" name="is_team" value="<?php echo $event['is_team']; ?>">
+                            <button type="submit">Register</button>
+                            </form>
                         </div>
                     </div>
                 <?php endforeach; ?>

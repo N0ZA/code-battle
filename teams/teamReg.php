@@ -216,11 +216,10 @@
                         </div>
                         <?php
                             //$_Session['hackathon'] shud be taken from the dashboard, based on which hackathon user chooses to register;
-                            $_SESSION['hackathon']='276';
-                            if (isset($_SESSION['hackathon'])){
+                            if (isset($_SESSION['H_id'])){
                                 $query="SELECT * from hackathon_data where H_id=:H_id";
                                 $stmt=$pdo->prepare($query);
-                                $stmt->bindParam(":H_id", $_SESSION['hackathon']);
+                                $stmt->bindParam(":H_id", $_SESSION['H_id']);
                                 $stmt->execute();
                                 $result=$stmt->fetch();
                                 $jrCadet=$result['Jr_Cadet'];
@@ -254,9 +253,12 @@
                                 <span>Available seats:  <?php echo $jrColonel; ?> </span>
                             </div>
                         </div>
+                        <input type="hidden" name="jrCadet" value="<?php echo $jrCadet; ?>">
+                        <input type="hidden" name="jrCaptain" value="<?php echo $jrCaptain; ?>">
+                        <input type="hidden" name="jrCadet" value="<?php echo $jrCadet; ?>">
                         <input type="hidden" name="maxP" value="<?php echo $maxP; ?>">
                         <?php
-                                check_team_errors();
+                            check_team_errors();    
                         ?>
                         <div class="submit-button">
                             <button type="submit" class="btn btn-dark-red">Next</button>

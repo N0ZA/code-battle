@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     else if (isset($_POST['Done'])) {
         unset($_SESSION['noMembers']);
         unset($_SESSION['currentMember']);
-        header("Location: teamReg.php"); 
+        header("Location: ../dashboard.php"); 
         exit();
     }
 }

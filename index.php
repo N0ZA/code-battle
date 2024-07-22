@@ -11,7 +11,7 @@
             die();
         }
         else if($_SESSION["user_isadmin"]==2 || $_SESSION["user_isadmin"]==3 || $_SESSION["user_isadmin"]==4 ){
-            header("Location: home.php");
+            header("Location: dashboard.php");
             $pdo=null;
             $stmt=null;
             die();
