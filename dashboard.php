@@ -147,7 +147,6 @@ $events = [
                                             if ($event['Jr_Cadet']) echo 'Jr Cadet';
                                             elseif ($event['Jr_Captain']) echo 'Jr Captain';
                                             elseif ($event['Jr_Colonel']) echo 'Jr Colonel';
-                
                                         ?>
                                     </li
                                 <?php endif; ?>
@@ -161,7 +160,6 @@ $events = [
                         </div>
                     </div>
                 <?php endforeach; ?>
-    
             </div>
         </div>
         <div class="events-carousel">
