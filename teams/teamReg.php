@@ -255,7 +255,7 @@
                         </div>
                         <input type="hidden" name="jrCadet" value="<?php echo $jrCadet; ?>">
                         <input type="hidden" name="jrCaptain" value="<?php echo $jrCaptain; ?>">
-                        <input type="hidden" name="jrCadet" value="<?php echo $jrCadet; ?>">
+                        <input type="hidden" name="jrColonel" value="<?php echo $jrColonel  ; ?>">
                         <input type="hidden" name="maxP" value="<?php echo $maxP; ?>">
                         <?php
                             check_team_errors();    

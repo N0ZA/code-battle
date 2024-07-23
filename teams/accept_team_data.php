@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
     elseif ($category == 2 && $_SESSION['noMembers']> $jrCaptain) {
         $_SESSION['errors_signup']= 'Members exceed the limit for the Captain category.';} 
     elseif ($category == 3 && $_SESSION['noMembers']> $jrColonel) {
-        $_SESSION['errors_signup']= 'Members exceed the limit for the Colonel category.';} 
+        $_SESSION['errors_signup']= 'Members' . $_SESSION['noMembers'].  'exceed the limit for the Colonel' . $jrCadet . ' category.';} 
     elseif ($_SESSION['noMembers']> $maxP) {
         $_SESSION['errors_signup']= 'The hackathon allows only ' . $maxP . ' members';}
     else{
