@@ -93,12 +93,43 @@
       border-radius: 20px;
       border: 1px solid #555555;
     }
+  .preloader {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: #272727;
+                color:#F73634;
+                font-size: x-large;
+                z-index: 9999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+    .loader {
+        border: 8px solid #0000007c;
+        border-top: 8px solid #F73634;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 2s linear infinite;
+    }
+    
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+       
   </style>
   <title>CodeBattle - Sign up</title>
 </head>
 <body>
+<div class="preloader">
+  <div class="loader"></div>
+</div>
   <div class="button-container">
-    <img src="images/logo.png" alt="CodeBattle Logo" class="img-fluid" style="max-width: 150px; margin-right: 10px;">
+    <img src="https://github.com/N0ZA/code-battle/blob/main/Images/Logo.png?raw=true" alt="CodeBattle Logo" class="img-fluid" style="max-width: 150px; margin-right: 10px;">
     <div class="profile-dropdown"></div>
   </div>
   <div class="form-container">
@@ -151,27 +182,27 @@
       <div id="teacher" style="display:none">
         <form action="send_mail.php" method="POST" class="createTeacherForm">
           <div class="form-group">
-            <label for="name">Name:</label>
+            <label for="name">Name</label>
             <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
           </div>
           <div class="form-group">
-            <label for="ph-num">Contact Number:</label>
+            <label for="ph-num">Contact Number</label>
             <input type="number" class="form-control" id="ph-num" name="ph-num" placeholder="Enter your contact number" required>
           </div>
           <div class="form-group">
-            <label for="email">Email:</label>
+            <label for="email">Email</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
           </div>
           <div class="form-group">
-            <label for="school-name">School Name:</label>
+            <label for="school-name">School Name</label>
             <input type="text" class="form-control" id="school-name" name="school-name" placeholder="Enter your school name" required>
           </div>
           <div class="form-group">
-            <label for="Username">Username:</label>
+            <label for="Username">Username</label>
             <input type="text" class="form-control" id="Username" name="Username" placeholder="Choose a username" required>
           </div>
           <div class="form-group">
-            <label for="pwd">Password:</label>
+            <label for="pwd">Password</label>
             <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required>
           </div>
           <?php
@@ -183,31 +214,31 @@
       <div id="student" style="display:none">
         <form action="send_mail.php" method="POST" class="createStudentForm">
           <div class="form-group">
-            <label for="name">Full Name:</label>
-            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your full name" required>
+            <label for="name">Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Enter your name" required>
           </div>
           <div class="form-group">
-            <label for="ph-num">Contact Number:</label>
+            <label for="ph-num">Contact Number</label>
             <input type="number" class="form-control" id="ph-num" name="ph-num" placeholder="Enter your contact number" required>
           </div>
           <div class="form-group">
-            <label for="email">Email:</label>
+            <label for="email">Email</label>
             <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
           </div>
           <div class="form-group">
-            <label for="school-name">School Name:</label>
+            <label for="school-name">School Name</label>
             <input type="text" class="form-control" id="school-name" name="school-name" placeholder="Enter your school name" required>
           </div>
           <div class="form-group">
-            <label for="class">Class/Grade:</label>
+            <label for="class">Class</label>
             <input type="number" class="form-control" id="class" name="class" min="1" max="13" placeholder="Enter your grade" required>
           </div>
           <div class="form-group">
-            <label for="username">Username:</label>
+            <label for="username">Username</label>
             <input type="text" class="form-control" id="Username" name="Username" placeholder="Choose a username" required>
           </div>
           <div class="form-group">
-            <label for="pwd">Password:</label>
+            <label for="pwd">Password</label>
             <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required>
           </div>
           <?php
@@ -219,9 +250,10 @@
     </div>
   </div>
   <footer>
-    <p>Code Battle &copy; 2024. All rights reserved. Made in U.A.E</p>
-    <p>Contact us at: info@codebattle.com</p>
-  </footer>
+        
+        <p>Code Battle &copy; 2024. All rights reserved. Made with ❤️ in U.A.E</p>
+        
+    </footer>
   <script>
     function toggleForm(x) {
       const id = x.value;
@@ -234,4 +266,11 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+<script>function load(){
+    const preloader = document.querySelector('.preloader');
+    preloader.style.display = 'none';
+}
+
+window.addEventListener('load', load);</script>
+
 </html>
