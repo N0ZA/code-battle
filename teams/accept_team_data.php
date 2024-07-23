@@ -13,7 +13,6 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
     $jrCadet=$_POST['jrCadet'];
     $jrCaptain=$_POST['jrCaptain'];
     $jrColonel=$_POST['jrColonel'];
-
     $hackathon=$_SESSION['H_id'];
 
     if ($category == 1 && $_SESSION['noMembers']> $jrCadet) {
@@ -33,7 +32,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
         $stmt->bindParam(":noMembers",$_SESSION['noMembers']);
         $stmt->bindParam(":Tuser_id",$_SESSION['user_id']);
         $stmt->execute();
-
+        
         $_SESSION['currentMember'] = 1;
         $_SESSION['T_CREATED']=1;
         header("Location: memberReg.php");

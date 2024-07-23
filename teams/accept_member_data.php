@@ -10,6 +10,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }   
 
+    if ($_SESSION['is_team']==0){
+        $T_id=NULL;
+        $H_id = $_SESSION['H_id'];
+        $C_id = $SESSION['C_id'];
+        $Pname = $_POST['name'];
+        $PEmail = $_POST['email'];
+        $PSchool = $_POST['school'];
+
+    }
+
+    else{
     $teamName = $_SESSION['teamName'];
     $query = "SELECT T_id, H_id, C_id FROM team_data WHERE TName=:teamName";
     $stmt = $pdo->prepare($query);
@@ -33,6 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt1->bindParam(":PEmail", $PEmail);
     $stmt1->bindParam(":PSchool", $PSchool);
     $stmt1->bindParam(":Puser_id", $_SESSION['user_id']);
+    //$stmt1->bindParam(":is_team", $_SESSION['is_team']);
     $stmt1->execute();
 
     $CName = ($C_id == 1) ? 'Jr_Cadet' : (($C_id == 2) ? 'Jr_Captain' : (($C_id == 3) ? 'Jr_Colonel' : 'Unknown'));

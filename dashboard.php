@@ -27,36 +27,6 @@
     $stmt2=$pdo->prepare($query2);
     $stmt2->execute();
     $events=$stmt2->fetchAll();
-
-
-/* Mock event data
-$events = [
-    [
-        "image" => "images/eventreg/CB24Sharjah.jpg",
-        "name" => "Code Battle '24 <br>Sharjah and N.Emirates",
-        "category" => "Jr Cadet, Jr Captain and Jr Colonel",
-        "date" => "July 20, 2024",
-        "time" => "10:00 AM",
-        "venue" => "Main Auditorium"
-    ],
-    [
-        "image" => "images/eventreg/CB24AD.jpg",
-        "name" => "Code Battle '24 Abu Dhabi Chapter",
-        "category" => "Jr Cadet, Jr Captain and Jr Colonel",
-        "date" => "August 12, 2024",
-        "time" => "2:00 PM",
-        "venue" => "Lab 3"
-    ],
-    [
-        "image" => "images/eventreg/CB24NF.jpg",
-        "name" => "Code Battle '24 National Finals",
-        "category" => "Jr Cadet, Jr Captain and Jr Colonel",
-        "date" => "September 10, 2024",
-        "time" => "9:00 AM",
-        "venue" => "Dubai Digital Park, Silicon Oasis"
-    ]
-];*/
-
 ?>
 
 <!DOCTYPE html>
@@ -132,9 +102,6 @@ $events = [
             <div class="events">
                 <?php foreach ($events as $event): ?>
                     <div class="events-card">
-                        <?php 
-                            $_SESSION['H_id']=$event['H_id'];
-                        ?>
                         <img src="<?php echo getImage(); ?>" alt="<?php echo $event['HName']; ?>">
                         <div class="card-details">
                         <?php if ($event['is_team']): ?>
@@ -150,9 +117,10 @@ $events = [
                                 <?php else: ?>
                                     <li>Category: 
                                         <?php 
-                                            if ($event['Jr_Cadet']) echo 'Jr Cadet';
-                                            elseif ($event['Jr_Captain']) echo 'Jr Captain';
-                                            elseif ($event['Jr_Colonel']) echo 'Jr Colonel';
+                                            if ($event['Jr_Cadet']) echo 'Jr Cadet'; 
+                                            elseif ($event['Jr_Captain']) echo 'Jr Captain';  
+                                            elseif ($event['Jr_Colonel']) echo 'Jr Colonel'; 
+                                            
                                         ?>
                                     </li
                                 <?php endif; ?>
@@ -160,7 +128,16 @@ $events = [
                                 <li>Time: <?php echo $event['HTime']; ?></li>
                             </ul>
                             <form action="eventreg.php" method="POST">
+                                <input type="hidden" name="H_id" value="<?php echo $event['H_id']; ?>">
+                                <?php
+                                if ($event['Jr_Cadet']) $C_id= 1; 
+                                elseif ($event['Jr_Captain'])  $C_id= 2;
+                                elseif ($event['Jr_Colonel'])  $C_id= 3;
+                                ?>
+                                <input type="hidden" name="C_id" value="<?php echo $C_id; ?>">
                                 <input type="hidden" name="is_team" value="<?php echo $event['is_team']; ?>">
+                                <button type="submit">Register</button>
+                            </form>
                             <button type="submit">Register</button>
                             </form>
                         </div>

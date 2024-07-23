@@ -1,7 +1,12 @@
 <?php
     require_once "includes/dbh.inc.php";
-    require_once 'includes/config_session.inc.php';
-    require_once 'eventreg.php';
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
+        header("Location: ../index.php");
+        exit();
+    }
 
     function getImage($Folder = 'images/eventreg/') {
         $images = glob($Folder.'*.{jpg,jpeg,png,gif}', GLOB_BRACE); //to get all files from image folder tht match the extensions
@@ -17,17 +22,16 @@
     $user = $stmt->fetch();
 
     $query3 = 'SELECT hackathon_data.*, team_data.TName AS TeamName FROM hackathon_data 
-    JOIN team_data ON hackathon_data.H_id = team_data.H_id 
-    WHERE team_data.Tuser_id = :user_id';
+                JOIN team_data ON hackathon_data.H_id = team_data.H_id 
+                WHERE team_data.Tuser_id = :user_id';
     $stmt3 = $pdo->prepare($query3);
     $stmt3->bindParam(":user_id", $_SESSION['user_id']);
     $stmt3->execute();
     $registered_team_events = $stmt3->fetchAll();
     
-    // Get registered hackathons for the user from solo_data
     $query4 = 'SELECT hackathon_data.*, solo_data.PName AS SoloName FROM hackathon_data 
-        JOIN solo_data ON hackathon_data.H_id = solo_data.H_id 
-        WHERE solo_data.Puser_id = :user_id';
+                JOIN solo_data ON hackathon_data.H_id = solo_data.H_id 
+                WHERE solo_data.Puser_id = :user_id';
     $stmt4 = $pdo->prepare($query4);
     $stmt4->bindParam(":user_id", $_SESSION['user_id']);
     $stmt4->execute();

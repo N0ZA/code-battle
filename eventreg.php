@@ -12,6 +12,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
     } else {
         $_SESSION['currentMember'] = 1;
         $_SESSION['noMembers']=1;
+        $_SESSION['is_team']=$is_team;
         header("Location: teams/memberReg.php");
     }
     exit();
