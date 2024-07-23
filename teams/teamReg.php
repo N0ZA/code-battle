@@ -175,13 +175,43 @@
         .available-seats-disabled {
             color: #cecece;
         }
+        .preloader {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: #272727;
+                color:#F73634;
+                font-size: x-large;
+                z-index: 9999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+    .loader {
+        border: 8px solid #0000007c;
+        border-top: 8px solid #F73634;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 2s linear infinite;
+    }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
     </style>
 </head>
 <body>
+<div class="preloader">
+  <div class="loader"></div>
+</div>  
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark">
-            <a class="navbar-brand" href="#"><img src="C:\Users\moham_jvk4ynn\Downloads\Logo.png" alt="Code Battle" style="height: 60px;"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <a class="navbar-brand" href="#"><img src="https://github.com/N0ZA/code-battle/blob/main/Images/Logo.png?raw=true" alt="Code Battle" style="height: 60px;"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
@@ -269,12 +299,19 @@
         </div>
     </div>
     <footer>
-        <p>Code Battle &copy; 2024. All rights reserved. Made in U.A.E</p>
-        <p>Contact us at: info@codebattle.com</p>
+        <p>Code Battle &copy; 2024. All rights reserved. Made with ❤️ in U.A.E</p>
     </footer>
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script>
+      function load(){
+        const preloader = document.querySelector('.preloader');
+        preloader.style.display = 'none';
+      }
+
+      window.addEventListener('load', load);
+    </script>
 
 </body>
 </html>

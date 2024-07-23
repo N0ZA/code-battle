@@ -92,13 +92,40 @@
     .form-control, .form-check-input {
       border-radius: 20px;
       border: 1px solid #555555;
+    } .preloader {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: #272727;
+                color:#F73634;
+                font-size: x-large;
+                z-index: 9999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+    .loader {
+        border: 8px solid #0000007c;
+        border-top: 8px solid #F73634;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 2s linear infinite;
     }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+
   </style>
   <title>CodeBattle - Sign up</title>
 </head>
 <body>
   <div class="button-container">
-    <img src="C:\Users\moham_jvk4ynn\Downloads\Logo.png" alt="CodeBattle Logo" class="img-fluid" style="max-width: 150px; margin-right: 10px;">
+  <img src="https://github.com/N0ZA/code-battle/blob/main/Images/Logo.png?raw=true" alt="CodeBattle Logo" class="img-fluid" style="max-width: 150px; margin-right: 10px;">
     <div class="profile-dropdown"></div>
   </div>
   <div class="form-container">
@@ -221,8 +248,7 @@
     </div>
   </div>
   <footer>
-    <p>Code Battle &copy; 2024. All rights reserved. Made in U.A.E</p>
-    <p>Contact us at: info@codebattle.com</p>
+    <p>Code Battle &copy; 2024. All rights reserved. Made with ❤️ in U.A.E</p>
   </footer>
   <script>
     function toggleForm(x) {
@@ -236,4 +262,13 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+    <script>
+      function load(){
+        const preloader = document.querySelector('.preloader');
+        preloader.style.display = 'none';
+      }
+
+      window.addEventListener('load', load);
+    </script>
+
 </html>
