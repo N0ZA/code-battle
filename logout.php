@@ -17,5 +17,9 @@ function logout(PDO $pdo) {
 if (isset($_SESSION["user_isadmin"])){
         logout( $pdo);
     }
+else{
+    header("Location: index.php");
+    exit(); 
+}
 
 

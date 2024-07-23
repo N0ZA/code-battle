@@ -25,12 +25,13 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
     elseif ($_SESSION['noMembers']> $maxP) {
         $_SESSION['errors_signup']= 'The hackathon allows only ' . $maxP . ' members';}
     else{
-        $query="INSERT INTO team_data(H_id,C_id,TName,TMembers) VALUES (:hackathon,:category,:teamName,:noMembers);";
+        $query="INSERT INTO team_data(H_id,C_id,TName,TMembers,Tuser_id) VALUES (:hackathon,:category,:teamName,:noMembers,:Tuser_id);";
         $stmt=$pdo->prepare($query);
         $stmt->bindParam(":hackathon",$hackathon);
         $stmt->bindParam(":category",$category);
         $stmt->bindParam(":teamName",$_SESSION['teamName']);
         $stmt->bindParam(":noMembers",$_SESSION['noMembers']);
+        $stmt->bindParam(":Tuser_id",$_SESSION['user_id']);
         $stmt->execute();
 
         $_SESSION['currentMember'] = 1;

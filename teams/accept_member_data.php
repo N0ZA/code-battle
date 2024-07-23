@@ -24,7 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $PEmail = $_POST['email'];
     $PSchool = $_POST['school'];
 
-    $query1 = "INSERT INTO solo_data (H_id, C_id, T_id, Pname, PEmail, PSchool) VALUES (:H_id, :C_id, :T_id, :Pname, :PEmail, :PSchool)";
+    $query1 = "INSERT INTO solo_data (H_id, C_id, T_id, Pname, PEmail, PSchool,Puser_id) VALUES (:H_id, :C_id, :T_id, :Pname, :PEmail, :PSchool,:Puser_id)";
     $stmt1 = $pdo->prepare($query1);
     $stmt1->bindParam(":H_id", $H_id);
     $stmt1->bindParam(":C_id", $C_id);
@@ -32,6 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt1->bindParam(":Pname", $Pname);
     $stmt1->bindParam(":PEmail", $PEmail);
     $stmt1->bindParam(":PSchool", $PSchool);
+    $stmt1->bindParam(":Puser_id", $_SESSION['user_id']);
     $stmt1->execute();
 
     $CName = ($C_id == 1) ? 'Jr_Cadet' : (($C_id == 2) ? 'Jr_Captain' : (($C_id == 3) ? 'Jr_Colonel' : 'Unknown'));

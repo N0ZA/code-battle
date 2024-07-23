@@ -1,7 +1,13 @@
 <?php
     require_once "includes/dbh.inc.php";
-    require_once 'includes/config_session.inc.php';
     require_once 'eventreg.php';
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
+        header("Location: ../index.php");
+        exit();
+    }
 
     function getImage($Folder = 'images/eventreg/') {
         $images = glob($Folder.'*.{jpg,jpeg,png,gif}', GLOB_BRACE); //to get all files from image folder tht match the extensions
@@ -94,7 +100,7 @@ $events = [
                 <img src="images/codebattlelogo.png" alt="Logo" class="logo">
                 <ul class="nav">
                     <li><a href="dashboard.php">Home</a></li>
-                    <li><a href="registeredevents.php">Registered Events</a></li>
+                    <li><a href="registered_events.php">Registered Events</a></li>
                 </ul>
             </div>
             <div class="header-right">
