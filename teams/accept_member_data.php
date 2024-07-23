@@ -20,21 +20,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     }
 
-    else{
-    $teamName = $_SESSION['teamName'];
-    $query = "SELECT T_id, H_id, C_id FROM team_data WHERE TName=:teamName";
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":teamName", $teamName);
-    $stmt->execute();
-    $result = $stmt->fetch();
-   
-    $T_id = $result['T_id'];
-    $H_id = $result['H_id'];
-    $C_id = $result['C_id'];
-    $Pname = $_POST['name'];
-    $PEmail = $_POST['email'];
-    $PSchool = $_POST['school'];
-
+    else if ($_SESSION['is_team']) {
+        $teamName = $_SESSION['teamName'];
+        $query = "SELECT T_id, H_id, C_id FROM team_data WHERE TName=:teamName";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":teamName", $teamName);
+        $stmt->execute();
+        $result = $stmt->fetch();
+       
+        $T_id = $result['T_id'];
+        $H_id = $result['H_id'];
+        $C_id = $result['C_id'];
+        $Pname = $_POST['name'];
+        $PEmail = $_POST['email'];
+        $PSchool = $_POST['school'];
+    }
+    
     $query1 = "INSERT INTO solo_data (H_id, C_id, T_id, Pname, PEmail, PSchool,Puser_id) VALUES (:H_id, :C_id, :T_id, :Pname, :PEmail, :PSchool,:Puser_id)";
     $stmt1 = $pdo->prepare($query1);
     $stmt1->bindParam(":H_id", $H_id);

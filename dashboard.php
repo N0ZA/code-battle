@@ -5,7 +5,7 @@
         session_start();
     }
     if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
-        header("Location: ../index.php");
+        header("Location: index.php");
         exit();
     }
 
@@ -41,7 +41,6 @@
         function toggleDropdown() {
             document.getElementById("profile-dropdown").classList.toggle("show");
         }
-
         window.onclick = function(event) {
             if (!event.target.matches('.profile-icon')) {
                 var dropdowns = document.getElementsByClassName("dropdown-content");
@@ -64,7 +63,6 @@
         <div class="loader"></div>
     </div>
     <div class=".main-container">
-
         <div class="header">
             <div class="header-left">
                 <img src="images/codebattlelogo.png" alt="Logo" class="logo">
@@ -108,37 +106,23 @@
                             <b>TEAM BASED </b>
                         <?php endif; ?>
                             <h3><?php echo $event['HName']; ?></h3>
-                            <ul>    
-                                <?php if ($event['is_team']): ?>
-                                    <li>Category: Jr Cadet= <?php echo $event['Jr_Cadet']; ?></li>
-                                    <li>Category: Jr Captain= <?php echo $event['Jr_Captain']; ?></li>
-                                    <li>Category: Jr Colonel <?php echo $event['Jr_Colonel']; ?></li>
-                                    <li>Max Number of People: <?php echo $event['MaxP']; ?></li>
-                                <?php else: ?>
-                                    <li>Category: 
-                                        <?php 
-                                            if ($event['Jr_Cadet']) echo 'Jr Cadet'; 
-                                            elseif ($event['Jr_Captain']) echo 'Jr Captain';  
-                                            elseif ($event['Jr_Colonel']) echo 'Jr Colonel'; 
-                                            
-                                        ?>
-                                    </li
-                                <?php endif; ?>
+                            <ul>   
+                                <li>Category</li>
+                                <li>Jr Cadet: <?php echo $event['Jr_Cadet']; ?></li>
+                                <li>Jr Captain:  <?php echo $event['Jr_Captain']; ?></li>
+                                <li>Jr Colonel: <?php echo $event['Jr_Colonel']; ?></li>
+                                <li>Max Number of People: <?php echo $event['MaxP']; ?></li>
                                 <li>Date: <?php echo $event['HDate']; ?></li>
                                 <li>Time: <?php echo $event['HTime']; ?></li>
                             </ul>
                             <form action="eventreg.php" method="POST">
                                 <input type="hidden" name="H_id" value="<?php echo $event['H_id']; ?>">
                                 <?php
-                                if ($event['Jr_Cadet']) $C_id= 1; 
-                                elseif ($event['Jr_Captain'])  $C_id= 2;
-                                elseif ($event['Jr_Colonel'])  $C_id= 3;
+                                    $C_id = ($event['Jr_Cadet']) ? 1 : (($event['Jr_Captain']) ? 2 : (($event['Jr_Colonel']) ? 3 : ''));
                                 ?>
                                 <input type="hidden" name="C_id" value="<?php echo $C_id; ?>">
                                 <input type="hidden" name="is_team" value="<?php echo $event['is_team']; ?>">
                                 <button type="submit">Register</button>
-                            </form>
-                            <button type="submit">Register</button>
                             </form>
                         </div>
                     </div>

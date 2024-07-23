@@ -4,7 +4,7 @@
         session_start();
     }
     if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
-        header("Location: ../index.php");
+        header("Location: index.php");
         exit();
     }
 
@@ -27,19 +27,17 @@
     $stmt3 = $pdo->prepare($query3);
     $stmt3->bindParam(":user_id", $_SESSION['user_id']);
     $stmt3->execute();
-    $registered_team_events = $stmt3->fetchAll();
+    $Tevents = $stmt3->fetchAll();
     
     $query4 = 'SELECT hackathon_data.*, solo_data.PName AS SoloName FROM hackathon_data 
                 JOIN solo_data ON hackathon_data.H_id = solo_data.H_id 
-                WHERE solo_data.Puser_id = :user_id';
+                WHERE solo_data.Puser_id = :user_id AND solo_data.T_id IS NULL';
     $stmt4 = $pdo->prepare($query4);
     $stmt4->bindParam(":user_id", $_SESSION['user_id']);
     $stmt4->execute();
-    $registered_solo_events = $stmt4->fetchAll();
+    $Sevents = $stmt4->fetchAll();
     ?>
 
-?>
-    
     <!DOCTYPE html>
     <html lang="en">
     <head>
@@ -105,34 +103,34 @@
             </div>
             <div class="events">
                 <div class="registered-events">
-                    <?php if (!empty($registered_team_events)): ?>
-                        <?php foreach ($registered_team_events as $event): ?>
+                    <?php if (!empty($Tevents)): ?>
+                        <?php foreach ($Tevents as $event): ?>
                             <div class="events-card">
                                 <img src="<?php echo getImage(); ?>" alt="<?php echo $event['HName']; ?>">
                                 <div class="card-details">
                                     <h3><?php echo $event['HName']; ?></h3>
+                                    <button>Add Teams</button>
+                                    <button>Edit Teams</button>
                                 </div>
-                                <button>Add Teams</button>
-                                <button>Edit Teams</button>
                             </div>
                         <?php endforeach; ?>
                     <?php endif; ?>
-                    <?php if (!empty($registered_solo_events)): ?>
-                        <?php foreach ($registered_solo_events as $event): ?>
+                    <?php if (!empty($Sevents)): ?>
+                        <?php foreach ($Sevents as $event): ?>
                             <div class="events-card">
                                 <img src="<?php echo getImage(); ?>" alt="<?php echo $event['HName']; ?>">
                                 <div class="card-details">
                                     <h3><?php echo $event['HName']; ?></h3>
+                                    <button>Add Member</button>
+                                    <button>Discard Member</button>
                                 </div>
-                                <button>Add Member</button>
-                                <button>Discard Member</button>
+                                
                             </div>
                         <?php endforeach; ?>
                     <?php else: ?>
                         <p>You have not registered for any events yet.</p>
                     <?php endif; ?>
                 </div>
-
         </div>
     </body>
     </html>
