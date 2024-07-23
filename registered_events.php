@@ -29,7 +29,9 @@
     $stmt3->execute();
     $Tevents = $stmt3->fetchAll();
     
-    $query4 = 'SELECT hackathon_data.*, solo_data.PName AS SoloName FROM hackathon_data 
+    $query4 = 'SELECT hackathon_data.*, solo_data.PName AS SoloName,
+                hackathon_data.Jr_Cadet, hackathon_data.Jr_Captain, hackathon_data.Jr_Colonel 
+                FROM hackathon_data 
                 JOIN solo_data ON hackathon_data.H_id = solo_data.H_id 
                 WHERE solo_data.Puser_id = :user_id AND solo_data.T_id IS NULL';
     $stmt4 = $pdo->prepare($query4);
@@ -101,37 +103,55 @@
             <div class="eventreg-title">
                 <h2>Registered Events</h2>
             </div>
-            <div class="events">
-                <div class="registered-events">
-                    <?php if (!empty($Tevents)): ?>
-                        <?php foreach ($Tevents as $event): ?>
-                            <div class="events-card">
-                                <img src="<?php echo getImage(); ?>" alt="<?php echo $event['HName']; ?>">
-                                <div class="card-details">
-                                    <h3><?php echo $event['HName']; ?></h3>
-                                    <button>Add Teams</button>
-                                    <button>Edit Teams</button>
-                                </div>
-                            </div>
-                        <?php endforeach; ?>
-                    <?php endif; ?>
-                    <?php if (!empty($Sevents)): ?>
-                        <?php foreach ($Sevents as $event): ?>
-                            <div class="events-card">
-                                <img src="<?php echo getImage(); ?>" alt="<?php echo $event['HName']; ?>">
-                                <div class="card-details">
-                                    <h3><?php echo $event['HName']; ?></h3>
-                                    <button>Add Member</button>
-                                    <button>Discard Member</button>
-                                </div>
-                                
-                            </div>
-                        <?php endforeach; ?>
-                    <?php else: ?>
-                        <p>You have not registered for any events yet.</p>
-                    <?php endif; ?>
-                </div>
+        <div class="events">
+            <?php if (!empty($Tevents)): ?>
+                <?php foreach ($Tevents as $event): ?>
+                    <div class="events-card">
+                        <img src="<?php echo getImage(); ?>" alt="<?php echo $event['HName'];?>">
+                        <div class="card-details">
+                            <h3><?php echo $event['HName']; ?></h3>
+                            <p>Team Name: <?php echo $event['TeamName']; ?></p>
+                            <form action="eventreg.php" method="POST">
+                                <input type="hidden" name="H_id" value="<?php echo $event['H_id']; ?>">
+                                <input type="hidden" name="is_team" value="<?php echo $event['is_team']; ?>">
+                                <button type="submit">Add Team</button>
+                            </form>
+                            <button>Edit Teams</button>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+            <?php if (!empty($Sevents)): ?>
+                <?php foreach ($Sevents as $event): ?>
+                    <div class="events-card">
+                        <img src="<?php echo getImage(); ?>" alt="<?php echo $event['HName']; ?>">
+                        <div class="card-details">
+                            <h3><?php echo $event['HName']; ?></h3>
+                            <p>Individual Name: <?php echo $event['SoloName']; ?></p>
+                            <form action="eventreg.php" method="POST">
+                                <input type="hidden" name="H_id" value="<?php echo $event['H_id']; ?>">
+                                <?php
+                                foreach ($Sevents as $soloEvent) {
+                                    if ($soloEvent['H_id'] == $event['H_id']) {
+                                        $C_id = ($soloEvent['Jr_Cadet']) ? 1 : (($soloEvent['Jr_Captain']) ? 2 : (($soloEvent['Jr_Colonel']) ? 3 : ''));
+                                        break;
+                                    }
+                                }
+                                ?>
+                                <input type="hidden" name="C_id" value="<?php echo $C_id; ?>">
+                                <input type="hidden" name="is_team" value="<?php echo $event['is_team']; ?>">
+                                <button type="submit">Add Member</button>
+                            </form>
+                            <button>Discard Member</button>
+                        </div>
+                    </div>
+                <?php endforeach; ?>
+            <?php else: ?>
+                <p>You have not registered for any events yet.</p>
+            <?php endif; ?>
+        </div>
         </div>
     </body>
     </html>
     
+                
