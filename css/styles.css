@@ -186,7 +186,7 @@ input {
 
 .events {
     display: flex;
-    overflow-x: auto;
+    flex-wrap: wrap; /*made sure more events cards could be properly accommodated*/
     justify-content: center;
     gap: 40px;
     padding: 40px 0;
