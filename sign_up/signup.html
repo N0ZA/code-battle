@@ -37,6 +37,7 @@
       padding: 2rem;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
       box-sizing: content-box;
+      
     }
     footer {
       background-color: #000000;
@@ -139,7 +140,20 @@
             border-radius: 18px;
             font-weight: bold;
         }
-
+.navbar {
+            background-color: #F73634;
+        }
+        .nav-link {
+            color: #ffffff !important;
+            font-size: 16px;
+        }
+        .nav-link:hover {
+            color: #ffcccc !important;
+        }
+       header {
+  position: relative;
+  z-index: 1000;
+}
   </style>
   <title>CodeBattle - Sign up</title>
 </head>
@@ -148,18 +162,25 @@
   <div class="loader"></div>
 </div>
 <header>
-            <div class="button-container">
-    <button class="navButtons" onClick="window.location.href='../admin.php';">Home</button>
-    <button class="navButtons" onClick="window.location.href='../HDetail.php';">View Hackathon</button>
-    <button class="navButtons" onClick="window.location.href='../create.php';">Create Hackathon</button>
-    <div class="scoreboard-dropdown-container" id="profile-container">
-        <button class="dropbtn"><i class="fas fa-user"></i>&#x25BC;</button>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-        <div id="profile-dropdown" class="score-dropdown">
-            <a onclick="window.location.href='../../logout.php';">Logout</a>
-        </div>
-    </div>
-</div>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <a class="navbar-brand" href="#"><img src="https://github.com/N0ZA/code-battle/blob/main/Images/logob.png?raw=true" alt="Code Battle" style="height: 60px;"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">View Hackathon</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Edit Teams</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </header>
   <div class="form-container">
     <div class="form-group" id="rtype">
