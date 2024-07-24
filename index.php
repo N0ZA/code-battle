@@ -22,7 +22,6 @@
             $stmt=null;
             die();
         }
-        exit();
     }
 ?>
 <!DOCTYPE html>

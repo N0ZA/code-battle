@@ -1,14 +1,13 @@
 <?php
     require_once "includes/dbh.inc.php";
-    require_once 'eventreg.php';
-    if (session_status() == PHP_SESSION_NONE) {
+   /* if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
     if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
         header("Location: index.php");
         exit();
     }
-
+    */
     function getImage($Folder = 'images/eventreg/') {
         $images = glob($Folder.'*.{jpg,jpeg,png,gif}', GLOB_BRACE); //to get all files from image folder tht match the extensions
         $randomImage = $images[array_rand($images)];
@@ -83,7 +82,6 @@
         </div>
         <div class="welcome-container">
             <div class="welcome">
-                <h1>Welcome, <span class="username"><?php echo strtoupper($user['RName']); ?></span></h1> 
             </div>
         </div>
         <div class="content">
@@ -102,29 +100,26 @@
                     <div class="events-card">
                         <img src="<?php echo getImage(); ?>" alt="<?php echo $event['HName']; ?>">
                         <div class="card-details">
-                        <?php if ($event['is_team']): ?>
-                            <b>TEAM BASED </b>
-                        <?php endif; ?>
-                            <h3><?php echo $event['HName']; ?></h3>
+                            <h3><?php echo $event['HName']; ?>-
+                            <?php if ($event['is_team']): ?>
+                                TEAM BASED
+                            <?php else: ?>
+                                SOLO BASED
+                            <?php endif; ?></h3>
                             <ul>   
-                                <li>Category</li>
-                                <li>Jr Cadet: <?php echo $event['Jr_Cadet']; ?></li>
-                                <li>Jr Captain:  <?php echo $event['Jr_Captain']; ?></li>
-                                <li>Jr Colonel: <?php echo $event['Jr_Colonel']; ?></li>
+                                <li>Seats in Each Category:</li>
+                                <li>Jr Cadet:<?php echo $event['Jr_Cadet']; ?>
+                                Jr Captain:<?php echo $event['Jr_Captain']; ?>
+                                Jr Colonel:<?php echo $event['Jr_Colonel']; ?></li>
                                 <li>Max Number of People: <?php echo $event['MaxP']; ?></li>
                                 <li>Date: <?php echo $event['HDate']; ?></li>
                                 <li>Time: <?php echo $event['HTime']; ?></li>
                             </ul>
                             <form action="eventreg.php" method="POST">
                                 <input type="hidden" name="H_id" value="<?php echo $event['H_id']; ?>">
-                                <?php
-                                    $C_id = ($event['Jr_Cadet']) ? 1 : (($event['Jr_Captain']) ? 2 : (($event['Jr_Colonel']) ? 3 : ''));
-                                ?>
-                                <input type="hidden" name="C_id" value="<?php echo $C_id; ?>">
                                 <input type="hidden" name="is_team" value="<?php echo $event['is_team']; ?>">
                                 <button type="submit">Register</button>
                             </form>
-                            
                         </div>
                     </div>
                 <?php endforeach; ?>

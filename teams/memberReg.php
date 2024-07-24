@@ -26,7 +26,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>New Form</title>
+    <title>Member Registration</title>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
@@ -264,7 +264,6 @@ main {
                             $maxP = $result['MaxP'];
                         }
                     ?>
-                    <?php echo "Hck ID: " .($_SESSION['H_id']). " Ok " ?>
                     <?php if ($_SESSION['is_team'] == 0): ?>
                         <div class="form-group">
                             <label for="category">Category</label>
