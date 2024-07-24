@@ -124,6 +124,7 @@
                                 <input type="hidden" name="is_team" value="<?php echo $event['is_team']; ?>">
                                 <button type="submit">Register</button>
                             </form>
+                            
                         </div>
                     </div>
                 <?php endforeach; ?>
