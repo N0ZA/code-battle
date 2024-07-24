@@ -39,7 +39,7 @@
     background-size: cover;
     color: #272727;
     display: grid;
-    grid-template-rows: auto 1fr auto; /* Header, content, footer */
+    grid-template-rows: auto 1fr auto;
 }
 
     header {
@@ -51,8 +51,8 @@
 main {
     display: grid;
     place-items: center;
-    padding-top: 70px; /* Space for the fixed header */
-    padding-bottom: 60px; /* Space for the footer */
+    padding-top: 70px;
+    padding-bottom: 60px;
 }
         .navbar {
     background-color: #F73634;
