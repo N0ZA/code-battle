@@ -130,97 +130,28 @@
             </div>
         </div>
         <div class="events-carousel">
-            <input type="radio" name="slider" id="s1" checked>
-            <input type="radio" name="slider" id="s2">
-            <input type="radio" name="slider" id="s3">
-            <input type="radio" name="slider" id="s4">
-            <input type="radio" name="slider" id="s5">
-    
+            <?php foreach ($events as $index => $event): ?>
+                <input type="radio" name="slider" id="s<?php echo $index + 1; ?>" <?php echo $index === 0 ? 'checked' : ''; ?> >
+            <?php endforeach; ?>
             <div class="cards">
-                <label for="s1" id="slide1">
-                    <div class="card">
-                        <div class="image">
-                            <img src="images/eventreg/CB24Sharjah.jpg" alt="Sharjah Chapter">
-                        </div>
-    
-                        <div class="infos">
-                            <span class="name">Code Battle '24 Sharjah and N.Emirates</span>
-                            <span class="det">Date: 24th July 2024</span>
-                            <span class="det">Time: 10:00 AM - 12:00 PM</span>
-                            <span class="det">Venue: Sharjah University</span>
-    
-                            <a href="/register" class="btn-details">Register</a>
-                        </div>
+                <?php foreach ($events as $index => $event): ?>
+                    <label for="s<?php echo $index + 1; ?>" id="slide<?php echo $index + 1; ?>">
+                <div class="card">
+                    <div class="image">
+                        <img src="<?php echo getImage(); ?>" alt="<?php echo $event['HName']; ?>">
                     </div>
-                </label>
-                <label for="s2" id="slide2">
-                    <div class="card">
-                        <div class="image">
-                            <img src="images/eventreg/CB24AD.jpg" alt="Abu Dhabi Chapter">
-                        </div>
-    
-                        <div class="infos">
-                            <span class="name">Code Battle '24 Abi Dhabi</span>
-                            <span class="det">Date: 15th August 2024</span>
-                            <span class="det">Time: 10:00 AM - 12:00 PM</span>
-                            <span class="det">Venue: Khaifa University</span>
-    
-                            <a href="/register" class="btn-details">Register</a>
-                        </div>
-                    </div>
-                </label>
-                <label for="s3" id="slide3">
-                    <div class="card">
-                        <div class="image">
-                            <img src="/images/eventreg/CB24Dubai.jpg" alt="Dubai Chapter">
-                        </div>
-    
-                        <div class="infos">
-                            <span class="name">Code Battle '24 Dubai Chapter</span>
-                            <span class="det">Date: 25th September 2024</span>
-                            <span class="det">Time: 10:00 AM - 12:00 PM</span>
-                            <span class="det">Venue: Internet Park,Silicon Oasis</span>
-    
-                            <a href="/register" class="btn-details">Register</a>
-                        </div>
-                    </div>
-                </label>
-                <label for="s4" id="slide4">
-                    <div class="card">
-                        <div class="image">
-                            <img src="/images/eventreg/CB24NF.jpg" alt="National Finals">
-                        </div>
-    
-                        <div class="infos">
-                            <span class="name">Code Battle '24 Final Chapter</span>
-                            <span class="det">Date: 02 th November 2024</span>
-                            <span class="det">Time: 10:00 AM - 12:00 PM</span>
-                            <span class="det">Venue: Dubai Digital Park, Silicon Oasis</span>
-    
-                            <a href="/register" class="btn-details">Register</a>
-                        </div>
-                    </div>
-                </label>
-                <label for="s5" id="slide5">
-                    <div class="card">
-                        <div class="image">
-                            <img src="/images/eventreg/CB24NF.jpg" alt="National Finals">
-                        </div>
-    
-                        <div class="infos">
-                            <span class="name">Code Battle '24 New Chapter</span>
-                            <span class="det">Date: 15 December 2024</span>
-                            <span class="det">Time: 10:00 AM - 12:00 PM</span>
-                            <span class="det">Venue: Dubai Digital Park, Silicon Oasis</span>
-    
-                            <a href="/register" class="btn-details">Register</a>
-                        </div>
-                    </div>
-                </label>
+                <div class="infos">
+                    <span class="name"><?php echo $event['HName']; ?></span>
+                    <b><?php echo $event['is_team'] ? 'Team Based' : 'Solo Based'; ?></b> <br></br>
+                    <span class="HDate">Date: <?php echo $event['HDate']; ?></span>
+                    <span class="HTime">Time: <?php echo $event['HTime']; ?></span>
+                    <a href="/register" class="btn-details">Register</a>
+                </div>
+            </div>
+                    </label>
+                <?php endforeach; ?>       
             </div>
         </div>
-    
-        
     
         <footer class="footer">
             <p>Code Battle &copy; 2024. All rights reserved. Made with ❤️ in U.A.E</p>
