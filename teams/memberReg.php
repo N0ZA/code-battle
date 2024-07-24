@@ -199,6 +199,49 @@
                     <label for="email">Email</label>
                     <input type="email" id="email" name="email" placeholder="Enter your email" required>
                 </div>
+                <?php
+                    //$_Session['hackathon'] shud be taken from the dashboard, based on which hackathon user chooses to register;
+                    if (isset($_SESSION['H_id'])){
+                                $query="SELECT * from hackathon_data where H_id=:H_id";
+                                $stmt=$pdo->prepare($query);
+                                $stmt->bindParam(":H_id", $_SESSION['H_id']);
+                                $stmt->execute();
+                                $result=$stmt->fetch();
+                                $jrCadet=$result['Jr_Cadet'];
+                                $jrCaptain=$result['Jr_Captain'];
+                                $jrColonel=$result['Jr_Colonel'];
+                                $maxP=$result['MaxP'];
+                            }
+                            ?>
+                <?php if ($_SESSION['is_team'] == 0): ?>
+                    <div class="form-group">
+                    <label for="category">Category</label>
+                    <div class="category-container">
+                        <div class="form-check">
+                            <input type="radio" id="cadet" name="category" class="form-check-input"  value="1" <?php if ($jrCadet == 0) echo 'disabled'; ?> required>
+                            <label for="cadet" class="form-check-label">Cadet</label>
+                        </div>
+                        <span>Available seats: <?php echo $jrCadet; ?> </span>
+                    </div>
+                    <div class="category-container">
+                        <div class="form-check">
+                            <input type="radio" id="captain" name="category" class="form-check-input"  value="2" <?php if ($jrCaptain == 0) echo 'disabled'; ?> required>
+                            <label for="captain" class="form-check-label">Captain</label>
+                        </div>
+                        <span>Available seats: <?php echo $jrCaptain; ?> </span>
+                    </div>
+                    <div class="category-container">
+                        <div class="form-check">
+                            <input type="radio" id="colonel" name="category" class="form-check-input" value="3" <?php if ($jrColonel == 0) echo 'disabled'; ?> required>
+                            <label for="colonel" class="form-check-label">Colonel</label>
+                        </div>
+                        <span>Available seats:  <?php echo $jrColonel; ?> </span>
+                        </div>
+                    </div>
+                    <input type="hidden" name="jrCadet" value="<?php echo $jrCadet; ?>">
+                    <input type="hidden" name="jrCaptain" value="<?php echo $jrCaptain; ?>">
+                    <input type="hidden" name="jrColonel" value="<?php echo $jrColonel  ; ?>">
+                <?php endif; ?>
                 <button type="submit" name="Discard">Discard</button>
                 <?php if ($currentMember < $noMembers): ?>
                     <button type="submit" name="Next">Next</button>

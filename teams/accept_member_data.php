@@ -13,11 +13,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($_SESSION['is_team']==0){
         $T_id=NULL;
         $H_id = $_SESSION['H_id'];
-        $C_id = $SESSION['C_id'];
-        $Pname = $_POST['name'];
-        $PEmail = $_POST['email'];
-        $PSchool = $_POST['school'];
-
+        $C_id = $_POST['category'];
     }
 
     else if ($_SESSION['is_team']) {
@@ -31,11 +27,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $T_id = $result['T_id'];
         $H_id = $result['H_id'];
         $C_id = $result['C_id'];
-        $Pname = $_POST['name'];
-        $PEmail = $_POST['email'];
-        $PSchool = $_POST['school'];
     }
     
+    $Pname = $_POST['name'];
+    $PEmail = $_POST['email'];
+    $PSchool = $_POST['school'];
+    $category=$_POST['category'];
+
     $query1 = "INSERT INTO solo_data (H_id, C_id, T_id, Pname, PEmail, PSchool,Puser_id) VALUES (:H_id, :C_id, :T_id, :Pname, :PEmail, :PSchool,:Puser_id)";
     $stmt1 = $pdo->prepare($query1);
     $stmt1->bindParam(":H_id", $H_id);
