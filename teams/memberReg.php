@@ -97,7 +97,7 @@ main {
             font-size: 20px;
         }
         .form-control, .form-check-input {
-            color: #ffffff;
+            color: black ;
             border: 1px solid #555555;
             font-size: 1rem;
             padding: 0.5rem 1rem;
@@ -236,8 +236,8 @@ main {
         <div class="container-fluid container-custom">
             <div class="row flex-grow-1">
                 <div class="form-wrapper">
-                    <form action="your_action_url" method="POST">
-                        <h2>Enter <font color="#F73634">Member Details</font></h2>
+                    <form action="accept_member_data.php" method="POST">
+                        <h2>Enter <font color="#F73634">Member  <?php echo $_SESSION['currentMember'];?> Details</font></h2>
                         <div class="form-group">
                         <label for="Name">Name</label>
                         <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
@@ -264,6 +264,7 @@ main {
                             $maxP = $result['MaxP'];
                         }
                     ?>
+                    <?php echo "Hck ID: " .($_SESSION['H_id']). " Ok " ?>
                     <?php if ($_SESSION['is_team'] == 0): ?>
                         <div class="form-group">
                             <label for="category">Category</label>
