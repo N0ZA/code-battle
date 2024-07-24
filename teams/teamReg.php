@@ -74,7 +74,7 @@
         }
         .form-control, .form-check-input {
 
-            color: #ffffff;
+            color: black;
             border: 1px solid #555555;
             font-size: 1rem;
             padding: 0.5rem 1rem; 
