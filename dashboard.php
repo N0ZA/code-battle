@@ -118,7 +118,7 @@
                             <form action="eventreg.php" method="POST">
                                 <input type="hidden" name="H_id" value="<?php echo $event['H_id']; ?>">
                                 <input type="hidden" name="is_team" value="<?php echo $event['is_team']; ?>">
-                                <button type="submit">Register</button>
+                                <button type="submit" name="Register">Register</button>
                             </form>
                         </div>
                     </div>
