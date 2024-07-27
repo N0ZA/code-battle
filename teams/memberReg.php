@@ -1,22 +1,12 @@
 <?php
     require_once '../includes/dbh.inc.php';
-    require_once 'accept_team_data.php';
+    require_once 'accept_member_data.php';
 
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
     if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
         header("Location: ../index.php");
-        exit();
-    }
-    $currentMember = $_SESSION['currentMember'];
-    $noMembers = $_SESSION['noMembers'];
-
-    // If the current member exceeds the total, redirect to a different page    
-    if ($currentMember > $noMembers) {
-        unset($_SESSION['noMembers']);
-        unset($_SESSION['currentMember']);
-        header("Location: ../dashboard.php"); // Redirect to a final page or completion page
         exit();
     }
 ?>
@@ -237,7 +227,21 @@ main {
             <div class="row flex-grow-1">
                 <div class="form-wrapper">
                     <form action="accept_member_data.php" method="POST">
-                        <h2>Enter <font color="#F73634">Member  <?php echo $_SESSION['currentMember'];?> Details</font></h2>
+                        <?php
+                            if ($_SESSION['is_team'] == 0){
+                                $result1['TMembers']=1;
+                            }
+                            else{
+                                $teamName = $_SESSION['teamName'];
+                                $query1 = "SELECT * FROM team_data WHERE TName=:teamName";
+                                $stmt1 = $pdo->prepare($query1);
+                                $stmt1->bindParam(":teamName", $teamName);
+                                $stmt1->execute();
+                                $result1 = $stmt1->fetch();
+                                $result1['TMembers']++;
+                            }   
+                        ?>
+                        <h2>Enter <font color="#F73634">Member  <?php echo $result1['TMembers'];?> Details</font></h2>
                         <div class="form-group">
                         <label for="Name">Name</label>
                         <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
@@ -261,7 +265,7 @@ main {
                             $jrCadet = $result['Jr_Cadet'];
                             $jrCaptain = $result['Jr_Captain'];
                             $jrColonel = $result['Jr_Colonel'];
-                            $maxP = $result['MaxP'];
+                            $_SESSION['is_team']=$result["is_team"];
                         }
                     ?>
                     <?php if ($_SESSION['is_team'] == 0): ?>
@@ -292,13 +296,15 @@ main {
                         <input type="hidden" name="jrCadet" value="<?php echo $jrCadet; ?>">
                         <input type="hidden" name="jrCaptain" value="<?php echo $jrCaptain; ?>">
                         <input type="hidden" name="jrColonel" value="<?php echo $jrColonel; ?>">
-                    <?php endif; ?>
-                    <button class="form-button" type="submit" name="Discard">Discard</button>
-                    <?php if ($currentMember < $noMembers): ?>
-                        <button class="form-button" type="submit" name="Next">Next</button>
+                        <button class="form-button" type="submit" name="Done">Done</button>    
                     <?php else: ?>
-                        <button class="form-button" type="submit" name="Done">Done</button>
+                        <button class="form-button" type="submit" name="Add_Member">Add Member</button>
+                        <button class="form-button" type="submit" name="Done">Done</button>   
                     <?php endif; ?>
+                    <?php
+                         check_mem_errors();    
+                    ?>
+                         
                 </form>
             </div>
         </div>

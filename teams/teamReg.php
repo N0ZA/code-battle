@@ -271,10 +271,6 @@
                             <label for="teamName">Team Name</label>
                             <input type="text" id="teamName" name="teamName" class="form-control" placeholder="Enter team name" required>
                         </div>
-                        <div class="form-group">
-                            <label for="noMembers">Number of Members</label>
-                            <input type="number" id="noMembers" name="noMembers" class="form-control" placeholder="Enter number of members" required>
-                        </div>
                         <?php
                             //$_Session['hackathon'] shud be taken from the dashboard, based on which hackathon user chooses to register;
                             if (isset($_SESSION['H_id'])){
@@ -286,7 +282,6 @@
                                 $jrCadet=$result['Jr_Cadet'];
                                 $jrCaptain=$result['Jr_Captain'];
                                 $jrColonel=$result['Jr_Colonel'];
-                                $maxP=$result['MaxP'];
                             }
                             ?>
 
@@ -317,12 +312,10 @@
                         <input type="hidden" name="jrCadet" value="<?php echo $jrCadet; ?>">
                         <input type="hidden" name="jrCaptain" value="<?php echo $jrCaptain; ?>">
                         <input type="hidden" name="jrColonel" value="<?php echo $jrColonel  ; ?>">
-                        <input type="hidden" name="maxP" value="<?php echo $maxP; ?>">
                         <?php
-                            check_team_errors();    
-                        ?>
+                            check_team_errors();?>
                         <div class="submit-button">
-                            <button type="submit" class="btn btn-dark-red">Next</button>
+                            <button type="submit" class="btn btn-dark-red">Create Team</button>
                         </div>
                     </div>
                 </form>

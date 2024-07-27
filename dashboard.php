@@ -100,11 +100,11 @@
                     <div class="events-card">
                         <img src="<?php echo getImage(); ?>" alt="<?php echo $event['HName']; ?>">
                         <div class="card-details">
-                            <h3><?php echo $event['HName']; ?>-
+                            <h3><?php echo $event['HName']; ?>
                             <?php if ($event['is_team']): ?>
-                                TEAM BASED
+                                [TEAM BASED]
                             <?php else: ?>
-                                SOLO BASED
+                                [SOLO BASED]
                             <?php endif; ?></h3>
                             <ul>   
                                 <li>Seats in Each Category:</li>

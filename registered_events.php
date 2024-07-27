@@ -35,7 +35,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Dashboard</title>
+        <title>Registered Events</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
         <link rel="stylesheet" href="css/styles.css">
         <script>
@@ -97,23 +97,34 @@
             <?php if (!empty($events)): ?>
                 <?php foreach ($events as $event): ?>
                     <?php
-                        $query2 ='SELECT HName, is_team FROM hackathon_data WHERE H_id = :H_id';
+                        $query2 ='SELECT H_id, HName, is_team FROM hackathon_data WHERE H_id = :H_id';
                         $stmt2 = $pdo->prepare($query2);
                         $stmt2->bindParam(':H_id', $event['H_id']);
                         $stmt2->execute();
                         $eventDetails=$stmt2->fetch();
+                        $_SESSION['is_team']=$eventDetails['is_team']
                      ?>
 
                     <div class="events-card">
                         <img src="<?php echo getImage(); ?>" alt="<?php echo $eventDetails['HName'];?>">
                         <div class="card-details">
-                            <h3><?php echo $eventDetails['HName']; ?></h3>
+                            <h3><?php echo $eventDetails['HName']; ?>
+                            <?php if ($_SESSION['is_team']): ?> [TEAM BASED]
+                            <?php else: ?>  [SOLO BASED]
+                            <?php endif; ?></h3>
+                            <?php // echo  $eventDetails['H_id'] ?>
                             <form action="eventreg.php" method="POST">
-                                <input type="hidden" name="H_id" value="<?php echo $event['H_id']; ?>">
+                                <input type="hidden" name="H_id" value="<?php echo $eventDetails['H_id']; ?>">
                                 <input type="hidden" name="is_team" value="<?php echo $eventDetails['is_team']; ?>">
-                                <button type="submit">Add Team</button>
+                                <?php if ($_SESSION['is_team']): ?> 
+                                    <button type="submit" name="Add_Team">Add Team</button>
+                                    <button type="submit" name="Edit_Team">Edit Teams</button>
+                                <?php else: ?> 
+                                    <button type="submit" name="Add_Member">Add Member</button>
+                                    <button type="submit" name="Edit_Team">Edit Teams</button>
+                                <?php endif; ?>
                             </form>
-                            <button>Edit Teams</button>
+                           
                         </div>
                     </div>
                 <?php endforeach; ?>
