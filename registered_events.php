@@ -121,7 +121,7 @@
                                     <button type="submit" name="Edit_Team">Edit Teams</button>
                                 <?php else: ?> 
                                     <button type="submit" name="Add_Member">Add Member</button>
-                                    <button type="submit" name="Edit_Team">Edit Teams</button>
+                                    <button type="submit" name="Edit_Member">Edit Member</button>
                                 <?php endif; ?>
                             </form>
                            

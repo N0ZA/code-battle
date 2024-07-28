@@ -8,9 +8,6 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
     //store the form enteries 
     $_SESSION['teamName'] = $_POST['teamName'];
     $category=$_POST['category'];
-    $jrCadet=$_POST['jrCadet'];
-    $jrCaptain=$_POST['jrCaptain'];
-    $jrColonel=$_POST['jrColonel'];
     $hackathon=$_SESSION['H_id'];
     $TMembers=0;
 
@@ -21,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
     $result1=$stmt1->fetch();
 
     if($result1){ 
-        $_SESSION['errors_team']="The team '" .$_SESSION['teamName']. "' is already registered for this Hackathon";
+        $_SESSION['errors_team']= "This team name already exists. Please chose another team name.";
         header("Location: teamReg.php");
         exit(); 
     }

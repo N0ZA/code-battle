@@ -194,8 +194,9 @@ main {
             padding: 0.5rem;
             width: 100%;
             margin-top: 10px;
-       
-
+        }
+        h2 {
+            text-align: center;
         }
 
     </style>
@@ -299,14 +300,30 @@ main {
                                 <span>Available seats: <?php echo $jrColonel; ?></span>
                             </div>
                         </div>
-                        <input type="hidden" name="jrCadet" value="<?php echo $jrCadet; ?>">
-                        <input type="hidden" name="jrCaptain" value="<?php echo $jrCaptain; ?>">
-                        <input type="hidden" name="jrColonel" value="<?php echo $jrColonel; ?>">
                         <button class="form-button" type="submit" name="Done">Done</button>    
                     <?php else: ?>
-                        <button class="form-button" type="submit" name="Add_Member">Add Member</button>
-                        <button class="form-button" type="submit" name="Done">Done</button>   
-                    <?php endif; ?>
+                        <?php
+                            $query3='SELECT T.TMembers,T.C_id, H.MaxP, H.Jr_Cadet, H.Jr_Captain, H.Jr_Colonel FROM team_data T
+                            JOIN hackathon_data H ON T.H_id = H.H_id
+                            WHERE T.TName=:TName AND H.H_id=:H_id';
+                            
+                            $stmt3 = $pdo->prepare($query3);
+                            $stmt3->bindParam(":TName", $teamName);
+                            $stmt3->bindParam(":H_id", $_SESSION['H_id']);  
+                            $stmt3->execute();
+                            $result3=$stmt3->fetch();
+                            $C_id=$result3['C_id'];
+                            $CName = ($C_id == 1) ? 'Jr_Cadet' : (($C_id == 2) ? 'Jr_Captain' : (($C_id == 3) ? 'Jr_Colonel' : 'Unknown'));
+
+             
+                            if ($result3['TMembers']+1 >= $result3[$CName] || $result3['TMembers'] + 1 >= $result3['MaxP']) {
+                                echo '<button class="form-button" type="submit" name="Done">Done</button>';
+                            } 
+                            else{
+                                echo '<button class="form-button" type="submit" name="Add_Member">Add Member</button>';
+                                echo '<button class="form-button" type="submit" name="Done">Done</button> ';
+                            }
+                    endif; ?>
                     <?php
                          check_mem_errors();    
                     ?>

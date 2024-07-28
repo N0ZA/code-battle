@@ -29,26 +29,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $CName = ($C_id == 1) ? 'Jr_Cadet' : (($C_id == 2) ? 'Jr_Captain' : (($C_id == 3) ? 'Jr_Colonel' : 'Unknown'));
 
         
-        if (isset($_POST['Add_Member'])) {  
-            $query2='SELECT T.TMembers,H.MaxP, H.' . $CName . ' FROM team_data T
-                JOIN hackathon_data H ON T.H_id = H.H_id
-                WHERE T.T_id=:T_id AND H.H_id=:H_id';
-                 
-            $stmt2 = $pdo->prepare($query2);
-            $stmt2->bindParam(":T_id", $T_id);
-            $stmt2->bindParam(":H_id", $H_id);  
-            $stmt2->execute();
-            $result2=$stmt2->fetch();
-
-            if ($result2['TMembers']+1 >= $result2[$CName]){
-                $_SESSION['errors_mem']="Exceeded the available seats limit. Press Done";
-             }
-            else if ($result2['TMembers']+1 >= $result2['MaxP']){
-                $_SESSION['errors_mem']="Cannot add more members MAX: " .$result2['MaxP']. ".Press Done";
-            }
-        }
     }
-    //check for both solo registration and team members
+    //check error for both solo registration and team members
     $query='SELECT * FROM solo_data WHERE T_id=:T_id and PName=:Pname';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":Pname", $Pname);
