@@ -38,6 +38,10 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
         }
 
         else{
+            echo "<br>Hackathon ID: " .$_SESSION['H_id'];
+            echo "<br> Team: ".$_SESSION['is_team'];
+            $H_id=$_SESSION['H_id'];
+            $is_team=$_SESSION['is_team'];
             $newSessionId=session_create_id();
             $sessionId=$newSessionId."_".$result['user_id'];
             session_id($sessionId);
@@ -46,6 +50,11 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
             $_SESSION["user_username"]=htmlspecialchars($result['username']);
             $_SESSION["user_isadmin"]=htmlspecialchars($result['admin']);
             
+            $_SESSION['H_id']=$H_id;
+            $_SESSION['is_team']=$is_team;
+            echo "<br>Hackathon ID: " .$_SESSION['H_id'];
+            echo "<br> Team: ".$_SESSION['is_team'];
+
             if($result['admin']==1){
                 header("Location: ../admin/admin.php?login=success");
                 $pdo=null;
@@ -53,19 +62,19 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
                 die();
             }
             else if($result['admin']==2){
-                header("Location: ../dashboard.php?login=success");
+                header("Location: ../eventreg.php?login=success");
                 $pdo=null;
                 $stmt=null;
                 die();
             }
             else if($result['admin']==3){
-                header("Location: ../dashboard.php?login=success");
+                header("Location: ../eventreg.php?login=success");
                 $pdo=null;
                 $stmt=null;
                 die();
             }
             else if($result['admin']==4){
-                header("Location: ../dashboard.php?login=success");
+                header("Location: ../eventreg.php?login=success");
                 $pdo=null;
                 $stmt=null;
                 die();

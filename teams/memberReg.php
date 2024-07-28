@@ -228,6 +228,12 @@ main {
                 <div class="form-wrapper">
                     <form action="accept_member_data.php" method="POST">
                         <?php
+                            $query2="SELECT HName FROM hackathon_data WHERE H_id=:H_id";
+                            $stmt2=$pdo->prepare($query2);
+                            $stmt2->bindParam(":H_id", $_SESSION['H_id']);
+                            $stmt2->execute();
+                            $result2=$stmt2->fetch();
+
                             if ($_SESSION['is_team'] == 0){
                                 $result1['TMembers']=1;
                             }
@@ -241,7 +247,7 @@ main {
                                 $result1['TMembers']++;
                             }   
                         ?>
-                        <h2>Enter <font color="#F73634">Member  <?php echo $result1['TMembers'];?> Details</font></h2>
+                        <h2>Enter Member <?php echo $result1['TMembers'];?> Details For <font color="#F73634"> <?php echo $result2['HName']; ?> </font></h2>
                         <div class="form-group">
                         <label for="Name">Name</label>
                         <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
