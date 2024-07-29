@@ -68,7 +68,7 @@
                 <img src="images/codebattlelogo.png" alt="Logo" class="logo">
                 <ul class="nav">
                     <li><a href="dashboard.php">Home</a></li>
-                    <li><a href="registered_events.php">Registered Events</a></li>
+                    <li><a href="events/registered_events.php">Registered Events</a></li>
                 </ul>
             </div>
             <div class="header-right">
@@ -119,7 +119,7 @@
                                 <li>Date: <?php echo $event['HDate']; ?></li>
                                 <li>Time: <?php echo $event['HTime']; ?></li>
                             </ul>
-                            <form action="eventreg.php" method="POST">
+                            <form action="events/eventreg.php" method="POST">
                                 <input type="hidden" name="H_id" value="<?php echo $event['H_id']; ?>">
                                 <input type="hidden" name="is_team" value="<?php echo $event['is_team']; ?>">
                                 <button type="submit" name="Register">Register</button>

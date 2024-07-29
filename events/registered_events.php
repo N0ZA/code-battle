@@ -71,7 +71,7 @@
                 <img src="images/codebattlelogo.png" alt="Logo" class="logo">
                 <ul class="nav">
                     <li><a href="dashboard.php">Home</a></li>
-                    <li><a href="registered_events.php">Registered Events</a></li>
+                    <li><a href="events/registered_events.php">Registered Events</a></li>
                 </ul>
             </div>
             <div class="header-right">

@@ -62,19 +62,19 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
                 die();
             }
             else if($result['admin']==2){
-                header("Location: ../eventreg.php?login=success");
+                header("Location: events/eventreg.php?login=success");
                 $pdo=null;
                 $stmt=null;
                 die();
             }
             else if($result['admin']==3){
-                header("Location: ../eventreg.php?login=success");
+                header("Location: events/eventreg.php?login=success");
                 $pdo=null;
                 $stmt=null;
                 die();
             }
             else if($result['admin']==4){
-                header("Location: ../eventreg.php?login=success");
+                header("Location: events/eventreg.php?login=success");
                 $pdo=null;
                 $stmt=null;
                 die();

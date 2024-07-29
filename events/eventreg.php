@@ -57,6 +57,6 @@
             $stmt1->bindParam(":user_id", $_SESSION['user_id']);
             $stmt1->execute();
         }
-        header("Location: registered_events.php");         
+        header("Location: events/registered_events.php");         
         exit();
     }
