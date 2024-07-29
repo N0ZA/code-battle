@@ -1,14 +1,14 @@
 <?php
-    require_once "includes/dbh.inc.php";
+    require_once "../includes/dbh.inc.php";
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
     if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
-        header("Location: index.php");
+        header("Location: ../index.php");
         exit();
     }
 
-    function getImage($Folder = 'images/eventreg/') {
+    function getImage($Folder = '../images/eventreg/') {
         $images = glob($Folder.'*.{jpg,jpeg,png,gif}', GLOB_BRACE); //to get all files from image folder tht match the extensions
         $randomImage = $images[array_rand($images)];
         return $randomImage;
@@ -37,7 +37,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Registered Events</title>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
-        <link rel="stylesheet" href="css/styles.css">
+        <link rel="stylesheet" href="../css/styles.css">
         <script>
             function toggleDropdown() {
                 document.getElementById("profile-dropdown").classList.toggle("show");
@@ -68,10 +68,10 @@
     
         <div class="header">
             <div class="header-left">
-                <img src="images/codebattlelogo.png" alt="Logo" class="logo">
+                <img src="../images/codebattlelogo.png" alt="Logo" class="logo">
                 <ul class="nav">
-                    <li><a href="dashboard.php">Home</a></li>
-                    <li><a href="events/registered_events.php">Registered Events</a></li>
+                    <li><a href="../dashboard.php">Home</a></li>
+                    <li><a href="registered_events.php">Registered Events</a></li>
                 </ul>
             </div>
             <div class="header-right">

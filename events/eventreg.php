@@ -1,8 +1,8 @@
 <?php
     declare(strict_types=1);
 
-    require_once 'includes/dbh.inc.php';
-    require_once 'includes/config_session.inc.php';
+    require_once '../includes/dbh.inc.php';
+    require_once '../includes/config_session.inc.php';
 
 
     if (($_SERVER["REQUEST_METHOD"]=="POST") || (isset($_GET["login"]) && $_GET["login"] === "success")) {
@@ -10,14 +10,14 @@
             if (isset($_POST['Add_Team'])){
                 $_SESSION['H_id']=$_POST['H_id'];
                 $_SESSION['is_team']=$_POST['is_team'];
-                header("Location: teams/teamReg.php");
+                header("Location: ../teams/teamReg.php");
                 exit();
             }
             
             elseif (isset($_POST['Add_Member'])) {  //Direct to solo registration
                 $_SESSION['H_id']=$_POST['H_id'];
                 $_SESSION['is_team']=$_POST['is_team'];
-                header("Location: teams/memberReg.php");
+                header("Location: ../teams/memberReg.php");
                 exit();
             }
     
@@ -31,7 +31,7 @@
             elseif (isset($_POST['Add_Member'])) {  //Direct to solo registration
                 $_SESSION['H_id']=$_POST['H_id'];
                 $_SESSION['is_team']=$_POST['is_team'];
-                header("Location: teams/memberReg.php");
+                header("Location: ../teams/memberReg.php");
                 exit();
             }
             else if (isset($_POST['Register'])){
@@ -39,7 +39,7 @@
                 $_SESSION['is_team']=$_POST['is_team'];
             }
             if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
-                header("Location: index.php");
+                header("Location: ../index.php");
                 exit();
             }
         }
@@ -57,6 +57,6 @@
             $stmt1->bindParam(":user_id", $_SESSION['user_id']);
             $stmt1->execute();
         }
-        header("Location: events/registered_events.php");         
+        header("Location: registered_events.php");         
         exit();
     }

@@ -1,5 +1,5 @@
 <?php
-    require_once "includes/dbh.inc.php";
+    require_once "../includes/dbh.inc.php";
     if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
@@ -7,7 +7,7 @@
         header("Location: index.php");
         exit();
     }
-    function getImage($Folder = 'images/teams/') {
+    function getImage($Folder = '../images/teams/') {
         $images = glob($Folder.'*.{jpg,jpeg,png,gif}', GLOB_BRACE); //to get all files from image folder tht match the extensions
         $randomImage = $images[array_rand($images)];
         return $randomImage;
@@ -28,7 +28,7 @@
     $stmt1->execute();
     $teams=$stmt1->fetchAll();
 
-    $query2 ='SELECT HName FROM hackathon_data WHERE H_id = :H_id';
+    $query2 ='SELECT * FROM hackathon_data WHERE H_id = :H_id';
     $stmt2 = $pdo->prepare($query2);
     $stmt2->bindParam(':H_id', $_SESSION['H_id']);
     $stmt2->execute();
@@ -43,7 +43,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
     <script>
         /*function toggleDropdown() {
             document.getElementById("profile-dropdown").classList.toggle("show");
@@ -78,10 +78,10 @@
 
     <div class="header">
         <div class="header-left">
-            <img src="images/codebattlelogo.png" alt="Logo" class="logo">
+            <img src="../images/codebattlelogo.png" alt="Logo" class="logo">
             <ul class="nav">
-                <li><a href="home.php">Home</a></li>
-                <li><a href="events/registered_events.php">Registered Events</a></li>
+                <li><a href="../dashboard.php">Home</a></li>
+                <li><a href="registered_events.php">Registered Events</a></li>
             </ul>
         </div>
         <div class="header-right">
@@ -122,6 +122,10 @@
                         </div>
                             <div class="card-text">
                                 <h3><strong><?php echo $team['TName']; ?></strong></h3>
+                                <?php $C_id=$team['C_id']; 
+                                $CName = ($C_id==1)?'Jr_Cadet' : (($C_id==2)?'Jr_Captain' : (($C_id==3)?'Jr_Colonel' : 'Unknown'));?>
+                                <h4><?php echo $CName; ?></h4>
+                                
                             </div>
                         </div>
                         <div class="card-back">
@@ -136,11 +140,17 @@
                                         <p>You have not registered any members for this team.</p>
                                     <?php endif; ?>
                                 </ul>
-                            </div>
+                            </div>  
                             <div class="card-actions">
-                                    <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=add" class="icon-link" name="add_member"><i class="fas fa-plus"></i></a>
-                                    <a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" name="edit_member"><i class="fas fa-edit"></i></a>
-                                    <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=delete" class="icon-link" name="delete_member"><i class="fas fa-trash"></i></a>
+                                    <?php 
+                                        if ($Hdetails[$CName]>1 || $team['TMembers']>=$Hdetails['MaxP']): ?>
+                                            <a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" name="edit_member"><i class="fas fa-edit"></i></a>
+                                            <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=delete" class="icon-link" name="delete_member"><i class="fas fa-trash"></i></a>
+                                    <?php else: ?>
+                                        <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=add" class="icon-link" name="add_member"><i class="fas fa-plus"></i></a>
+                                        <a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" name="edit_member"><i class="fas fa-edit"></i></a>
+                                        <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=delete" class="icon-link" name="delete_member"><i class="fas fa-trash"></i></a>
+                                    <?php endif; ?>
                             </div>
                         </div>
                     </div>

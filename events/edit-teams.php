@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Edit Teams</title>
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
     <div class="main-container">
 
         <div class="header">
             <div class="header-left">
-                <img src="images/codebattlelogo.png" alt="Logo" class="logo">
+                <img src="../images/codebattlelogo.png" alt="Logo" class="logo">
                 <ul class="nav">
-                    <li><a href="home.php">Home</a></li>
+                    <li><a href="../dashboard.php">Home</a></li>
                     <li><a href="registeredevents.php">Registered Events</a></li>
                     <li><a href="edit-teams.php">Edit Teams</a></li>
                 </ul>

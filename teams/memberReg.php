@@ -211,10 +211,10 @@ main {
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="events/registered_events.php">View Hackathon</a>
+                        <a class="nav-link" href="../events/registered_events.php">View Hackathon</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../edit-teams.php">Edit Teams</a>
+                        <a class="nav-link" href="../events/edit-teams.php">Edit Teams</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../logout.php">Logout</a>
@@ -316,7 +316,7 @@ main {
                             $CName = ($C_id == 1) ? 'Jr_Cadet' : (($C_id == 2) ? 'Jr_Captain' : (($C_id == 3) ? 'Jr_Colonel' : 'Unknown'));
 
              
-                            if ($result3['TMembers']+1 >= $result3[$CName] || $result3['TMembers'] + 1 >= $result3['MaxP']) {
+                            if ($result3[$CName]==1 || $result3['TMembers'] + 1 == $result3['MaxP']) {
                                 echo '<button class="form-button" type="submit" name="Done">Done</button>';
                             } 
                             else{

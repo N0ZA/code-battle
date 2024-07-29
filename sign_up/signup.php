@@ -170,10 +170,10 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link" href="events/registered_events.php">View Hackathon</a>
+                        <a class="nav-link" href="../events/registered_events.php">View Hackathon</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="edit-teams.php">Edit Teams</a>
+                        <a class="nav-link" href="../events/edit-teams.php">Edit Teams</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="logout.php">Logout</a>
