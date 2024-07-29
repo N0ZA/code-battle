@@ -239,10 +239,10 @@ main {
                                 $result1['TMembers']=1;
                             }
                             else{
-                                $teamName = $_SESSION['teamName'];
-                                $query1 = "SELECT * FROM team_data WHERE TName=:teamName";
+                                $TName = $_SESSION['TName'];
+                                $query1 = "SELECT * FROM team_data WHERE TName=:TName";
                                 $stmt1 = $pdo->prepare($query1);
-                                $stmt1->bindParam(":teamName", $teamName);
+                                $stmt1->bindParam(":TName", $TName);
                                 $stmt1->execute();
                                 $result1 = $stmt1->fetch();
                                 $result1['TMembers']++;
@@ -308,7 +308,7 @@ main {
                             WHERE T.TName=:TName AND H.H_id=:H_id';
                             
                             $stmt3 = $pdo->prepare($query3);
-                            $stmt3->bindParam(":TName", $teamName);
+                            $stmt3->bindParam(":TName", $TName);
                             $stmt3->bindParam(":H_id", $_SESSION['H_id']);  
                             $stmt3->execute();
                             $result3=$stmt3->fetch();
@@ -327,7 +327,7 @@ main {
                     <?php
                          check_mem_errors();    
                     ?>
-                         
+                  <input type="hidden" name="source" value="<?php echo $_GET['source']; ?>">
                 </form>
             </div>
         </div>

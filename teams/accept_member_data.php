@@ -16,10 +16,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }
 
     else if ($_SESSION['is_team']) {    //team regis-set variables
-        $teamName = $_SESSION['teamName'];
-        $query1 = "SELECT T_id, H_id, C_id FROM team_data WHERE TName=:teamName";
+        $TName = $_SESSION['TName'];
+        $query1 = "SELECT T_id, H_id, C_id FROM team_data WHERE TName=:TName";
         $stmt1 = $pdo->prepare($query1);
-        $stmt1->bindParam(":teamName", $teamName);
+        $stmt1->bindParam(":TName", $TName);
         $stmt1->execute();
         $result1 = $stmt1->fetch();
        
@@ -73,8 +73,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         } 
         elseif (isset($_POST['Done'])) {
-            unset($_SESSION['teamName']);
-            header("Location: ../registered_events.php");
+            $source=$_POST['source'];
+            if ($source=='eventedit'){
+                header("Location: ../teamdetails.php");
+            } 
+            else {
+                header("Location: ../registered_events.php");
+            }
+            unset($_SESSION['TName']);
             exit();
         }      
     }

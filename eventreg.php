@@ -21,6 +21,19 @@
                 exit();
             }
     
+            else if (isset($_POST['Edit_Teams'])){
+                $_SESSION['H_id']=$_POST['H_id'];
+                $_SESSION['is_team']=$_POST['is_team'];
+                header("Location: teamdetails.php");
+                exit();
+            }
+            
+            elseif (isset($_POST['Add_Member'])) {  //Direct to solo registration
+                $_SESSION['H_id']=$_POST['H_id'];
+                $_SESSION['is_team']=$_POST['is_team'];
+                header("Location: teams/memberReg.php");
+                exit();
+            }
             else if (isset($_POST['Register'])){
                 $_SESSION['H_id']= $_POST['H_id'];
                 $_SESSION['is_team']=$_POST['is_team'];

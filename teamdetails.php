@@ -1,34 +1,38 @@
 <?php
-// Mock user data
-$users = [
-    ["name" => "John Doe", "role" => "Math Teacher"],
-    ["name" => "Jane Smith", "role" => "Science Teacher"],
-    ["name" => "Alice Johnson", "role" => "Computer Science Teacher"]
-];
+    require_once "includes/dbh.inc.php";
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
+        header("Location: index.php");
+        exit();
+    }
+    function getImage($Folder = 'images/teams/') {
+        $images = glob($Folder.'*.{jpg,jpeg,png,gif}', GLOB_BRACE); //to get all files from image folder tht match the extensions
+        $randomImage = $images[array_rand($images)];
+        return $randomImage;
+    }
+ 
+    //get user details
+    $query='SELECT RName FROM registration_data WHERE R_id = :user_id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id",$_SESSION['user_id']);
+    $stmt->execute();
+    $user = $stmt->fetch();
 
+    //get team details
+    $query1='SELECT * FROM team_data WHERE H_id=:H_id and Tuser_id=:user_id';
+    $stmt1=$pdo->prepare($query1);
+    $stmt1->bindParam(":user_id",$_SESSION['user_id']);
+    $stmt1->bindParam(":H_id",$_SESSION['H_id']);
+    $stmt1->execute();
+    $teams=$stmt1->fetchAll();
 
-$logged_in_user = $users[2];
-// Mock team data
-$teams = [
-    [
-        "team_name" => "Team Alpha",
-        "hackathon_name" => "Hackathon 2024",
-        "members" => ["Alice Johnson", "Bob Smith", "Charlie Davis"],
-        "image" => "images/teams/team1.png"
-    ],
-    [
-        "team_name" => "Team Beta",
-        "hackathon_name" => "CodeFest 2024",
-        "members" => ["David Lee", "Eva Green", "Frank White"],
-        "image" => "images/teams/team2.png"
-    ],
-    [
-        "team_name" => "Team Gamma",
-        "hackathon_name" => "DevHack 2024",
-        "members" => ["Grace Kim", "Hank Brown", "Ivy Wilson"],
-        "image" => "images/teams/team3.png"
-    ]
-];
+    $query2 ='SELECT HName FROM hackathon_data WHERE H_id = :H_id';
+    $stmt2 = $pdo->prepare($query2);
+    $stmt2->bindParam(':H_id', $_SESSION['H_id']);
+    $stmt2->execute();
+    $Hdetails=$stmt2->fetch();
 
 ?>
 
@@ -77,7 +81,7 @@ $teams = [
             <img src="images/codebattlelogo.png" alt="Logo" class="logo">
             <ul class="nav">
                 <li><a href="home.php">Home</a></li>
-                <li><a href="registeredevents.php">Registered Events</a></li>
+                <li><a href="registered_events.php">Registered Events</a></li>
             </ul>
         </div>
         <div class="header-right">
@@ -92,38 +96,51 @@ $teams = [
     </div>
     <div class="welcome-container">
         <div class="welcome">
-            <h1><span class="username"><?php echo $logged_in_user['name']; ?></span></h1>
-            <p>Role: <?php echo $logged_in_user['role']; ?></p>
+            <h1>Welcome, <span class="username"><?php echo strtoupper($user['RName']); ?></span></h1>
         </div>
-    </div>
+    </div>   
     <div class="teams-title">
-        <h2>Registered Teams</h2>
+        <h2>Registered Teams <br>Hackathon Name: <?php echo $Hdetails['HName']; ?></h2>
     </div>
+        <p style="text-align:center; color:white"> Hackathon Name: <?php echo $Hdetails['HName']; ?> </p>
         <div class="team-card-container">
             <?php foreach ($teams as $team): ?>
-                <div class="team-card" id="<?php echo $team['team_name']; ?>" onclick="CardClick(this)">
+                <?php 
+                     $query3 = 'SELECT * FROM solo_data WHERE H_id=:H_id and Puser_id=:user_id and T_id=:T_id';
+                     $stmt3 = $pdo->prepare($query3);
+                     $stmt3->bindParam(":user_id", $_SESSION['user_id']);
+                     $stmt3->bindParam(":H_id", $_SESSION['H_id']);
+                     $stmt3->bindParam(":T_id", $team['T_id']);
+                     $stmt3->execute();
+                     $members = $stmt3->fetchAll();
+                ?>
+                <div class="team-card" id="<?php echo $team['TName']; ?>" onclick="CardClick(this)">
                     <div class="card-inner">
                         <div class="card-front">
                             <div id="team-image">
-                            <img src="<?php echo $team['image']; ?>" alt="<?php echo $team['team_name']; ?>" class="team-img">
-                            </div>
+                            <img src="<?php echo getImage(); ?>" alt="<?php echo $team['TName']; ?>" class="team-img">
+                        </div>
                             <div class="card-text">
-                                <h3><strong><?php echo $team['team_name']; ?></strong></h3>
+                                <h3><strong><?php echo $team['TName']; ?></strong></h3>
                             </div>
                         </div>
                         <div class="card-back">
                             <div class="card-members">
                                 <p>Members:</p>
                                 <ul class="member-list">
-                                    <?php foreach ($team['members'] as $member): ?>
-                                        <li><?php echo $member; ?></li>
-                                    <?php endforeach; ?>
+                                    <?php if (!empty($members)): ?>
+                                        <?php foreach ($members as $member): ?>
+                                            <li><?php echo $member['PName']; ?></li>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <p>You have not registered any members for this team.</p>
+                                    <?php endif; ?>
                                 </ul>
                             </div>
                             <div class="card-actions">
-                                <a href="add_member.php?team=<?php echo $team['team_name']; ?>" class="icon-link"><i class="fas fa-plus"></i></a>
-                                <a href="edit_team.php?team=<?php echo $team['team_name']; ?>" class="icon-link"><i class="fas fa-edit"></i></a>
-                                <a href="delete_team.php?team=<?php echo $team['team_name']; ?>" class="icon-link"><i class="fas fa-trash"></i></a>
+                                    <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=add" class="icon-link" name="add_member"><i class="fas fa-plus"></i></a>
+                                    <a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" name="edit_member"><i class="fas fa-edit"></i></a>
+                                    <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=delete" class="icon-link" name="delete_member"><i class="fas fa-trash"></i></a>
                             </div>
                         </div>
                     </div>

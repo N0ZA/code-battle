@@ -268,8 +268,8 @@
                     <div class="form-header text-center mb-4"></div>
                     <div class="form-body">
                         <div class="form-group">
-                            <label for="teamName">Team Name</label>
-                            <input type="text" id="teamName" name="teamName" class="form-control" placeholder="Enter team name" required>
+                            <label for="TName">Team Name</label>
+                            <input type="text" id="TName" name="TName" class="form-control" placeholder="Enter team name" required>
                         </div>
                         <?php
                             //$_Session['hackathon'] shud be taken from the dashboard, based on which hackathon user chooses to register;

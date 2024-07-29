@@ -1,6 +1,7 @@
 <?php
     require_once "includes/dbh.inc.php";
-   /* if (session_status() == PHP_SESSION_NONE) {
+   /* PAGE IS ACCESSIBLE TO ALL
+   if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
     if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
