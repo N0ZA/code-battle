@@ -214,7 +214,7 @@ main {
                         <a class="nav-link" href="../events/registered_events.php">View Hackathon</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="../events/edit-teams.php">Edit Teams</a>
+                        <a class="nav-link" href="../events/teamdetails.php">Edit Teams</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="../logout.php">Logout</a>
@@ -327,7 +327,7 @@ main {
                     <?php
                          check_mem_errors();    
                     ?>
-                  <input type="hidden" name="source" value="<?php echo $_GET['source']; ?>">
+                  <input type="hidden" name="source" value="<?php echo isset($_GET['source']) ? $_GET['source'] : ''; ?>">
                 </form>
             </div>
         </div>

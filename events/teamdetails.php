@@ -143,7 +143,7 @@
                             </div>  
                             <div class="card-actions">
                                     <?php 
-                                        if ($Hdetails[$CName]>1 || $team['TMembers']>=$Hdetails['MaxP']): ?>
+                                        if ($Hdetails[$CName]==0 || $team['TMembers']==$Hdetails['MaxP']): ?>
                                             <a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" name="edit_member"><i class="fas fa-edit"></i></a>
                                             <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=delete" class="icon-link" name="delete_member"><i class="fas fa-trash"></i></a>
                                     <?php else: ?>
