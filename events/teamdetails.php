@@ -86,7 +86,7 @@
         </div>
         <div class="header-right">
             <ul class="nav">
-                <li><a href="signin.php">Logout</a></li>
+                <li><a href="../logout.php">Logout</a></li>
             </ul>
             <!--<img src="images/profile-icon.png" alt="Profile" class="profile-icon" onclick="toggleDropdown()">
             <div id="profile-dropdown" class="dropdown-content">
