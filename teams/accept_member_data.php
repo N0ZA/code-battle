@@ -75,9 +75,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         elseif (isset($_POST['Done'])) {
             $source=$_POST['source'];
             if ($source=='eventedit'){
-                header("Location: events/teamdetails.php");} 
+                header("Location: ../events/teamdetails.php");} 
             else {
-                header("Location: events/registered_events.php");}
+                header("Location: ../events/registered_events.php");}
             unset($_SESSION['TName']);
             exit();
         }      

@@ -121,10 +121,10 @@
                             <img src="<?php echo getImage(); ?>" alt="<?php echo $team['TName']; ?>" class="team-img">
                         </div>
                             <div class="card-text">
-                                <h3><strong><?php echo $team['TName']; ?></strong></h3>
-                                <?php $C_id=$team['C_id']; 
-                                $CName = ($C_id==1)?'Jr_Cadet' : (($C_id==2)?'Jr_Captain' : (($C_id==3)?'Jr_Colonel' : 'Unknown'));?>
-                                <h4><?php echo $CName; ?></h4>
+                                <h3><strong><?php echo $team['TName']; ?></strong>
+                                [<?php $C_id=$team['C_id']; 
+                                $CName = ($C_id==1)?'Jr_Cadet' : (($C_id==2)?'Jr_Captain' : (($C_id==3)?'Jr_Colonel' : 'Unknown'));
+                                echo $CName; ?>]</h3>
                                 
                             </div>
                         </div>
