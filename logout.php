@@ -11,14 +11,14 @@ function logout(PDO $pdo) {
         setcookie($key, '', $past, '/');
     }   
 
-    header("Location: index.php");
+    header("Location: dashboard.php");
     exit(); 
 }
 if (isset($_SESSION["user_isadmin"])){
         logout( $pdo);
     }
 else{
-    header("Location: index.php");
+    header("Location: dashboard.php");
     exit(); 
 }
 
