@@ -31,7 +31,7 @@
             $stmt1->bindParam(":T_id", $T_id);
             $stmt1->execute();
             $result1=$stmt1->fetch();
-            header("Location: teamdetails.php");
+            header("Location: team_details.php");
         }
         else if  ($action=="edit"){
 

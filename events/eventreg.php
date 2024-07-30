@@ -24,7 +24,7 @@
             else if (isset($_POST['Edit_Teams'])){
                 $_SESSION['H_id']=$_POST['H_id'];
                 $_SESSION['is_team']=$_POST['is_team'];
-                header("Location: teamdetails.php");
+                header("Location: team_details.php");
                 exit();
             }
             

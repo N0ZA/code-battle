@@ -1,0 +1,168 @@
+<?php
+    require_once "../includes/dbh.inc.php";
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
+        header("Location: index.php");
+        exit();
+    }
+    function getImage($Folder = '../images/teams/') {
+        $images = glob($Folder.'*.{jpg,jpeg,png,gif}', GLOB_BRACE); //to get all files from image folder tht match the extensions
+        $randomImage = $images[array_rand($images)];
+        return $randomImage;
+    }
+ 
+    //get user details
+    $query='SELECT RName FROM registration_data WHERE R_id = :user_id';
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":user_id",$_SESSION['user_id']);
+    $stmt->execute();
+    $user = $stmt->fetch();
+
+    //get team details
+    $query1='SELECT * FROM team_data WHERE H_id=:H_id and Tuser_id=:user_id';
+    $stmt1=$pdo->prepare($query1);
+    $stmt1->bindParam(":user_id",$_SESSION['user_id']);
+    $stmt1->bindParam(":H_id",$_SESSION['H_id']);
+    $stmt1->execute();
+    $teams=$stmt1->fetchAll();
+
+    $query2 ='SELECT * FROM hackathon_data WHERE H_id = :H_id';
+    $stmt2 = $pdo->prepare($query2);
+    $stmt2->bindParam(':H_id', $_SESSION['H_id']);
+    $stmt2->execute();
+    $Hdetails=$stmt2->fetch();
+
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/styles.css">
+    <script>
+        /*function toggleDropdown() {
+            document.getElementById("profile-dropdown").classList.toggle("show");
+        }
+
+        window.onclick = function(event) {
+            if (!event.target.matches('.profile-icon')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }*/
+
+        window.addEventListener('load', function(){
+            const preloader = document.querySelector('.preloader');
+            preloader.style.display = 'none';
+        });
+    </script>
+    <style>
+        
+    </style>
+</head>
+<body>
+    <div class="preloader">
+        <div class="loader"></div>
+    </div>
+    <div class="main-container">
+
+    <div class="header">
+        <div class="header-left">
+            <img src="../images/codebattlelogo.png" alt="Logo" class="logo">
+            <ul class="nav">
+                <li><a href="../dashboard.php">Home</a></li>
+                <li><a href="registered_events.php">Registered Events</a></li>
+            </ul>
+        </div>
+        <div class="header-right">
+            <ul class="nav">
+                <li><a href="../logout.php">Logout</a></li>
+            </ul>
+            <!--<img src="images/profile-icon.png" alt="Profile" class="profile-icon" onclick="toggleDropdown()">
+            <div id="profile-dropdown" class="dropdown-content">
+                <a href="#">Logout</a> 
+            </div>-->
+        </div>
+    </div>
+    <div class="welcome-container">
+        <div class="welcome">
+            <h1>Welcome, <span class="username"><?php echo strtoupper($user['RName']); ?></span></h1>
+        </div>
+    </div>   
+    <div class="teams-title">
+        <h2>Registered Teams</h2>
+    </div>
+        <p style="text-align:center; color:white"> Hackathon Name: <?php echo $Hdetails['HName']; ?> </p>
+        <div class="team-card-container">
+        <?php if (!empty($teams)): ?>
+           <?php foreach ($teams as $team): ?>
+                <?php 
+                     $query3 = 'SELECT * FROM solo_data WHERE H_id=:H_id and Puser_id=:user_id and T_id=:T_id';
+                     $stmt3 = $pdo->prepare($query3);
+                     $stmt3->bindParam(":user_id", $_SESSION['user_id']);
+                     $stmt3->bindParam(":H_id", $_SESSION['H_id']);
+                     $stmt3->bindParam(":T_id", $team['T_id']);
+                     $stmt3->execute();
+                     $members = $stmt3->fetchAll();
+                ?>
+                <div class="team-card" id="<?php echo $team['TName']; ?>" onclick="CardClick(this)">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div id="team-image">
+                            <img src="<?php echo getImage(); ?>" alt="<?php echo $team['TName']; ?>" class="team-img">
+                        </div>
+                            <div class="card-text">
+                                <h3><strong><?php echo $team['TName']; ?></strong>
+                                [<?php $C_id=$team['C_id']; 
+                                $CName = ($C_id==1)?'Jr_Cadet' : (($C_id==2)?'Jr_Captain' : (($C_id==3)?'Jr_Colonel' : 'Unknown'));
+                                echo $CName; ?>]</h3>
+                                
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <div class="card-members">
+                                <p>Members:</p>
+                                <ul class="member-list">
+                                    <?php if (!empty($members)): ?>
+                                        <?php foreach ($members as $member): ?>
+                                            <li><?php echo $member['PName']; ?></li>
+                                        <?php endforeach; ?>
+                                    <?php else: ?>
+                                        <p>You have not registered any members for this team.</p>
+                                    <?php endif; ?>
+                                </ul>
+                            </div>  
+                            <div class="card-actions">
+                                    <?php 
+                                        if ($Hdetails[$CName]==0 || $team['TMembers']==$Hdetails['MaxP']): ?>
+                                            <a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" name="edit_member"><i class="fas fa-edit"></i></a>
+                                            <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=delete" class="icon-link" name="delete_member"><i class="fas fa-trash"></i></a>
+                                    <?php else: ?>
+                                        <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=add" class="icon-link" name="add_member"><i class="fas fa-plus"></i></a>
+                                        <a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" name="edit_member"><i class="fas fa-edit"></i></a>
+                                        <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=delete" class="icon-link" name="delete_member"><i class="fas fa-trash"></i></a>
+                                    <?php endif; ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+            <?php else: ?>
+                <p style="color:white">You have not created any teams yet.</p>
+            <?php endif; ?>
+        </div>
+    </div>
+</body>
+</html>
+
+    

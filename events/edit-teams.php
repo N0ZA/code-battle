@@ -15,7 +15,7 @@
                 <ul class="nav">
                     <li><a href="../dashboard.php">Home</a></li>
                     <li><a href="registeredevents.php">Registered Events</a></li>
-                    <li><a href="teamdetails.php">Edit Teams</a></li>
+                    <li><a href="team_details.php">Edit Teams</a></li>
                 </ul>
             </div>
             <div class="header-right">
