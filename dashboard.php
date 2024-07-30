@@ -1,9 +1,9 @@
 <?php
     require_once "includes/dbh.inc.php";
-   /* PAGE IS ACCESSIBLE TO ALL
    if (session_status() == PHP_SESSION_NONE) {
         session_start();
     }
+    /* PAGE IS ACCESSIBLE TO ALL
     if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
         header("Location: index.php");
         exit();
