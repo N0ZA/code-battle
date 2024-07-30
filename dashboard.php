@@ -23,7 +23,7 @@
     $user = $stmt->fetch();
 
     //get hackathon details
-    $query2='SELECT * FROM hackathon_data WHERE HDate>CURDATE()'; 
+    $query2='SELECT * FROM hackathon_data WHERE HDate>=CURDATE()'; 
     $stmt2=$pdo->prepare($query2);
     $stmt2->execute();
     $events=$stmt2->fetchAll();
