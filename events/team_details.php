@@ -149,12 +149,12 @@
                             <div class="card-actions">
                                     <?php 
                                         if ($Hdetails[$CName]==0 || $team['TMembers']==$Hdetails['MaxP']): ?>
-                                            <a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" name="edit_member"><i class="fas fa-edit"></i></a>
-                                            <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=delete" class="icon-link" name="delete_member"><i class="fas fa-trash"></i></a>
+                                            <a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>
+                                            <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $team['TName']; ?>')"><i class="fas fa-trash"></i></a>
                                     <?php else: ?>
-                                        <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=add" class="icon-link" name="add_member"><i class="fas fa-plus"></i></a>
-                                        <a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" name="edit_member"><i class="fas fa-edit"></i></a>
-                                        <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=delete" class="icon-link" name="delete_member"><i class="fas fa-trash"></i></a>
+                                        <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=add" class="icon-link" ><i class="fas fa-plus"></i></a>
+                                        <a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>
+                                        <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $team['TName']; ?>')"><i class="fas fa-trash"></i></a>
                                     <?php endif; ?>
                             </div>
                         </div>
@@ -166,6 +166,31 @@
             <?php endif; ?>
         </div>
     </div>
+    
+    <div id="modal" class="modal-background">
+        <div class="modal-content">
+            <p class="modal-text">Are you sure you want to delete team <span id="team-name"></span>?</p>
+            <div class="modal-button-container">
+                <button class="modal-button" onclick="hideModal()">Cancel</button>
+                <button class="modal-button" onclick="Tdelete()">Yes</button>
+            </div>
+        </div>
+    </div>
+  
+    <script>
+        function showModal(teamName) {
+            document.getElementById("team-name").textContent = teamName;
+            document.getElementById("modal").style.display = "flex";
+        }
+
+        function hideModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+
+        function Tdelete() {
+            window.location.href = `eventedit.php?team=${document.getElementById("team-name").textContent}&action=delete`;
+        }
+    </script>
 </body>
 </html>
 
