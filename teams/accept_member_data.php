@@ -69,7 +69,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt5->execute();
     
         if (isset($_POST['Add_Member'])) {
-            header("Location: memberReg.php");
+            $source=$_POST['source'];
+            if ($source=='eventedit'){
+                header("Location: ../teams/memberReg.php?source=eventedit");}
+            else {
+                header("Location: memberReg.php");}
             exit();
         } 
         elseif (isset($_POST['Done'])) {

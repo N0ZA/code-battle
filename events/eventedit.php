@@ -17,7 +17,7 @@
         else if  ($action=="delete"){
             $query1='DELETE FROM team_data WHERE TName=:TName';
             $stmt1=$pdo->prepare($query1);
-            $stmt1->bindParam(":TName", $TName);
+            $stmt1->bindParam(":TName", $_SESSION['TName']);
             $stmt1->execute();
             $result1=$stmt1->fetch();
             header("Location: team_details.php");
