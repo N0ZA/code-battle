@@ -72,9 +72,13 @@
                 </ul>
             </div>
             <div class="header-right">
-                <ul class="nav">
-                    <li><a href="logout.php">Logout</a></li>
-                </ul>
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+                    <div class="dropdown-container">
+                        <button class="dropbtn"><i class="fas fa-user"></i>&#x25BC;</button>
+                        <div id="profile-dropdown" class="dropdown-content">
+                            <a onclick="window.location.href='../logout.php';">Logout</a>
+                        </div>
+                    </div>
                 <!--<img src="images/profile-icon.png" alt="Profile" class="profile-icon" onclick="toggleDropdown()">
                 <div id="profile-dropdown" class="dropdown-content">
                     <a href="#">Logout</a> 

@@ -93,6 +93,7 @@ input {
     position: relative;
     display: flex;
     align-items: center;
+    justify-content: center;
     padding-right: 30px;
 }
 
@@ -102,14 +103,29 @@ input {
     padding-right: 30px;
 }
 
+.show {
+    display: block;
+}
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+.dropbtn {
+    background-color: #F73634;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
 .dropdown-content {
     display: none;
     position: absolute;
-    top: 50px;
     right: 0;
-    background-color: white;
+    background-color: #f9f9f9;
     min-width: 160px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
     z-index: 1;
 }
 
@@ -124,9 +140,10 @@ input {
     background-color: #f1f1f1;
 }
 
-.show {
+.dropdown-container:hover .dropdown-content {
     display: block;
 }
+
 .welcome-container {
     padding: 10px 20px;
     width: 100%;
