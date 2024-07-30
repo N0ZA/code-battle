@@ -39,7 +39,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->fetch();  
 
     if ($result){
-        $_SESSION['errors_mem']='A registration with this name already exists for this team';}
+        $_SESSION['errors_mem']='A registration with this name already exists';}
 
     if (!empty($_SESSION['errors_mem'])) {
         header("Location: memberReg.php");

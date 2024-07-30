@@ -21,12 +21,12 @@
     $user = $stmt->fetch();
 
     //get team details
-    $query1='SELECT * FROM team_data WHERE H_id=:H_id and Tuser_id=:user_id';
+    $query1='SELECT * FROM solo_data WHERE H_id=:H_id and Puser_id=:user_id and T_id is NULL';
     $stmt1=$pdo->prepare($query1);
     $stmt1->bindParam(":user_id",$_SESSION['user_id']);
     $stmt1->bindParam(":H_id",$_SESSION['H_id']);
     $stmt1->execute();
-    $teams=$stmt1->fetchAll();
+    $solos=$stmt1->fetchAll();
 
     $query2 ='SELECT * FROM hackathon_data WHERE H_id = :H_id';
     $stmt2 = $pdo->prepare($query2);
@@ -100,65 +100,44 @@
         </div>
     </div>   
     <div class="teams-title">
-        <h2>Registered Teams</h2>
+        <h2>Registered Members</h2>
     </div>
-        <p style="text-align:center; color:white"> Hackathon Name: <?php echo $Hdetails['HName']; ?> </p>
+        <p style="text-align:center;"><b> Hackathon Name: <?php echo $Hdetails['HName']; ?> </b></p>
         <div class="team-card-container">
-        <?php if (!empty($teams)): ?>
-           <?php foreach ($teams as $team): ?>
-                <?php 
-                     $query3 = 'SELECT * FROM solo_data WHERE H_id=:H_id and Puser_id=:user_id and T_id=:T_id';
-                     $stmt3 = $pdo->prepare($query3);
-                     $stmt3->bindParam(":user_id", $_SESSION['user_id']);
-                     $stmt3->bindParam(":H_id", $_SESSION['H_id']);
-                     $stmt3->bindParam(":T_id", $team['T_id']);
-                     $stmt3->execute();
-                     $members = $stmt3->fetchAll();
-                ?>
-                <div class="team-card" id="<?php echo $team['TName']; ?>" onclick="CardClick(this)">
+        <?php 
+        if (!empty($solos)): ?>
+           <?php foreach ($solos as $solo): ?>
+                <div class="team-card" id="<?php echo $solo['PName']; ?>" onclick="CardClick(this)">
                     <div class="card-inner">
                         <div class="card-front">
                             <div id="team-image">
-                            <img src="<?php echo getImage(); ?>" alt="<?php echo $team['TName']; ?>" class="team-img">
+                            <img src="<?php echo getImage(); ?>" alt="<?php echo $solo['PName']; ?>" class="team-img">
                         </div>
                             <div class="card-text">
-                                <h3><strong><?php echo $team['TName']; ?></strong>
-                                [<?php $C_id=$team['C_id']; 
-                                $CName = ($C_id==1)?'Jr_Cadet' : (($C_id==2)?'Jr_Captain' : (($C_id==3)?'Jr_Colonel' : 'Unknown'));
-                                echo $CName; ?>]</h3>
-                                
+                                <h3><strong><?php echo $solo['PName']; ?></strong></h3>   
+                                <?php $C_id=$solo['C_id']; 
+                                $CName = ($C_id==1)?'Jr_Cadet' : (($C_id==2)?'Jr_Captain' : (($C_id==3)?'Jr_Colonel' : 'Unknown'));?>
                             </div>
                         </div>
                         <div class="card-back">
                             <div class="card-members">
-                                <p>Members:</p>
+                                <p>Member Details:</p>
                                 <ul class="member-list">
-                                    <?php if (!empty($members)): ?>
-                                        <?php foreach ($members as $member): ?>
-                                            <li><?php echo $member['PName']; ?></li>
-                                        <?php endforeach; ?>
-                                    <?php else: ?>
-                                        <p>You have not registered any members for this team.</p>
-                                    <?php endif; ?>
+                                            <li>Name: <?php echo $solo['PName']; ?></li>
+                                            <li>Category: <?php echo $CName; ?></li>
+                                            <li>Email: <?php echo $solo['PEmail']; ?></li>
+                                            <li>School: <?php echo $solo['PSchool']; ?></li>
                                 </ul>
                             </div>  
                             <div class="card-actions">
-                                    <?php 
-                                        if ($Hdetails[$CName]==0 || $team['TMembers']==$Hdetails['MaxP']): ?>
-                                            <a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" name="edit_member"><i class="fas fa-edit"></i></a>
-                                            <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=delete" class="icon-link" name="delete_member"><i class="fas fa-trash"></i></a>
-                                    <?php else: ?>
-                                        <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=add" class="icon-link" name="add_member"><i class="fas fa-plus"></i></a>
-                                        <a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" name="edit_member"><i class="fas fa-edit"></i></a>
-                                        <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=delete" class="icon-link" name="delete_member"><i class="fas fa-trash"></i></a>
-                                    <?php endif; ?>
+                                 <a href="eventedit.php?solo=<?php echo $solo['PName']; ?>&action=Sdelete" class="icon-link"><i class="fas fa-trash"></i></a>
                             </div>
                         </div>
                     </div>
                 </div>
             <?php endforeach; ?>
             <?php else: ?>
-                <p style="color:white">You have not created any teams yet.</p>
+                <p>You have not registered any members yet.</p>
             <?php endif; ?>
         </div>
     </div>

@@ -7,36 +7,29 @@
 
     if (($_SERVER["REQUEST_METHOD"]=="POST") || (isset($_GET["login"]) && $_GET["login"] === "success")) {
         if ($_SERVER["REQUEST_METHOD"]=="POST"){
+            $_SESSION['H_id']=$_POST['H_id'];
+            $_SESSION['is_team']=$_POST['is_team'];
             if (isset($_POST['Add_Team'])){
-                $_SESSION['H_id']=$_POST['H_id'];
-                $_SESSION['is_team']=$_POST['is_team'];
                 header("Location: ../teams/teamReg.php");
                 exit();
             }
-            
             elseif (isset($_POST['Add_Member'])) {  //Direct to solo registration
-                $_SESSION['H_id']=$_POST['H_id'];
-                $_SESSION['is_team']=$_POST['is_team'];
                 header("Location: ../teams/memberReg.php");
                 exit();
             }
-    
             else if (isset($_POST['Edit_Teams'])){
-                $_SESSION['H_id']=$_POST['H_id'];
-                $_SESSION['is_team']=$_POST['is_team'];
                 header("Location: team_details.php");
                 exit();
             }
-            
+            else if (isset($_POST['Edit_Members'])){
+                header("Location: member_details.php");
+                exit();
+            }
             elseif (isset($_POST['Add_Member'])) {  //Direct to solo registration
-                $_SESSION['H_id']=$_POST['H_id'];
-                $_SESSION['is_team']=$_POST['is_team'];
                 header("Location: ../teams/memberReg.php");
                 exit();
             }
             else if (isset($_POST['Register'])){
-                $_SESSION['H_id']= $_POST['H_id'];
-                $_SESSION['is_team']=$_POST['is_team'];
             }
             if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
                 header("Location: ../index.php");

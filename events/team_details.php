@@ -102,7 +102,7 @@
     <div class="teams-title">
         <h2>Registered Teams</h2>
     </div>
-        <p style="text-align:center; color:white"> Hackathon Name: <?php echo $Hdetails['HName']; ?> </p>
+        <p style="text-align:center;"><b>Hackathon Name: <?php echo $Hdetails['HName']; ?> </b></p>
         <div class="team-card-container">
         <?php if (!empty($teams)): ?>
            <?php foreach ($teams as $team): ?>
@@ -158,7 +158,7 @@
                 </div>
             <?php endforeach; ?>
             <?php else: ?>
-                <p style="color:white">You have not created any teams yet.</p>
+                <p>You have not created any teams yet.</p>
             <?php endif; ?>
         </div>
     </div>
