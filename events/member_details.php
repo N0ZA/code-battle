@@ -125,7 +125,7 @@
                         </div>
                         <div class="card-back">
                             <div class="card-members">
-                                <p>Member Details:</p>
+                                <p> MEMBER DETAILS</p>
                                 <ul class="member-list">
                                             <li>Name: <?php echo $solo['PName']; ?></li>
                                             <li>Category: <?php echo $CName; ?></li>

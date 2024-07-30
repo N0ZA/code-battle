@@ -135,7 +135,7 @@
                         </div>
                         <div class="card-back">
                             <div class="card-members">
-                                <p>Members:</p>
+                                <p>MEMBERS</p>
                                 <ul class="member-list">
                                     <?php if (!empty($members)): ?>
                                         <?php foreach ($members as $member): ?>
