@@ -324,6 +324,7 @@ main {
                                 echo '<button class="form-button" type="submit" name="Done">Done</button> ';
                             }
                     endif; ?>
+                    <br></br>
                     <?php
                          check_mem_errors();    
                     ?>

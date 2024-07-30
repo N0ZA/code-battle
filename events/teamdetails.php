@@ -100,11 +100,12 @@
         </div>
     </div>   
     <div class="teams-title">
-        <h2>Registered Teams <br>Hackathon Name: <?php echo $Hdetails['HName']; ?></h2>
+        <h2>Registered Teams</h2>
     </div>
         <p style="text-align:center; color:white"> Hackathon Name: <?php echo $Hdetails['HName']; ?> </p>
         <div class="team-card-container">
-            <?php foreach ($teams as $team): ?>
+        <?php if (!empty($teams)): ?>
+           <?php foreach ($teams as $team): ?>
                 <?php 
                      $query3 = 'SELECT * FROM solo_data WHERE H_id=:H_id and Puser_id=:user_id and T_id=:T_id';
                      $stmt3 = $pdo->prepare($query3);
@@ -156,9 +157,11 @@
                     </div>
                 </div>
             <?php endforeach; ?>
+            <?php else: ?>
+                <p style="color:white">You have not created any teams yet.</p>
+            <?php endif; ?>
         </div>
-</div>
-
+    </div>
 </body>
 </html>
 

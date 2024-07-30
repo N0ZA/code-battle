@@ -85,7 +85,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
     function check_mem_errors(){
         if (isset($_SESSION['errors_mem'])) {
-            echo '<p style="text-align: center; color: #F73634;">' . $_SESSION['errors_mem'] . '</p>';
+            echo '<p style="text-align: center; color: #F73634; font-size:large;">' . $_SESSION['errors_mem'] . '</p>';
             unset($_SESSION['errors_mem']); }
     }
     
