@@ -159,16 +159,13 @@
     <script>
         function showModal(teamName) {
             document.getElementById("solo-name").textContent = teamName;
-            document.getElementById("modal").style.display = "flex";
-        }
+            document.getElementById("modal").style.display = "flex";}
 
         function hideModal() {
-            document.getElementById("modal").style.display = "none";
-        }
+            document.getElementById("modal").style.display = "none";}
 
         function Sdelete() {
-            window.location.href = `eventedit.php?solo=${document.getElementById("solo-name").textContent}&action=Sdelete`;
-        }
+            window.location.href = `eventedit.php?solo=${document.getElementById("solo-name").textContent}&action=Sdelete`;}
     </script>
 </body>
 </html>

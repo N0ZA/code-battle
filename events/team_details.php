@@ -180,16 +180,13 @@
     <script>
         function showModal(teamName) {
             document.getElementById("team-name").textContent = teamName;
-            document.getElementById("modal").style.display = "flex";
-        }
+            document.getElementById("modal").style.display = "flex";}
 
         function hideModal() {
-            document.getElementById("modal").style.display = "none";
-        }
+            document.getElementById("modal").style.display = "none";}
 
         function Tdelete() {
-            window.location.href = `eventedit.php?team=${document.getElementById("team-name").textContent}&action=delete`;
-        }
+            window.location.href = `eventedit.php?team=${document.getElementById("team-name").textContent}&action=delete`;}
     </script>
 </body>
 </html>
