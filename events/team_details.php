@@ -169,7 +169,7 @@
     
     <div id="modal" class="modal-background">
         <div class="modal-content">
-            <p class="modal-text">Are you sure you want to delete team <span id="team-name"></span>?</p>
+            <p class="modal-text">Are you sure you want to delete team: <span id="team-name"></span>?</p>
             <div class="modal-button-container">
                 <button class="modal-button" onclick="hideModal()">Cancel</button>
                 <button class="modal-button" onclick="Tdelete()">Yes</button>
