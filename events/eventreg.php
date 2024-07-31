@@ -8,10 +8,8 @@
     if (($_SERVER["REQUEST_METHOD"]=="POST") || (isset($_GET["login"]) && $_GET["login"] === "success") || ($_SERVER['REQUEST_METHOD']=='GET')) {
         if (($_SERVER["REQUEST_METHOD"]=="POST") || (isset($_GET["Hackathon"]))){
             //h_id and is_team taken from dashboard page
-            echo "why u here";
             $_SESSION['H_id']=isset($_POST['H_id'])? $_POST['H_id'] : $_GET['Hackathon'];
             $_SESSION['is_team']=isset($_POST['is_team'])? $_POST['is_team']: $_GET['isT'];
-            
             if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
                 header("Location: ../index.php");   //if user is not logged in and they press register, take them to log in page
                 exit();

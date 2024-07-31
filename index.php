@@ -23,6 +23,9 @@
             die();
         }
     }
+    if (!isset($_SESSION['H_id'])){
+        header("Location: dashboard.php");
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -244,7 +247,9 @@ footer {
                 </div>
                 <!--<hr>-->
                 <button type="submit">Log In</button>
-                <p  style="font-size:large; text-align: center; color: red;">Don't have an account? <a href="sign_up/signup.php">Sign up</a></p>
+                <p  style="font-size:large; text-align: center; color: red;">Don't have an account? 
+                <a href="sign_up/signup.php?H=<?php echo $_SESSION['H_id']; ?>&T=<?php echo $_SESSION['is_team']; ?>">Sign up</a>
+                </p>
             </form>
             <?php
                 check_login_errors();

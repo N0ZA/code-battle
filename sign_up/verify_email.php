@@ -33,9 +33,13 @@ if (isset($_POST['verify'])) {
                 $stmt2->bindParam(":password",$_SESSION['password']);
                 $stmt2->bindParam(":admin", $_SESSION['is_admin']);
                 $stmt2->execute();
-
-                session_unset();
+                
                 $_SESSION['Reg_CREATED']=1;
+                $H_id=$_SESSION['H_id'];
+                $is_team=$_SESSION['is_team'];
+                session_unset();
+                $_SESSION['H_id']=$H_id;
+                $_SESSION['is_team']=$is_team;
                 header("Location: ../index.php");
             }
             else {

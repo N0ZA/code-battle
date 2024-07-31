@@ -38,8 +38,6 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
         }
 
         else{
-            echo "<br>Hackathon ID: " .$_SESSION['H_id'];
-            echo "<br> Team: ".$_SESSION['is_team'];
             $H_id=$_SESSION['H_id'];
             $is_team=$_SESSION['is_team'];
             $newSessionId=session_create_id();
@@ -52,8 +50,6 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
             
             $_SESSION['H_id']=$H_id;
             $_SESSION['is_team']=$is_team;
-            echo "<br>Hackathon ID: " .$_SESSION['H_id'];
-            echo "<br> Team: ".$_SESSION['is_team'];
 
             if($result['admin']==1){
                 header("Location: ../admin/admin.php?login=success");

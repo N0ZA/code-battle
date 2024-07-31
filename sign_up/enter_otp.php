@@ -1,13 +1,11 @@
 <?php
     require_once "verify_email.php";
-    if (session_status() == PHP_SESSION_NONE) {
-        session_start();
-    }
+    require_once '../includes/config_session.inc.php';
 
     if (!isset($_SESSION['otp']) || !isset($_SESSION['otp_time'])){
         header("Location: signup.php");
     }
-
+    echo "Hackathon ID: " . $_SESSION['H_id'] . "<br>"; 
 ?>
 
 <!DOCTYPE html>

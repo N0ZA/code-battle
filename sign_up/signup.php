@@ -7,6 +7,10 @@
         header("Location: ../index.php");
         die();
     }
+    if ($_SERVER["REQUEST_METHOD"]=="GET"){
+      $H_id=$_GET['H'];
+      $is_team=$_GET['T'];
+    }
 ?>
 
 <!DOCTYPE html>
@@ -226,8 +230,9 @@
               check_signup_errors();
           ?>
           <input type="hidden" name="is_admin" value="2">  
+          <input type="hidden" name="H_id" value="<?php echo $H_id;?>">  
+          <input type="hidden" name="is_team" value="<?php echo $is_team; ?>">  
           <button type="submit" class="btn btn-primary" name="SignUp">Submit</button><br></br>
-          <p  style="font-size:large; text-align: center; color: red;">Already have an account? <a href="../index.php">Log In</a></p>
         </form>
       </div>
       <div id="teacher" style="display:none">
@@ -260,8 +265,9 @@
               check_signup_errors();
           ?>
           <input type="hidden" name="is_admin" value="3">
+          <input type="hidden" name="H_id" value="<?php echo $H_id;?>">  
+          <input type="hidden" name="is_team" value="<?php echo $is_team; ?>">  
           <button type="submit" class="btn btn-primary" name="SignUp">Submit</button><br></br>
-          <p  style="font-size:large; text-align: center; color: red;">Already have an account? <a href="../index.php">Log In</a></p>
         </form>
       </div>
       <div id="student" style="display:none">
@@ -294,9 +300,10 @@
               check_signup_errors();
           ?>
           <input type="hidden" name="is_admin" value="4">
+          <input type="hidden" name="H_id" value="<?php echo $H_id;?>">  
+          <input type="hidden" name="is_team" value="<?php echo $is_team; ?>">  
           <button type="submit" class="btn btn-primary" name="SignUp">Submit</button> <br></br>
-          <p  style="font-size:large; text-align: center; color: red;">Already have an account? <a href="../index.php">Log In</a></p>
-        </form>
+       </form>
       </div>
     </div>
   </div>

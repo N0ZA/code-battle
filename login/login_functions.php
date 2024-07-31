@@ -96,7 +96,6 @@ function check_login_errors(){
             die();
 
         }
-        die();
     }
 }
 

@@ -11,11 +11,14 @@ require_once '../includes/config_session.inc.php';
 
 if (isset($_POST['SignUp'])) {
     //store the form enteries as session variables
+    $_SESSION['H_id'] = $_POST['H_id'];
+    $_SESSION['is_team']=$_POST['is_team'];
     $_SESSION['RName'] = $_POST['name'];
     $_SESSION['RPhone'] = $_POST['ph-num'];
     $_SESSION['REmail'] = $_POST['email'];
     $_SESSION['RSchool'] = $_POST['school-name'];
     $_SESSION['is_admin']=$_POST['is_admin'];
+    
     
     $_SESSION['Rusername'] = $_POST['Username'];
     $options = ['cost' => 12];
@@ -41,11 +44,13 @@ if (isset($_POST['SignUp'])) {
 
     if ($count1 > 0) {
         $_SESSION['errors_signup'] = "Email already registered. Log In or SignUp with a different email.";; 
-        header("Location: signup.php");
+        header("Location: signup.php?H=".$_SESSION['H_id'] ."&T=". $_SESSION['is_team']);
+  
+
     } 
     else if ($count2 > 0) {
         $_SESSION['errors_signup'] = "Username already exists. Use a different username";; 
-        header("Location: signup.php");
+        header("Location: signup.php?H=".$_SESSION['H_id'] ."&T=". $_SESSION['is_team']);
     } 
     else {
         //sendin the mail
