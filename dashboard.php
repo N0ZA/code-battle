@@ -58,6 +58,18 @@
             const preloader = document.querySelector('.preloader');
             preloader.style.display = 'none';
         });
+
+        function showModal(h_id,is_team) {
+                const eventLink =`code-battle/events/eventreg.php?Hackathon=${h_id}&isT=${is_team}`;
+                document.getElementById("event-link").textContent=eventLink ;
+                document.getElementById("register-button").onclick= function() {
+                    window.location.href = `events/eventreg.php?Hackathon=${h_id}&isT=${is_team}`;
+                }
+                document.getElementById("modal").style.display = "flex";
+            }
+            function hideModal() {
+                document.getElementById("modal").style.display = "none";}
+
     </script>
 </head>
 <body>
@@ -125,11 +137,9 @@
                                 <li>Date: <?php echo $event['HDate']; ?></li>
                                 <li>Time: <?php echo $event['HTime']; ?></li>
                             </ul>
-                            <form action="events/eventreg.php" method="POST">
-                                <input type="hidden" name="H_id" value="<?php echo $event['H_id']; ?>">
-                                <input type="hidden" name="is_team" value="<?php echo $event['is_team']; ?>">
-                                <button type="submit" name="Register">Register</button>
-                            </form>
+                        <a href="javascript:void(0);"  onclick="showModal('<?php echo $event['H_id'];?>','<?php echo $event['is_team'];?>')">
+                        <button name="Register" class="btn-details">Register</button> </a>
+                            
                         </div>
                     </div>
                 <?php endforeach; ?>
@@ -151,7 +161,8 @@
                     <b><?php echo $event['is_team'] ? 'Team Based' : 'Solo Based'; ?></b> <br></br>
                     <span class="HDate">Date: <?php echo $event['HDate']; ?></span>
                     <span class="HTime">Time: <?php echo $event['HTime']; ?></span>
-                    <a href="/register" class="btn-details">Register</a>
+                    <a href="javascript:void(0);"  onclick="showModal('<?php echo $event['H_id'];?>','<?php echo $event['is_team'];?>')">
+                    <button name="Register" class="btn-details">Register</button> </a>                   
                 </div>
             </div>
                     </label>
@@ -159,6 +170,16 @@
             </div>
         </div>
     
+        <div id="modal" class="modal-background">
+            <div class="modal-content">
+                <p class="modal-text">SHARABLE HACKATHON LINK: <br></br> <span id="event-link"></span></p>
+                <div class="modal-button-container">
+                    <button class="modal-button" onclick="hideModal()">Cancel</button>
+                    <button class="modal-button" id="register-button">Register</button>
+                </div>
+            </div>
+        </div>
+
         <footer class="footer">
             <p>Code Battle &copy; 2024. All rights reserved. Made with ❤️ in U.A.E</p>
         </footer>
