@@ -7,10 +7,12 @@
         header("Location: index.php");
         exit();
     }
-    function getImage($Folder = '../images/teams/') {
-        $images = glob($Folder.'*.{jpg,jpeg,png,gif}', GLOB_BRACE); //to get all files from image folder tht match the extensions
-        $randomImage = $images[array_rand($images)];
-        return $randomImage;
+    function getImage($Folder = '../Images/teams/') {
+        static $lastImage=-1; //static allows it to retain the value during function calls
+        $images=glob($Folder.'*.{jpg,jpeg,png,gif}', GLOB_BRACE); 
+        sort($images);
+        $lastImage=($lastImage+1) % count($images);
+        return $images[$lastImage];
     }
  
     //get user details
@@ -135,7 +137,7 @@
                         </div>
                         <div class="card-back">
                             <div class="card-members">
-                                <p>MEMBERS</p>
+                                <p>MEMBERS  (<?php echo $CName; ?>)</p>
                                 <ul class="member-list">
                                     <?php if (!empty($members)): ?>
                                         <?php foreach ($members as $member): ?>
