@@ -236,7 +236,7 @@ main {
                             $result2=$stmt2->fetch();
 
                             if ($_SESSION['is_team'] == 0){
-                                $result1['TMembers']=1;
+                                $result1['TMembers']=NULL;
                             }
                             else{
                                 $TName = $_SESSION['TName'];
