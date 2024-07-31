@@ -129,9 +129,9 @@
                         </div>
                             <div class="card-text">
                                 <h3><strong><?php echo $team['TName']; ?></strong>
-                                [<?php $C_id=$team['C_id']; 
+                                <?php $C_id=$team['C_id']; 
                                 $CName = ($C_id==1)?'Jr_Cadet' : (($C_id==2)?'Jr_Captain' : (($C_id==3)?'Jr_Colonel' : 'Unknown'));
-                                echo $CName; ?>]</h3>
+                                ?></h3>
                                 
                             </div>
                         </div>
