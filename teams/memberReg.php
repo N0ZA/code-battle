@@ -204,7 +204,7 @@ main {
 <body>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark">
-            <a class="navbar-brand" href="#"><img src="https://github.com/N0ZA/code-battle/blob/main/Images/logob.png?raw=true" alt="Code Battle" style="height: 60px;"></a>
+            <a class="navbar-brand" href="#"><img src="https://github.com/N0ZA/code-battle/blob/main/Images/Logo.png?raw=true" alt="Code Battle" style="height: 60px;"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
