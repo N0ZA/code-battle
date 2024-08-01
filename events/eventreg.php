@@ -11,7 +11,7 @@
             $_SESSION['H_id']=isset($_POST['H_id'])? $_POST['H_id'] : $_GET['H'];
             $_SESSION['is_team']=isset($_POST['is_team'])? $_POST['is_team']: $_GET['T'];
             if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
-                header("Location: ../index.php");   //if user is not logged in and they press register, take them to log in page
+                header("Location: ../index.php?H=" . $_SESSION['H_id'] . "&T=" . $_SESSION['is_team']);  // if user is not logged in and they press register, take them to log in page
                 exit();
             }
             else if (isset($_POST['Add_Team'])){         //Direct to team registration
