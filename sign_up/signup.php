@@ -269,7 +269,7 @@
           <input type="hidden" name="H_id" value="<?php echo $H_id;?>">  
           <input type="hidden" name="is_team" value="<?php echo $is_team; ?>">  
           <button type="submit" class="btn btn-primary" name="SignUp">Submit</button><br></br>
-          <p  style="font-size:large; text-align: center; color: red;">Already have an account? <a href="../index.php?H=<?php echo $H_id;?>&T=<?php echo $is_team;?>">Log In</>
+          <p  style="font-size:large; text-align: center; color: red;">Already have an account? <a href="../index.php?H=<?php echo $H_id;?>&T=<?php echo $is_team;?>">Log In</a>
         </form>
       </div>
       <div id="student" style="display:none">
