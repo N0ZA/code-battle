@@ -23,9 +23,11 @@
             die();
         }
     }
-    if (!isset($_SESSION['H_id'])){
-        header("Location: dashboard.php");
-    }
+    if ($_SERVER["REQUEST_METHOD"]=="GET"){
+        $H_id=isset($_GET['H']) ? $_GET['H'] : NULL;
+        $is_team=isset($_GET['T']) ? $_GET['T']: NULL;
+      } 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -248,7 +250,7 @@ footer {
                 <!--<hr>-->
                 <button type="submit">Log In</button>
                 <p  style="font-size:large; text-align: center; color: red;">Don't have an account? 
-                <a href="sign_up/signup.php?H=<?php echo $_SESSION['H_id']; ?>&T=<?php echo $_SESSION['is_team']; ?>">Sign up</a>
+                <a href="sign_up/signup.php?H=<?php echo $H_id; ?>&T=<?php echo $is_team; ?>">Sign up</a>
                 </p>
             </form>
             <?php

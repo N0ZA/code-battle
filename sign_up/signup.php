@@ -10,7 +10,7 @@
     if ($_SERVER["REQUEST_METHOD"]=="GET"){
       $H_id=$_GET['H'];
       $is_team=$_GET['T'];
-    }
+    } 
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +22,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
     body {
-      background-image: url(https://github.com/N0ZA/code-battle/blob/main/images/grids.jpeg?raw=true);
+      background-image: url(https://github.com/N0ZA/code-battle/blob/main/Images/grids.jpeg?raw=true);
       background-size: cover;
       display: flex;
       flex-direction: column;
@@ -233,6 +233,7 @@
           <input type="hidden" name="H_id" value="<?php echo $H_id;?>">  
           <input type="hidden" name="is_team" value="<?php echo $is_team; ?>">  
           <button type="submit" class="btn btn-primary" name="SignUp">Submit</button><br></br>
+          <p  style="font-size:large; text-align: center; color: red;">Already have an account? <a href="../index.php?H=<?php echo $H_id;?>&T=<?php echo $is_team;?>">Log In</a></p>
         </form>
       </div>
       <div id="teacher" style="display:none">
@@ -268,6 +269,7 @@
           <input type="hidden" name="H_id" value="<?php echo $H_id;?>">  
           <input type="hidden" name="is_team" value="<?php echo $is_team; ?>">  
           <button type="submit" class="btn btn-primary" name="SignUp">Submit</button><br></br>
+          <p  style="font-size:large; text-align: center; color: red;">Already have an account? <a href="../index.php?H=<?php echo $H_id;?>&T=<?php echo $is_team;?>">Log In</>
         </form>
       </div>
       <div id="student" style="display:none">
@@ -303,7 +305,8 @@
           <input type="hidden" name="H_id" value="<?php echo $H_id;?>">  
           <input type="hidden" name="is_team" value="<?php echo $is_team; ?>">  
           <button type="submit" class="btn btn-primary" name="SignUp">Submit</button> <br></br>
-       </form>
+          <p  style="font-size:large; text-align: center; color: red;">Already have an account? <a href="../index.php?H=<?php echo $H_id;?>&T=<?php echo $is_team;?>">Log In</a></p>
+        </form>
       </div>
     </div>
   </div>

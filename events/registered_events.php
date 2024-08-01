@@ -114,9 +114,9 @@
                     <div class="events-card">
                         <img src="<?php echo getImage(); ?>" alt="<?php echo $eventDetails['HName'];?>">
                         <div class="card-details">
-                            <h3><?php echo $eventDetails['HName']; ?>
-                            <?php if ($_SESSION['is_team']): ?> [TEAM BASED]
-                            <?php else: ?>  [SOLO BASED]
+                            <h3><u> <?php echo strtoupper($eventDetails['HName']); ?> </u> <br></br>
+                            <?php if ($_SESSION['is_team']): ?> Team Based
+                            <?php else: ?>  Solo Based
                             <?php endif; ?></h3>
                             <?php // echo  $eventDetails['H_id'] ?>
                             <form action="eventreg.php" method="POST">

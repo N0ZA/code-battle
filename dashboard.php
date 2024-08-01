@@ -60,10 +60,10 @@
         });
 
         function showModal(h_id,is_team) {
-                const eventLink =`/code-battle/events/eventreg.php?Hackathon=${h_id}&isT=${is_team}`;
+                const eventLink =`/code-battle/events/eventreg.php?H=${h_id}&T=${is_team}`;
                 document.getElementById("event-link").textContent=eventLink ;
                 document.getElementById("register-button").onclick= function() {
-                    window.location.href = `events/eventreg.php?Hackathon=${h_id}&isT=${is_team}`;
+                    window.location.href = `events/eventreg.php?H=${h_id}&T=${is_team}`;
                 }
                 document.getElementById("modal").style.display = "flex";
             }
