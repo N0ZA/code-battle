@@ -102,7 +102,7 @@
         <div class="welcome-container">
             <div class="welcome">
                 <?php if (isset($_SESSION['user_id']) || isset($_SESSION['user_isadmin'])):?>
-                    <h1>Welcome, <span class="username"><?php echo strtoupper($user['RName']); ?></span></h1>
+                    <h1>Welcome, <span class="username"><?php echo $user['RName']; ?></span></h1>
                 <?php endif; ?>
             </div>
         </div>

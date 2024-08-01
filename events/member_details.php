@@ -102,13 +102,12 @@
     </div>
     <div class="welcome-container">
         <div class="welcome">
-            <h1>Welcome, <span class="username"><?php echo strtoupper($user['RName']); ?></span></h1>
+            <h1>Welcome, <span class="username"><?php echo $user['RName']; ?></span></h1>
         </div>
     </div>   
     <div class="teams-title">
-        <h2>Registered Members</h2>
+        <h2>Registered Members </h2> <h4>For Hackathon <span class="username"><?php echo $Hdetails['HName']; ?></h4></span>
     </div>
-        <p style="text-align:center;"><b> Hackathon Name: <?php echo $Hdetails['HName']; ?> </b></p>
         <div class="team-card-container">
         <?php 
         if (!empty($solos)): ?>

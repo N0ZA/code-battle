@@ -92,7 +92,7 @@
         </div>
         <div class="welcome-container">
             <div class="welcome">
-                <h1>Welcome, <span class="username"><?php echo strtoupper($user['RName']); ?></span></h1>
+                <h1>Welcome, <span class="username"><?php echo $user['RName']; ?></span></h1>
             </div>
         </div>   
         <div>
