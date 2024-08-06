@@ -414,6 +414,9 @@ main {
                             if ($result3[$CName]==1 || $result3['TMembers'] + 1 == $result3['MaxP']) {
                                 echo '<button class="form-button" type="submit" name="Done">Done</button>';
                             } 
+                            else if ($result3['TMembers']==0) {
+                                echo '<button class="form-button" type="submit" name="Add_Member">Add Member</button>';
+                            } 
                             else{
                                 echo '<button class="form-button" type="submit" name="Add_Member">Add Member</button>';
                                 echo '<button class="form-button" type="submit" name="Done">Done</button> ';

@@ -11,9 +11,10 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
     $hackathon=$_SESSION['H_id'];
     $TMembers=0;
 
-    $query1 = "SELECT * FROM team_data WHERE TName=:TName";
+    $query1 = "SELECT * FROM team_data WHERE TName=:TName AND H_id=:H_id";
     $stmt1 = $pdo->prepare($query1);
     $stmt1->bindParam(":TName", $_SESSION['TName']);
+    $stmt1->bindParam(":H_id", $hackathon);
     $stmt1->execute();
     $result1=$stmt1->fetch();
 
