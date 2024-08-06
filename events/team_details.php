@@ -106,10 +106,9 @@
         </div>
     </div>   
     <div class="teams-title">
-        <h2>Registered Teams</h2>
+        <h2>Registered Teams</h2> <h4>For Hackathon <span class="username"><?php echo $Hdetails['HName']; ?></h4></span>
     </div>
-        <p style="text-align:center;"><b>Hackathon Name: <?php echo $Hdetails['HName']; ?> </b></p>
-        <div class="team-card-container">
+     <div class="team-card-container">
         <?php if (!empty($teams)): ?>
            <?php foreach ($teams as $team): ?>
                 <?php 
