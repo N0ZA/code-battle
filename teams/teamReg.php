@@ -32,16 +32,7 @@
             margin: 0;
             padding: 0;
         }
-        .navbar {
-            background-color: #F73634;
-        }
-        .nav-link {
-            color: #ffffff !important;
-            font-size: 16px;
-        }
-        .nav-link:hover {
-            color: #ffcccc !important;
-        }
+        
         .form-column {
             display: flex;
             align-items: center;
@@ -228,14 +219,104 @@
             border-radius: 18px;
             font-weight: bold;
         }
-        header {
-  position: relative;
-  z-index: 1000;
+        .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f44134;
+    padding: 8px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
 }
 
-.navbar-toggler span {
-  color: #ffffff;
+.header-left {
+    display: flex;
+    align-items: center;
 }
+
+.logo {
+    height: 40px;
+    margin-right: 20px;
+}
+
+.nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav li {
+    display: inline;
+    margin: 0 15px;
+}
+
+.nav li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.nav li a:hover {
+    text-decoration: underline;
+}
+
+.header-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+}
+
+.profile-icon {
+    height: 40px;
+    cursor: pointer;
+    padding-right: 30px;
+}
+
+.show {
+    display: block;
+}
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+.dropbtn {
+    background-color: #F73634;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown-container:hover .dropdown-content {
+    display: block;
+}
+
     </style>
 
 </head>
@@ -244,20 +325,24 @@
   <div class="loader"></div>
 </div>  
     <header>
-        <nav class="navbar navbar-expand-lg navbar-dark">
-            <a class="navbar-brand" href="#"><img src="https://github.com/N0ZA/code-battle/blob/main/Images/Logo.png?raw=true" alt="Code Battle" style="height: 40px;"></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                <span><i class="fas fa-user"></i>&#x25BC;</span>      
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item">
-                    
-                        <a class="nav-link" href="../logout.php">Logout</a>
-                    </li>
-                </ul>
+        <div class="header">
+            <div class="header-left">
+                <img src="https://github.com/N0ZA/code-battle/blob/main/Images/Logo.png?raw=true" alt="Logo" class="logo">
             </div>
-        </nav>
+            <div class="header-right">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+                    <div class="dropdown-container">
+                        <button class="dropbtn"><i class="fas fa-user"></i>&#x25BC;</button>
+                        <div id="profile-dropdown" class="dropdown-content">
+                            <a onclick="window.location.href='logout.php';">Logout</a>
+                        </div>
+                    </div>
+                <!--<img src="images/profile-icon.png" alt="Profile" class="profile-icon" onclick="toggleDropdown()">
+                <div id="profile-dropdown" class="dropdown-content">
+                    <a href="#">Logout</a> 
+                </div>-->
+            </div>
+        </div>
     </header>
     <div class="container-fluid container-custom">
         <div class="row flex-grow-1">
