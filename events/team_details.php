@@ -154,7 +154,7 @@
                                             <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $team['TName']; ?>')"><i class="fas fa-trash"></i></a>
                                     <?php else: ?>
                                         <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=add" class="icon-link" ><i class="fas fa-plus"></i></a>
-                                        <a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>
+                                    <!--<a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a> -->
                                         <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $team['TName']; ?>')"><i class="fas fa-trash"></i></a>
                                     <?php endif; ?>
                             </div>
