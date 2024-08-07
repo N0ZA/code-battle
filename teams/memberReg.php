@@ -348,10 +348,10 @@ main {
                         <label for="Name">Name</label>
                         <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
                     </div>
-                    <div class="form-group">
+            <!--        <div class="form-group">
                         <label for="school">School</label>
                         <input type="text" id="school" name="school" class="form-control" placeholder="Enter your school name" required>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
@@ -369,8 +369,22 @@ main {
                             $jrColonel = $result['Jr_Colonel'];
                             $_SESSION['is_team']=$result["is_team"];
                         }
+                        $schools=[];
+                        $query="SELECT * FROM school_data";
+                        $stmt=$pdo->prepare($query);
+                        $stmt->execute();
+                        $schools=$stmt->fetchAll();
                     ?>
                     <?php if ($_SESSION['is_team'] == 0): ?>
+                        <div class="form-group">
+                            <label for="school">School</label>
+                            <select class="form-control" name="school" id="school" required>
+                                    <option value="" disabled selected>Select your School Name</option>
+                                <?php foreach ($schools as $school): ?>
+                                    <option value="<?php echo $school['ScName'] ?>"><?php echo $school['ScName']?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="category">Category</label>
                             <div class="category-container">

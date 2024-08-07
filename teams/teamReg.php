@@ -367,8 +367,21 @@
                                 $jrCaptain=$result['Jr_Captain'];
                                 $jrColonel=$result['Jr_Colonel'];
                             }
-                            ?>
-
+                            $schools=[];
+                            $query="SELECT * FROM school_data";
+                            $stmt=$pdo->prepare($query);
+                            $stmt->execute();
+                            $schools=$stmt->fetchAll();
+                        ?>
+                        <div class="form-group">
+                            <label for="school">School</label>
+                            <select class="form-control" name="school" id="school" required>
+                                    <option value="" disabled selected>Select your School Name</option>
+                                <?php foreach ($schools as $school): ?>
+                                    <option value="<?php echo $school['ScName'] ?>"><?php echo $school['ScName']?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="category">Category</label>
                             <div class="category-container">
