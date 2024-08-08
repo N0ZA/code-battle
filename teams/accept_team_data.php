@@ -43,7 +43,6 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
         exit(); 
     }  
     else{
-        $_SESSION['errors_team']= "current count: " .$result2. " Allowed: " .$result['reg_per_user'];
         $query="INSERT INTO team_data(H_id,C_id,TName,TSchool,TMembers,Tuser_id) VALUES (:hackathon,:category,:TName,:TSchool,:TMembers,:Tuser_id);";
         $stmt=$pdo->prepare($query);
         $stmt->bindParam(":hackathon",$hackathon);

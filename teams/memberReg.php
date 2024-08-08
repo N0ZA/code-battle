@@ -9,6 +9,12 @@
         header("Location: ../index.php");
         exit();
     }
+    if ($_SESSION['is_team']==1){
+        if (!isset($_SESSION['TName'])){
+            header("Location: ../events/team_details.php");
+            exit();
+       }
+    }
 ?>
 
 <!DOCTYPE html>

@@ -1,6 +1,6 @@
 <?php
   $host='localhost';
-  $dbname='new';
+  $dbname='code_battle';
   $dbusername = 'root';
   $dbpassword = '';
   

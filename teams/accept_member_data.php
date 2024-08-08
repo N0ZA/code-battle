@@ -56,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     if($_SESSION['is_team']==0){
         if ($result2==$result1['reg_per_user']){
-            $_SESSION['errors_mem']= "You can only make " .$result['reg_per_user']. " registration/s for this hackathon. <br> You have reached your limit!. <br> Edit your registration/s here <a href='../events/registered_events.php'> Registered Events </a>";
+            $_SESSION['errors_mem']= "You can only make " .$result1['reg_per_user']. " registration/s for this hackathon. <br> You have reached your limit!. <br> Edit your registration/s here <a href='../events/registered_events.php'> Registered Events </a>";
             header("Location: memberReg.php");
             exit(); 
         }

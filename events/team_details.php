@@ -36,6 +36,18 @@
     $stmt2->execute();
     $Hdetails=$stmt2->fetch();
 
+     //deleting teams tht have  less than 2 members
+     foreach ($teams as $team) {
+        if ($team['TMembers']<2){
+            $query4='DELETE FROM team_data WHERE T_id=:T_id';
+            $stmt4=$pdo->prepare($query4);
+            $stmt4->bindParam(":T_id",$team['T_id']);
+            $stmt4->execute();
+        }
+    }
+    //get the team details again after updating
+    $stmt1->execute();
+    $teams=$stmt1->fetchAll();
 ?>
 
 <!DOCTYPE html>
