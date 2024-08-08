@@ -12,6 +12,12 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
     $school = $_POST['school'];
     $TMembers=0;
 
+    $query = "SELECT * FROM hackathon_data WHERE H_id=:H_id";
+    $stmt = $pdo->prepare($query);
+    $stmt->bindParam(":H_id", $hackathon);
+    $stmt->execute();
+    $result=$stmt->fetch();
+
     $query1 = "SELECT * FROM team_data WHERE TName=:TName AND H_id=:H_id";
     $stmt1 = $pdo->prepare($query1);
     $stmt1->bindParam(":TName", $_SESSION['TName']);
@@ -19,12 +25,25 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
     $stmt1->execute();
     $result1=$stmt1->fetch();
 
-    if($result1){ 
-        $_SESSION['errors_team']= "This team name already exists. Please chose another team name.";
+    $query2 = "SELECT * FROM team_data WHERE Tuser_id=:user_id AND H_id=:H_id";
+    $stmt2 = $pdo->prepare($query2);
+    $stmt2->bindParam(":user_id", $_SESSION['user_id']);
+    $stmt2->bindParam(":H_id", $hackathon);
+    $stmt2->execute();
+    $result2=$stmt2->rowCount();
+
+    if ($result2==$result['reg_per_user']){
+        $_SESSION['errors_team']= "You can only make " .$result['reg_per_user']. " registration/s for this hackathon. <br> You have reached your limit!. <br> Edit your registration/s here <a href='../events/registered_events.php'> Registered Events </a>";
         header("Location: teamReg.php");
         exit(); 
     }
+    else if($result1){ 
+        $_SESSION['errors_team']= "This team name already exists. Please chose another team name.";
+        header("Location: teamReg.php");
+        exit(); 
+    }  
     else{
+        $_SESSION['errors_team']= "current count: " .$result2. " Allowed: " .$result['reg_per_user'];
         $query="INSERT INTO team_data(H_id,C_id,TName,TSchool,TMembers,Tuser_id) VALUES (:hackathon,:category,:TName,:TSchool,:TMembers,:Tuser_id);";
         $stmt=$pdo->prepare($query);
         $stmt->bindParam(":hackathon",$hackathon);

@@ -136,6 +136,7 @@
                                 <li>Max Number of People: <?php echo $event['MaxP']; ?></li>
                                 <li>Date: <?php echo $event['HDate']; ?></li>
                                 <li>Time: <?php echo $event['HTime']; ?></li>
+                                <li>Registrations Per User: <?php echo $event['reg_per_user']; ?></li>
                             </ul>
                         <a href="javascript:void(0);"  onclick="showModal('<?php echo $event['H_id'];?>','<?php echo $event['is_team'];?>')">
                         <button name="Register" class="btn-details">Register</button> </a>

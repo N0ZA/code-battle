@@ -335,9 +335,10 @@ main {
                             }
                             else{
                                 $TName = $_SESSION['TName'];
-                                $query1 = "SELECT * FROM team_data WHERE TName=:TName";
+                                $query1 = "SELECT * FROM team_data WHERE TName=:TName and H_id=:H_id";
                                 $stmt1 = $pdo->prepare($query1);
                                 $stmt1->bindParam(":TName", $TName);
+                                $stmt1->bindParam(":H_id",$_SESSION['H_id']);
                                 $stmt1->execute();
                                 $result1 = $stmt1->fetch();
                                 $result1['TMembers']++;
@@ -392,21 +393,21 @@ main {
                                     <input type="radio" id="cadet" name="category" class="form-check-input" value="1" <?php if ($jrCadet == 0) echo 'disabled'; ?> required>
                                     <label for="cadet" class="form-check-label">Cadet</label>
                                 </div>
-                                <span>Available seats: <?php echo $jrCadet; ?></span>
+                                <!--<span>Available seats: <?php echo $jrCadet; ?></span> -->
                             </div>
                             <div class="category-container">
                                 <div class="form-check">
                                     <input type="radio" id="captain" name="category" class="form-check-input" value="2" <?php if ($jrCaptain == 0) echo 'disabled'; ?> required>
                                     <label for="captain" class="form-check-label">Captain</label>
                                 </div>
-                                <span>Available seats: <?php echo $jrCaptain; ?></span>
+                                <!--<span>Available seats: <?php echo $jrCaptain; ?></span> -->
                             </div>
                             <div class="category-container">
                                 <div class="form-check">
                                     <input type="radio" id="colonel" name="category" class="form-check-input" value="3" <?php if ($jrColonel == 0) echo 'disabled'; ?> required>
                                     <label for="colonel" class="form-check-label">Colonel</label>
                                 </div>
-                                <span>Available seats: <?php echo $jrColonel; ?></span>
+                                <!--<span>Available seats: <?php echo $jrColonel; ?></span> -->
                             </div>
                         </div>
                         <button class="form-button" type="submit" name="Done">Done</button>    
@@ -438,7 +439,7 @@ main {
                     endif; ?>
                     <br></br>
                     <?php
-                         check_mem_errors();    
+                        check_mem_errors();    
                     ?>
                   <input type="hidden" name="source" value="<?php echo isset($_GET['source']) ? $_GET['source'] : ''; ?>">
                 </form>
