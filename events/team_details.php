@@ -82,7 +82,7 @@
         <div class="header-left">
             <img src="../images/codebattlelogo.png" alt="Logo" class="logo">
             <ul class="nav">
-                <li><a href="../dashboard.php">Home</a></li>
+        <!--    <li><a href="../dashboard.php">Home</a></li>   -->
                 <li><a href="registered_events.php">Registered Events</a></li>
             </ul>
         </div>
@@ -150,11 +150,11 @@
                             <div class="card-actions">
                                     <?php 
                                         if ($Hdetails[$CName]==0 || $team['TMembers']==$Hdetails['MaxP']): ?>
-                                            <a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>
+                                    <!-- <a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>  -->
                                             <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $team['TName']; ?>')"><i class="fas fa-trash"></i></a>
                                     <?php else: ?>
                                         <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=add" class="icon-link" ><i class="fas fa-plus"></i></a>
-                                        <a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>
+                                    <!--<a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a> -->
                                         <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $team['TName']; ?>')"><i class="fas fa-trash"></i></a>
                                     <?php endif; ?>
                             </div>

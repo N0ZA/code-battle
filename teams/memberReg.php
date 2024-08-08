@@ -335,9 +335,10 @@ main {
                             }
                             else{
                                 $TName = $_SESSION['TName'];
-                                $query1 = "SELECT * FROM team_data WHERE TName=:TName";
+                                $query1 = "SELECT * FROM team_data WHERE TName=:TName and H_id=:H_id";
                                 $stmt1 = $pdo->prepare($query1);
                                 $stmt1->bindParam(":TName", $TName);
+                                $stmt1->bindParam(":H_id",$_SESSION['H_id']);
                                 $stmt1->execute();
                                 $result1 = $stmt1->fetch();
                                 $result1['TMembers']++;
@@ -348,10 +349,10 @@ main {
                         <label for="Name">Name</label>
                         <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
                     </div>
-                    <div class="form-group">
+            <!--        <div class="form-group">
                         <label for="school">School</label>
                         <input type="text" id="school" name="school" class="form-control" placeholder="Enter your school name" required>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <label for="email">Email</label>
                         <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
@@ -369,8 +370,22 @@ main {
                             $jrColonel = $result['Jr_Colonel'];
                             $_SESSION['is_team']=$result["is_team"];
                         }
+                        $schools=[];
+                        $query="SELECT * FROM school_data";
+                        $stmt=$pdo->prepare($query);
+                        $stmt->execute();
+                        $schools=$stmt->fetchAll();
                     ?>
                     <?php if ($_SESSION['is_team'] == 0): ?>
+                        <div class="form-group">
+                            <label for="school">School</label>
+                            <select class="form-control" name="school" id="school" required>
+                                    <option value="" disabled selected>Select your School Name</option>
+                                <?php foreach ($schools as $school): ?>
+                                    <option value="<?php echo $school['ScName'] ?>"><?php echo $school['ScName']?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="category">Category</label>
                             <div class="category-container">
@@ -378,21 +393,21 @@ main {
                                     <input type="radio" id="cadet" name="category" class="form-check-input" value="1" <?php if ($jrCadet == 0) echo 'disabled'; ?> required>
                                     <label for="cadet" class="form-check-label">Cadet</label>
                                 </div>
-                                <span>Available seats: <?php echo $jrCadet; ?></span>
+                                <!--<span>Available seats: <?php echo $jrCadet; ?></span> -->
                             </div>
                             <div class="category-container">
                                 <div class="form-check">
                                     <input type="radio" id="captain" name="category" class="form-check-input" value="2" <?php if ($jrCaptain == 0) echo 'disabled'; ?> required>
                                     <label for="captain" class="form-check-label">Captain</label>
                                 </div>
-                                <span>Available seats: <?php echo $jrCaptain; ?></span>
+                                <!--<span>Available seats: <?php echo $jrCaptain; ?></span> -->
                             </div>
                             <div class="category-container">
                                 <div class="form-check">
                                     <input type="radio" id="colonel" name="category" class="form-check-input" value="3" <?php if ($jrColonel == 0) echo 'disabled'; ?> required>
                                     <label for="colonel" class="form-check-label">Colonel</label>
                                 </div>
-                                <span>Available seats: <?php echo $jrColonel; ?></span>
+                                <!--<span>Available seats: <?php echo $jrColonel; ?></span> -->
                             </div>
                         </div>
                         <button class="form-button" type="submit" name="Done">Done</button>    
@@ -424,7 +439,7 @@ main {
                     endif; ?>
                     <br></br>
                     <?php
-                         check_mem_errors();    
+                        check_mem_errors();    
                     ?>
                   <input type="hidden" name="source" value="<?php echo isset($_GET['source']) ? $_GET['source'] : ''; ?>">
                 </form>

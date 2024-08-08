@@ -7,25 +7,34 @@ require_once '../includes/config_session.inc.php';
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Pname = $_POST['name'];
     $PEmail = $_POST['email'];
-    $PSchool = $_POST['school'];
     
     if ($_SESSION['is_team']==0){       //solo regis-set variables
         $T_id=NULL;
         $H_id = $_SESSION['H_id'];
         $C_id = $_POST['category'];
+        $PSchool = $_POST['school'];
+
+        $query1 = "SELECT * FROM hackathon_data WHERE H_id=:H_id";
+        $stmt1 = $pdo->prepare($query1);
+        $stmt1->bindParam(":H_id", $H_id);
+        $stmt1->execute();
+        $result1=$stmt1->fetch();
+
     }
 
-    else if ($_SESSION['is_team']) {    //team regis-set variables
+    else if ($_SESSION['is_team']) {    //team regis of members-set variables
         $TName = $_SESSION['TName'];
-        $query1 = "SELECT T_id, H_id, C_id FROM team_data WHERE TName=:TName";
+        $query1 = "SELECT T_id, H_id, C_id FROM team_data WHERE TName=:TName and H_id=:H_id";
         $stmt1 = $pdo->prepare($query1);
         $stmt1->bindParam(":TName", $TName);
+        $stmt1->bindParam(":H_id",$_SESSION['H_id']);
         $stmt1->execute();
         $result1 = $stmt1->fetch();
        
-        $T_id = $result1['T_id'];
-        $H_id = $result1['H_id'];
-        $C_id = $result1['C_id'];
+        $T_id= $result1['T_id'];
+        $H_id= $result1['H_id'];
+        $C_id= $result1['C_id'];
+        $PSchool= $result1['TSchool'];
         $CName = ($C_id == 1) ? 'Jr_Cadet' : (($C_id == 2) ? 'Jr_Captain' : (($C_id == 3) ? 'Jr_Colonel' : 'Unknown'));
 
         
@@ -38,9 +47,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $result = $stmt->fetch();  
 
-    if ($result){
-        $_SESSION['errors_mem']='A registration with this name already exists';}
+    $query2='SELECT * FROM solo_data WHERE T_id is NULL and H_id=:H_id';
+    $stmt2 = $pdo->prepare($query2);
+    $stmt2->bindParam(":H_id", $H_id);
+    $stmt2->execute();
+    $result2=$stmt2->rowCount();
 
+    
+    if($_SESSION['is_team']==0){
+        if ($result2==$result1['reg_per_user']){
+            $_SESSION['errors_mem']= "You can only make " .$result['reg_per_user']. " registration/s for this hackathon. <br> You have reached your limit!. <br> Edit your registration/s here <a href='../events/registered_events.php'> Registered Events </a>";
+            header("Location: memberReg.php");
+            exit(); 
+        }
+    }
+    else if ($result){
+        $_SESSION['errors_mem']="A registration with this name already exists";
+    }
+    
     if (!empty($_SESSION['errors_mem'])) {
         header("Location: memberReg.php");
         exit();

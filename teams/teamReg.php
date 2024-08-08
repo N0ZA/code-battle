@@ -367,8 +367,21 @@
                                 $jrCaptain=$result['Jr_Captain'];
                                 $jrColonel=$result['Jr_Colonel'];
                             }
-                            ?>
-
+                            $schools=[];
+                            $query="SELECT * FROM school_data";
+                            $stmt=$pdo->prepare($query);
+                            $stmt->execute();
+                            $schools=$stmt->fetchAll();
+                        ?>
+                        <div class="form-group">
+                            <label for="school">School</label>
+                            <select class="form-control" name="school" id="school" required>
+                                    <option value="" disabled selected>Select your School Name</option>
+                                <?php foreach ($schools as $school): ?>
+                                    <option value="<?php echo $school['ScName'] ?>"><?php echo $school['ScName']?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </div>
                         <div class="form-group">
                             <label for="category">Category</label>
                             <div class="category-container">
@@ -376,21 +389,18 @@
                                     <input type="radio" id="cadet" name="category" class="form-check-input"  value="1" <?php if ($jrCadet == 0) echo 'disabled'; ?> required>
                                     <label for="cadet" class="form-check-label">Cadet</label>
                                 </div>
-                                <span>Available seats: <?php echo $jrCadet; ?> </span>
                             </div>
                             <div class="category-container">
                                 <div class="form-check">
                                     <input type="radio" id="captain" name="category" class="form-check-input"  value="2" <?php if ($jrCaptain == 0) echo 'disabled'; ?> required>
                                     <label for="captain" class="form-check-label">Captain</label>
                                 </div>
-                                <span>Available seats: <?php echo $jrCaptain; ?> </span>
                             </div>
                             <div class="category-container">
                                 <div class="form-check">
                                     <input type="radio" id="colonel" name="category" class="form-check-input" value="3" <?php if ($jrColonel == 0) echo 'disabled'; ?> required>
                                     <label for="colonel" class="form-check-label">Colonel</label>
                                 </div>
-                                <span>Available seats:  <?php echo $jrColonel; ?> </span>
                             </div>
                         </div>
                         <input type="hidden" name="jrCadet" value="<?php echo $jrCadet; ?>">
