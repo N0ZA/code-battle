@@ -16,7 +16,7 @@ require_once '../includes/config_session.inc.php';
             height: 100vh;
             margin: 0;
             background-color: #E3E3E3;
-            background-image: url(../Images/grids.jpeg);
+            background-image: url(../images/grids.jpeg);
             background-size: cover;
             color: white;
             font-family: Tahoma;
@@ -402,7 +402,7 @@ if(isset($_POST['HName'])){
 ?>
         <div class="The-Container">
             <!-- <div class="image-container">
-                <img src="../Images/Hackathon.png" alt="Image" class="image">
+                <img src="../images/Hackathon.png" alt="Image" class="image">
             </div> -->
             <div class="details-container">
 

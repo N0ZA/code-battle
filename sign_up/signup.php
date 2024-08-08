@@ -7,6 +7,10 @@
         header("Location: ../index.php");
         die();
     }
+    if ($_SERVER["REQUEST_METHOD"]=="GET"){
+      $H_id=$_GET['H'];
+      $is_team=$_GET['T'];
+    } 
 ?>
 
 <!DOCTYPE html>
@@ -37,6 +41,7 @@
       padding: 2rem;
       box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
       box-sizing: content-box;
+      
     }
     footer {
       background-color: #000000;
@@ -92,15 +97,94 @@
     .form-control, .form-check-input {
       border-radius: 20px;
       border: 1px solid #555555;
+    } .preloader {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: #272727;
+                color:#F73634;
+                font-size: x-large;
+                z-index: 9999;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+    .loader {
+        border: 8px solid #0000007c;
+        border-top: 8px solid #F73634;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 2s linear infinite;
     }
+
+    @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+    }
+    .button-container {
+            text-align: center;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            background-color: #F73634;
+            padding: 15px;
+            margin: auto;
+        }
+        button {
+            background-color: #F73634;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: large;
+            padding: 5px 30px;
+            margin-left: 1em;
+            border-radius: 18px;
+            font-weight: bold;
+        }
+.navbar {
+            background-color: #F73634;
+        }
+        .nav-link {
+            color: #ffffff !important;
+            font-size: 16px;
+        }
+        .nav-link:hover {
+            color: #ffcccc !important;
+        }
+       header {
+  position: relative;
+  z-index: 1000;
+}
+
+.navbar-toggler span {
+  color: #ffffff;
+}
   </style>
   <title>CodeBattle - Sign up</title>
 </head>
 <body>
-  <div class="button-container">
-    <img src="C:\Users\moham_jvk4ynn\Downloads\Logo.png" alt="CodeBattle Logo" class="img-fluid" style="max-width: 150px; margin-right: 10px;">
-    <div class="profile-dropdown"></div>
-  </div>
+<div class="preloader">
+  <div class="loader"></div>
+</div>
+<header>
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <a class="navbar-brand" href="#"><img src="https://github.com/N0ZA/code-battle/blob/main/Images/Logo.png?raw=true" alt="Code Battle" style="height: 60px;"></a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span><i class="fas fa-user"></i>&#x25BC;</span>      
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                    
+                        <a class="nav-link" href="../logout.php">Logout</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </header>
   <div class="form-container">
     <div class="form-group" id="rtype">
       <div class="btn-group btn-group-toggle justify-content-center" data-toggle="buttons">
@@ -131,6 +215,10 @@
             <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
           </div>
           <div class="form-group">
+            <label for="school-name">School Name:</label>
+            <input type="text" class="form-control" id="school-name" name="school-name" placeholder="Enter your school name" required>
+          </div> 
+          <div class="form-group">
             <label for="Username">Username:</label>
             <input type="text" class="form-control" id="Username" name="Username" placeholder="Choose a username" required>
           </div>
@@ -142,8 +230,10 @@
               check_signup_errors();
           ?>
           <input type="hidden" name="is_admin" value="2">  
+          <input type="hidden" name="H_id" value="<?php echo $H_id;?>">  
+          <input type="hidden" name="is_team" value="<?php echo $is_team; ?>">  
           <button type="submit" class="btn btn-primary" name="SignUp">Submit</button><br></br>
-          <p  style="font-size:large; text-align: center; color: red;">Already have an account? <a href="../index.php">Log In</a></p>
+          <p  style="font-size:large; text-align: center; color: red;">Already have an account? <a href="../index.php?H=<?php echo $H_id;?>&T=<?php echo $is_team;?>">Log In</a></p>
         </form>
       </div>
       <div id="teacher" style="display:none">
@@ -176,8 +266,10 @@
               check_signup_errors();
           ?>
           <input type="hidden" name="is_admin" value="3">
+          <input type="hidden" name="H_id" value="<?php echo $H_id;?>">  
+          <input type="hidden" name="is_team" value="<?php echo $is_team; ?>">  
           <button type="submit" class="btn btn-primary" name="SignUp">Submit</button><br></br>
-          <p  style="font-size:large; text-align: center; color: red;">Already have an account? <a href="../index.php">Log In</a></p>
+          <p  style="font-size:large; text-align: center; color: red;">Already have an account? <a href="../index.php?H=<?php echo $H_id;?>&T=<?php echo $is_team;?>">Log In</a>
         </form>
       </div>
       <div id="student" style="display:none">
@@ -197,11 +289,7 @@
           <div class="form-group">
             <label for="school-name">School Name:</label>
             <input type="text" class="form-control" id="school-name" name="school-name" placeholder="Enter your school name" required>
-          </div>
-          <div class="form-group">
-            <label for="class">Class/Grade:</label>
-            <input type="number" class="form-control" id="class" name="class" min="1" max="13" placeholder="Enter your grade" required>
-          </div>
+          </div>  
           <div class="form-group">
             <label for="username">Username:</label>
             <input type="text" class="form-control" id="Username" name="Username" placeholder="Choose a username" required>
@@ -214,15 +302,16 @@
               check_signup_errors();
           ?>
           <input type="hidden" name="is_admin" value="4">
+          <input type="hidden" name="H_id" value="<?php echo $H_id;?>">  
+          <input type="hidden" name="is_team" value="<?php echo $is_team; ?>">  
           <button type="submit" class="btn btn-primary" name="SignUp">Submit</button> <br></br>
-          <p  style="font-size:large; text-align: center; color: red;">Already have an account? <a href="../index.php">Log In</a></p>
+          <p  style="font-size:large; text-align: center; color: red;">Already have an account? <a href="../index.php?H=<?php echo $H_id;?>&T=<?php echo $is_team;?>">Log In</a></p>
         </form>
       </div>
     </div>
   </div>
   <footer>
-    <p>Code Battle &copy; 2024. All rights reserved. Made in U.A.E</p>
-    <p>Contact us at: info@codebattle.com</p>
+    <p>Code Battle &copy; 2024. All rights reserved. Made with ❤️ in U.A.E</p>
   </footer>
   <script>
     function toggleForm(x) {
@@ -236,4 +325,13 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 </body>
+    <script>
+      function load(){
+        const preloader = document.querySelector('.preloader');
+        preloader.style.display = 'none';
+      }
+
+      window.addEventListener('load', load);
+    </script>
+
 </html>

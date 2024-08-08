@@ -31,7 +31,7 @@ if(isset($_SESSION['H_added_criteria'])){
             min-height: 100vh;
             margin: 0;
             background-color: #E3E3E3;
-            background-image: url(../../Images/grids.jpeg);
+            background-image: url(../../images/grids.jpeg);
             background-size: cover;
             
             color: black;

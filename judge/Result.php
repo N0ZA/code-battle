@@ -63,7 +63,7 @@ $s7->bindParam(":H_id",$_SESSION['H_id']);
             min-height: 100vh;
             font-family: 'Arial', sans-serif;
             background-color: #E3E3E3;
-            background-image: url(../Images/grids.jpeg);
+            background-image: url(../images/grids.jpeg);
             background-size: cover;
             color: #F73634;
             margin: 0;

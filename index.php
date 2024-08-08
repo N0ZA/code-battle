@@ -11,7 +11,7 @@
             die();
         }
         else if($_SESSION["user_isadmin"]==2 || $_SESSION["user_isadmin"]==3 || $_SESSION["user_isadmin"]==4 ){
-            header("Location: login/dashboard.php");
+            header("Location: events/registered_events.php");
             $pdo=null;
             $stmt=null;
             die();
@@ -22,8 +22,12 @@
             $stmt=null;
             die();
         }
-        exit();
     }
+    if ($_SERVER["REQUEST_METHOD"]=="GET"){
+        $H_id=isset($_GET['H']) ? $_GET['H'] : NULL;
+        $is_team=isset($_GET['T']) ? $_GET['T']: NULL;
+      } 
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -39,7 +43,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #E3E3E3;
-    background-image: url(Images/grids.jpeg);
+    background-image: url(images/grids.jpeg);
     
     background-size: cover;
     overflow-x: hidden;
@@ -228,7 +232,7 @@ footer {
          
          <div class="logo">
    
-                <img src="Images/logob.png" alt="CodeBattle Image" >
+                <img src="images/logob.png" alt="CodeBattle Image" >
            
 </div>
               <h1><font color = "Black">Welcome</font> <font color = "#F73634">Back!</font></h1>
@@ -245,6 +249,9 @@ footer {
                 </div>
                 <!--<hr>-->
                 <button type="submit">Log In</button>
+                <p  style="font-size:large; text-align: center; color: red;">Don't have an account? 
+                <a href="sign_up/signup.php?H=<?php echo $H_id; ?>&T=<?php echo $is_team; ?>">Sign up</a>
+                </p>
             </form>
             <?php
                 check_login_errors();

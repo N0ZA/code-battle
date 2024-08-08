@@ -34,7 +34,7 @@ require_once "../admin/admin_functions.php";
             margin: 0;
             padding: 0;
             background-color: #E3E3E3;
-            background-image: url(../Images/grids.jpeg);
+            background-image: url(../images/grids.jpeg);
             background-size: cover;
             min-height: 100vh;
         }
