@@ -239,10 +239,10 @@ if(isset($_SESSION['H_created'])){
     <div class="category-container">
         <div class="category-item">
             <label for="jr-cadet">
-                <input type="checkbox" id="jr-cadet" name="Category[]" value="Jr_Cadet">
+                <input type="checkbox" id="jr-cadet" name="Category[]" value="Jr_Cadet" >
                 Jr Cadet
             </label>
-            <input id="SeatsCadet" type="number" name="SeatsCadet" placeholder="Seats" style="display: none;" />
+            <input id="SeatsCadet" type="number" name="SeatsCadet" placeholder="Seats" style="display: none;" min="0"/>
         </div>
 
         <div class="category-item">
@@ -250,7 +250,7 @@ if(isset($_SESSION['H_created'])){
                 <input type="checkbox" id="jr-captain" name="Category[]" value="Jr_Captain">
                 Jr Captain
             </label>
-            <input id="SeatsCaptain" type="number" name="SeatsCaptain" placeholder="Seats" style="display: none;" />
+            <input id="SeatsCaptain" type="number" name="SeatsCaptain" placeholder="Seats" style="display: none;" min="0"/>
         </div>
 
         <div class="category-item">
@@ -258,7 +258,7 @@ if(isset($_SESSION['H_created'])){
                 <input type="checkbox" id="jr-colonel" name="Category[]" value="Jr_Colonel">
                 Jr Colonel
             </label>
-            <input id="SeatsColonel" type="number" name="SeatsColonel" placeholder="Seats" style="display: none;" />
+            <input id="SeatsColonel" type="number" name="SeatsColonel" placeholder="Seats" style="display: none;" min="0"/>
         </div>
     </div>
 
@@ -275,9 +275,10 @@ if(isset($_SESSION['H_created'])){
     <div id="max-players">
         <input id="MaxP" type="number" name="MaxP" max="5" placeholder=" Maximum participants per team" />
     </div>
-    <textarea id="HDescription" name="HDescription" rows="5" placeholder=" Hackathon Description"></textarea>
+    <textarea id="Hdesc" name="Hdesc" rows="5" placeholder=" Hackathon Description"></textarea>
+    <label for="reg_per_user">Registration per User: <input id="reg_per_user" name="reg_per_user" type="number" min="0" placeholder=" Registration per User" required/></label>
     <button type="submit" id="nextButton">Next</button>
-</form>
+    </form>
 
 <script>
     function team() {

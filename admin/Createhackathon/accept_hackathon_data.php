@@ -22,17 +22,21 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
     $HName=$_POST["HName"];
     $HDate=$_POST["HDate"];
     $HTime=$_POST["HTime"];
+    $reg_per_user=$_POST["reg_per_user"];
+    $Hdesc=$_POST["Hdesc"];
     
     
     // $MaxP=$_POST["MaxP"];
     
     
 
-    $query="INSERT INTO hackathon_data(HName,HDate,HTime) VALUES (:HName,:HDate,:HTime);";
+    $query="INSERT INTO hackathon_data(HName,HDate,HTime,reg_per_user,Hdesc) VALUES (:HName,:HDate,:HTime,:reg_per_user,:Hdesc);";
     $stmt=$pdo->prepare($query);
     $stmt->bindParam(":HName",$HName);
     $stmt->bindParam(":HDate",$HDate);
     $stmt->bindParam(":HTime",$HTime);
+    $stmt->bindParam(":reg_per_user",$reg_per_user);
+    $stmt->bindParam(":Hdesc",$Hdesc);
     $stmt->execute();
 
     $query2="SELECT(H_id) from hackathon_data where HName=:HName;";
@@ -47,21 +51,26 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
     $Category=$_POST["Category"];
     if (isset($_POST["Category"])) {
         $categories = $_POST["Category"];
+        $num_participants = 0; 
         foreach ($categories as $selected) {
             switch ($selected) {
                 case "Jr_Cadet":
-                    $stmt = $pdo->prepare("UPDATE hackathon_data SET Jr_Cadet = 1 WHERE H_id = :H_id");
+                    $num_participants = $_POST["SeatsCadet"];
+                    $stmt = $pdo->prepare("UPDATE hackathon_data SET Jr_Cadet = 1, Jr_Cadet = :num_participants WHERE H_id = :H_id");
                     break;
                 case "Jr_Captain":
-                    $stmt = $pdo->prepare("UPDATE hackathon_data SET Jr_Captain = 1 WHERE H_id = :H_id");
+                    $num_participants = $_POST["SeatsCaptain"];
+                    $stmt = $pdo->prepare("UPDATE hackathon_data SET Jr_Captain = 1, Jr_Captain = :num_participants WHERE H_id = :H_id");
                     break;
                 case "Jr_Colonel":
-                    $stmt = $pdo->prepare("UPDATE hackathon_data SET Jr_Colonel = 1 WHERE H_id = :H_id");
+                    $num_participants = $_POST["SeatsColonel"];
+                    $stmt = $pdo->prepare("UPDATE hackathon_data SET Jr_Colonel = 1, Jr_Colonel = :num_participants WHERE H_id = :H_id");
                     break;
                 default:
                     break;
             }
             $stmt->bindParam(":H_id", $H_id);
+            $stmt->bindParam(":num_participants", $num_participants);
             $stmt->execute();
         }
     }
