@@ -9,10 +9,10 @@
         header("Location: ../index.php");
         exit();
     }    
-    //if (($_SESSION['M_CREATED']==1)){
-      // header("Location: ../teams/teamReg.php");
-        //exit();
-    //}
+    if ($_SESSION['new_TM']!=1){
+        header("Location: ../events/registered_events.php");
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -434,7 +434,9 @@ main {
                             $result3=$stmt3->fetch();
                             $C_id=$result3['C_id'];
                             $CName = ($C_id == 1) ? 'Jr_Cadet' : (($C_id == 2) ? 'Jr_Captain' : (($C_id == 3) ? 'Jr_Colonel' : 'Unknown'));
-
+                            
+                            check_mem_errors();
+                            
                             if ($result3[$CName]==1 || $result3['TMembers'] + 1 == $result3['MaxP']) {
                                 echo '<button class="form-button" type="submit" name="Done">Done</button>';
                             } 
@@ -446,6 +448,7 @@ main {
                                 echo '<button class="form-button" type="submit" name="Done">Done</button> ';
                             }
                     endif; ?>
+                    
                   <input type="hidden" name="source" value="<?php echo isset($_GET['source']) ? $_GET['source'] : ''; ?>">
                 </form>
             </div>

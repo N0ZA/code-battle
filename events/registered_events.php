@@ -7,6 +7,7 @@
         header("Location: ../index.php");
         exit();
     }
+    unset($_SESSION['new_TM']);
 
     function getImage($Folder = '../Images/eventreg/') {
         static $lastImage=-1; //static allows it to retain the value during function calls

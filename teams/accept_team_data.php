@@ -18,6 +18,24 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
     $stmt->execute();
     $result=$stmt->fetch();
 
+    //get team details
+    $query1='SELECT * FROM team_data WHERE H_id=:H_id and Tuser_id=:user_id';
+    $stmt1=$pdo->prepare($query1);
+    $stmt1->bindParam(":user_id",$_SESSION['user_id']);
+    $stmt1->bindParam(":H_id",$_SESSION['H_id']);
+    $stmt1->execute();
+    $teams=$stmt1->fetchAll();
+    
+    //deleting teams tht have  less than 2 members
+    foreach ($teams as $team) {
+        if ($team['TMembers']<2){
+            $query4='DELETE FROM team_data WHERE T_id=:T_id';
+            $stmt4=$pdo->prepare($query4);
+            $stmt4->bindParam(":T_id",$team['T_id']);
+            $stmt4->execute();
+        }
+    }
+
     $query1 = "SELECT * FROM team_data WHERE TName=:TName AND H_id=:H_id";
     $stmt1 = $pdo->prepare($query1);
     $stmt1->bindParam(":TName", $_SESSION['TName']);
@@ -38,7 +56,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
         exit(); 
     }
     else if($result1){ 
-        $_SESSION['errors_team']= "This team name already exists. Please chose another team name.";
+        $_SESSION['errors_team']= "This team name already exists. <br>Please chose another team name.";
         header("Location: teamReg.php");
         exit(); 
     }  

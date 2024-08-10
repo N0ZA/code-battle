@@ -15,10 +15,12 @@
                 exit();
             }
             else if (isset($_POST['Add_Team'])){         //Direct to team registration
+                $_SESSION['new_TM']=1;
                 header("Location: ../teams/teamReg.php");
                 exit();
             }
             elseif (isset($_POST['Add_Member'])) {      //Direct to solo registration
+                $_SESSION['new_TM']=1;
                 header("Location: ../teams/memberReg.php");
                 exit();
             }

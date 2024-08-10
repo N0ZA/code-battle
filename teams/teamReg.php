@@ -10,10 +10,10 @@
         header("Location: ../index.php");
         exit();
     }
-    //if(isset($_SESSION['T_CREATED'])){
-        //header("Location: memberRegistration.php");
-        //die();
-    //}
+    if ($_SESSION['new_TM']!=1){
+        header("Location: ../events/registered_events.php");
+        die();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -87,14 +87,14 @@
             padding: 5px;
             border: 1px solid #ced4da;
             border-radius: 5px;
-            margin-bottom: 5px;
+            margin-bottom: 1px;
 
         }
         
         .submit-button {
             display: flex;
             justify-content: center;
-            margin-top: 30px;
+            margin-top: 1rem;
         }
         
         .btn-dark-red {
@@ -105,7 +105,7 @@
             font-size: 1rem;
             padding: 0.5rem;
             width: 100%;
-            margin-top: 2rem;
+            margin-top: 1rem;
             margin-bottom: 0%;
         }
         .btn-dark-red:hover {

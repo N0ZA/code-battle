@@ -40,7 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
     }
     //check error for both solo registration and team members
-    $query='SELECT * FROM solo_data WHERE T_id=:T_id and PName=:Pname';
+    $query='SELECT * FROM solo_data WHERE T_id=:T_id  OR (T_id IS NULL AND :T_id IS NULL)and PName=:Pname';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":Pname", $Pname);
     $stmt->bindParam(":T_id", $T_id);
@@ -53,19 +53,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt2->execute();
     $result2=$stmt2->rowCount();
 
-    
     if($_SESSION['is_team']==0){
         if ($result2==$result1['reg_per_user']){
             $_SESSION['errors_mem']= "You can only make " .$result1['reg_per_user']. " registration/s for this hackathon. <br> You have reached your limit!.";
-            header("Location: memberReg.php");
-            exit(); 
         }
     }
-    else if ($result){
+    if ($result){
         $_SESSION['errors_mem']="A registration with this name already exists";
     }
     
-    if (!empty($_SESSION['errors_mem'])) {
+    if (!empty($_SESSION['errors_mem'])) {  
         header("Location: memberReg.php");
         exit();
     }   
@@ -101,6 +98,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             exit();
         } 
         elseif (isset($_POST['Done'])) {
+            unset($_SESSION['new_TM']);
             $source=$_POST['source'];
             if ($source=='eventedit'){
                 header("Location: ../events/team_details.php");} 
