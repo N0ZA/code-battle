@@ -390,19 +390,19 @@
                             <div class="category-container">
                                 <div class="form-check">
                                     <input type="radio" id="cadet" name="category" class="form-check-input"  value="1" <?php if ($jrCadet == 0) echo 'disabled'; ?> required>
-                                    <label for="cadet" class="form-check-label">Cadet</label>
+                                    <label for="cadet" class="form-check-label">Jr Cadet</label>
                                 </div>
                             </div>
                             <div class="category-container">
                                 <div class="form-check">
                                     <input type="radio" id="captain" name="category" class="form-check-input"  value="2" <?php if ($jrCaptain == 0) echo 'disabled'; ?> required>
-                                    <label for="captain" class="form-check-label">Captain</label>
+                                    <label for="captain" class="form-check-label">Jr Captain</label>
                                 </div>
                             </div>
                             <div class="category-container">
                                 <div class="form-check">
                                     <input type="radio" id="colonel" name="category" class="form-check-input" value="3" <?php if ($jrColonel == 0) echo 'disabled'; ?> required>
-                                    <label for="colonel" class="form-check-label">Colonel</label>
+                                    <label for="colonel" class="form-check-label">Jr Colonel</label>
                                 </div>
                             </div>
                         </div>

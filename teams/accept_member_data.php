@@ -40,13 +40,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         
     }
     //check error for both solo registration and team members
-    $query='SELECT * FROM solo_data WHERE T_id=:T_id  OR (T_id IS NULL AND :T_id IS NULL)and PName=:Pname';
-    $stmt = $pdo->prepare($query);
-    $stmt->bindParam(":Pname", $Pname);
-    $stmt->bindParam(":T_id", $T_id);
-    $stmt->execute();
-    $result = $stmt->fetch();  
-
     $query2='SELECT * FROM solo_data WHERE T_id is NULL and H_id=:H_id';
     $stmt2 = $pdo->prepare($query2);
     $stmt2->bindParam(":H_id", $H_id);
@@ -55,9 +48,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if($_SESSION['is_team']==0){
         if ($result2==$result1['reg_per_user']){
-            $_SESSION['errors_mem']= "You can only make " .$result1['reg_per_user']. " registration/s for this hackathon. <br> You have reached your limit!.";
+            $_SESSION['errors_mem']= "You can only make " .$result1['reg_per_user']. " registration/s for this hackathon. <br> You have reached your limit!";
         }
+        $query = 'SELECT * FROM solo_data WHERE T_id IS NULL AND PName=:Pname AND H_id=:H_id';
+        $stmt = $pdo->prepare($query);
     }
+    else if($_SESSION['is_team']==1) {
+        $query = 'SELECT * FROM solo_data WHERE T_id=:T_id AND PName=:Pname AND H_id=:H_id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":T_id", $T_id);
+    }
+    
+    $stmt->bindParam(":Pname", $Pname);
+    $stmt->bindParam(":H_id", $H_id);
+    $stmt->execute();
+    $result = $stmt->fetch();  
     if ($result){
         $_SESSION['errors_mem']="A registration with this name already exists";
     }

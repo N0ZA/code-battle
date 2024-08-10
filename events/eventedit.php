@@ -12,6 +12,7 @@
 
 
         if ($action=="add"){
+            $_SESSION['new_TM']=1;
             header("Location: ../teams/memberReg.php?source=eventedit");
         }
         else if  ($action=="delete"){

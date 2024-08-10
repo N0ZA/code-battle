@@ -398,21 +398,21 @@ main {
                             <div class="category-container">
                                 <div class="form-check">
                                     <input type="radio" id="cadet" name="category" class="form-check-input" value="1" <?php if ($jrCadet == 0) echo 'disabled'; ?> required>
-                                    <label for="cadet" class="form-check-label">Cadet</label>
+                                    <label for="cadet" class="form-check-label">Jr Cadet</label>
                                 </div>
                                 <!--<span>Available seats: <?php echo $jrCadet; ?></span> -->
                             </div>
                             <div class="category-container">
                                 <div class="form-check">
                                     <input type="radio" id="captain" name="category" class="form-check-input" value="2" <?php if ($jrCaptain == 0) echo 'disabled'; ?> required>
-                                    <label for="captain" class="form-check-label">Captain</label>
+                                    <label for="captain" class="form-check-label">Jr Captain</label>
                                 </div>
                                 <!--<span>Available seats: <?php echo $jrCaptain; ?></span> -->
                             </div>
                             <div class="category-container">
                                 <div class="form-check">
                                     <input type="radio" id="colonel" name="category" class="form-check-input" value="3" <?php if ($jrColonel == 0) echo 'disabled'; ?> required>
-                                    <label for="colonel" class="form-check-label">Colonel</label>
+                                    <label for="colonel" class="form-check-label">Jr Colonel</label>
                                 </div>
                                 <!--<span>Available seats: <?php echo $jrColonel; ?></span> -->
                             </div>
@@ -426,7 +426,6 @@ main {
                             $query3='SELECT T.TMembers,T.C_id, H.MaxP, H.Jr_Cadet, H.Jr_Captain, H.Jr_Colonel FROM team_data T
                             JOIN hackathon_data H ON T.H_id = H.H_id
                             WHERE T.TName=:TName AND H.H_id=:H_id';
-                            
                             $stmt3 = $pdo->prepare($query3);
                             $stmt3->bindParam(":TName", $TName);
                             $stmt3->bindParam(":H_id", $_SESSION['H_id']);  
