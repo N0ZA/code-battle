@@ -8,13 +8,11 @@
     if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
         header("Location: ../index.php");
         exit();
-    }
-    if ($_SESSION['is_team']==1){
-        if (!isset($_SESSION['TName'])){
-            header("Location: ../events/team_details.php");
-            exit();
-       }
-    }
+    }    
+    //if (($_SESSION['M_CREATED']==1)){
+      // header("Location: ../teams/teamReg.php");
+        //exit();
+    //}
 ?>
 
 <!DOCTYPE html>
@@ -308,6 +306,9 @@ main {
         <div class="header">
             <div class="header-left">
                 <img src="https://github.com/N0ZA/code-battle/blob/main/Images/Logo.png?raw=true" alt="Logo" class="logo">
+                <ul class="nav">
+                    <li><a href="../events/registered_events.php">Registered Events</a></li> 
+                </ul>
             </div>
             <div class="header-right">
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -416,6 +417,9 @@ main {
                                 <!--<span>Available seats: <?php echo $jrColonel; ?></span> -->
                             </div>
                         </div>
+                        <?php
+                            check_mem_errors();
+                        ?>
                         <button class="form-button" type="submit" name="Done">Done</button>    
                     <?php else: ?>
                         <?php
@@ -431,7 +435,6 @@ main {
                             $C_id=$result3['C_id'];
                             $CName = ($C_id == 1) ? 'Jr_Cadet' : (($C_id == 2) ? 'Jr_Captain' : (($C_id == 3) ? 'Jr_Colonel' : 'Unknown'));
 
-             
                             if ($result3[$CName]==1 || $result3['TMembers'] + 1 == $result3['MaxP']) {
                                 echo '<button class="form-button" type="submit" name="Done">Done</button>';
                             } 
@@ -443,10 +446,6 @@ main {
                                 echo '<button class="form-button" type="submit" name="Done">Done</button> ';
                             }
                     endif; ?>
-                    <br></br>
-                    <?php
-                        check_mem_errors();    
-                    ?>
                   <input type="hidden" name="source" value="<?php echo isset($_GET['source']) ? $_GET['source'] : ''; ?>">
                 </form>
             </div>

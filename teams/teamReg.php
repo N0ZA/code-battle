@@ -10,10 +10,10 @@
         header("Location: ../index.php");
         exit();
     }
-    if(isset($_SESSION['T_CREATED'])){
+    //if(isset($_SESSION['T_CREATED'])){
         //header("Location: memberRegistration.php");
         //die();
-    }
+    //}
 ?>
 
 <!DOCTYPE html>
@@ -328,6 +328,9 @@
         <div class="header">
             <div class="header-left">
                 <img src="https://github.com/N0ZA/code-battle/blob/main/Images/Logo.png?raw=true" alt="Logo" class="logo">
+                <ul class="nav">
+                    <li><a href="../events/registered_events.php">Registered Events</a></li> 
+                </ul>
             </div>
             <div class="header-right">
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -407,7 +410,8 @@
                         <input type="hidden" name="jrCaptain" value="<?php echo $jrCaptain; ?>">
                         <input type="hidden" name="jrColonel" value="<?php echo $jrColonel  ; ?>">
                         <?php
-                            check_team_errors();?>
+                            check_team_errors();
+                        ?>
                         <div class="submit-button">
                             <button type="submit" class="btn btn-dark-red">Create Team</button>
                         </div>

@@ -33,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
     $result2=$stmt2->rowCount();
 
     if ($result2==$result['reg_per_user']){
-        $_SESSION['errors_team']= "You can only make " .$result['reg_per_user']. " registration/s for this hackathon. <br> You have reached your limit!. <br> Edit your registration/s here <a href='../events/registered_events.php'> Registered Events </a>";
+        $_SESSION['errors_team']= "You can only make " .$result['reg_per_user']. " registration/s for this hackathon. <br> You have reached your limit!.";
         header("Location: teamReg.php");
         exit(); 
     }
