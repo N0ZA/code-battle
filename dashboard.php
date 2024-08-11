@@ -81,18 +81,18 @@
             <div class="header-left">
                 <img src="images/codebattlelogo.png" alt="Logo" class="logo">
                 <ul class="nav">
-                    <li><a href="dashboard.php">Home</a></li>
-                <!--    <li><a href="events/registered_events.php">Registered Events</a></li>  -->
+                   <!-- <li><a href="dashboard.php">Home</a></li>
+                    <li><a href="events/registered_events.php">Registered Events</a></li>
                 </ul>
             </div>
-            <!-- <div class="header-right">
+            <div class="header-right">
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
                     <div class="dropdown-container">
                         <button class="dropbtn"><i class="fas fa-user"></i>&#x25BC;</button>
                         <div id="profile-dropdown" class="dropdown-content">
                             <a onclick="window.location.href='logout.php';">Logout</a>
                         </div>
-                    </div>  -->
+                    </div> -->
                 <!--<img src="images/profile-icon.png" alt="Profile" class="profile-icon" onclick="toggleDropdown()">
                 <div id="profile-dropdown" class="dropdown-content">
                     <a href="#">Logout</a> 
