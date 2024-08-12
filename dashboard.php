@@ -65,7 +65,7 @@
         });
         const baseURL = window.location.origin;
         function showModal(h_id,is_team) {
-            <?php if (isset($_SESSION['user_isadmin']) && $_SESSION['user_isadmin'] == 3): ?>
+            <?php if (isset($_SESSION['user_isadmin']) && $_SESSION['user_isadmin']==1): ?>
                 const eventLink =`${baseURL}/code-battle/events/eventreg.php?H=${h_id}&T=${is_team}&L=yes`;
                 document.getElementById("event-link").textContent=eventLink ;
                 document.getElementById("register-button").onclick= function() {
