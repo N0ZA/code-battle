@@ -83,7 +83,7 @@
                 <ul class="nav">
                    <!-- <li><a href="dashboard.php">Home</a></li>
                     <li><a href="events/registered_events.php">Registered Events</a></li>
-                </ul>
+                </ul>-->
             </div>
             <div class="header-right">
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -92,7 +92,7 @@
                         <div id="profile-dropdown" class="dropdown-content">
                             <a onclick="window.location.href='logout.php';">Logout</a>
                         </div>
-                    </div> -->
+                    </div> 
                 <!--<img src="images/profile-icon.png" alt="Profile" class="profile-icon" onclick="toggleDropdown()">
                 <div id="profile-dropdown" class="dropdown-content">
                     <a href="#">Logout</a> 
