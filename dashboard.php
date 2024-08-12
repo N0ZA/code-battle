@@ -14,7 +14,12 @@
         $images=glob($Folder.'*.{jpg,jpeg,png,gif}', GLOB_BRACE); 
         sort($images);
         $lastImage=($lastImage+1) % count($images);
-        return $images[$lastImage];
+        $imagePath = $images[$lastImage];
+        $imageName = basename($imagePath);
+        return [
+            'path' => $imagePath,
+            'name' => $imageName
+        ];
     }
  
     //get user details
@@ -125,7 +130,18 @@
             <div class="events">
                 <?php foreach ($events as $event): ?>
                     <div class="events-card">
-                        <img src="<?php echo getImage(); ?>" alt="<?php echo $event['HName']; ?>">
+                        <?php 
+                            $imageData = getImage();
+                            $imagePath = $imageData['path'];
+                            $imageName = $imageData['name'];
+
+                            $query = 'UPDATE hackathon_data SET HImage=:HImage WHERE H_id=:H_id';
+                            $stmt = $pdo->prepare($query);
+                            $stmt->bindParam(':HImage', $imageName);
+                            $stmt->bindParam(':H_id', $event['H_id']);
+                            $stmt->execute();
+                        ?>
+                        <img src="<?php echo $imagePath ?>" alt="<?php echo $event['HName']; ?>">
                         <div class="card-details">
                             <h3><?php echo $event['HName']; ?>
                             <?php if ($event['is_team']): ?>
