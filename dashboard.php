@@ -129,10 +129,6 @@
                                 [SOLO BASED]
                             <?php endif; ?></h3>
                             <ul>   
-                                <li>Seats in Each Category:</li>
-                                <li>Jr Cadet:<?php echo $event['Jr_Cadet']; ?>
-                                Jr Captain:<?php echo $event['Jr_Captain']; ?>
-                                Jr Colonel:<?php echo $event['Jr_Colonel']; ?></li>
                                 <li>Max Number of People: <?php echo $event['MaxP']; ?></li>
                                 <li>Date: <?php echo $event['HDate']; ?></li>
                                 <li>Time: <?php echo $event['HTime']; ?></li>
