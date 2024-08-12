@@ -43,11 +43,12 @@
             $stmt4=$pdo->prepare($query4);
             $stmt4->bindParam(":T_id",$team['T_id']);
             $stmt4->execute();
+            unset($_SESSION['TName']);
         }
     }
     //get the team details again after updating
     $stmt1->execute();
-    $teams=$stmt1->fetchAll();
+    $teams=$stmt1->fetchAll();   
 ?>
 
 <!DOCTYPE html>
@@ -162,11 +163,11 @@
                             <div class="card-actions">
                                     <?php 
                                         if ($Hdetails[$CName]==0 || $team['TMembers']==$Hdetails['MaxP']): ?>
-                                    <!-- <a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>  -->
+                                            <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>
                                             <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $team['TName']; ?>')"><i class="fas fa-trash"></i></a>
                                     <?php else: ?>
                                         <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=add" class="icon-link" ><i class="fas fa-plus"></i></a>
-                                    <!--<a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a> -->
+                                        <a href="eventedit.php? team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>
                                         <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $team['TName']; ?>')"><i class="fas fa-trash"></i></a>
                                     <?php endif; ?>
                             </div>

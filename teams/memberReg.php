@@ -9,9 +9,18 @@
         header("Location: ../index.php");
         exit();
     }    
-    if ($_SESSION['new_TM']!=1){
+    if ($_SESSION['new_TM']!=1 && $_SESSION['new_TM']!=2){
         header("Location: ../events/registered_events.php");
         exit();
+    }
+
+    if ($_SESSION['new_TM'] == 2) {
+        //existing member data
+        $query = "SELECT * FROM solo_data WHERE P_id=:P_id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":P_id", $_GET['S']);
+        $stmt->execute();
+        $memberData = $stmt->fetch();
     }
 ?>
 
@@ -340,30 +349,38 @@ main {
                             if ($_SESSION['is_team'] == 0){
                                 $result1['TMembers']=NULL;
                             }
-                            else{
+                            else if ($_SESSION['is_team'] == 1){
                                 $TName = $_SESSION['TName'];
-                                $query1 = "SELECT * FROM team_data WHERE TName=:TName and H_id=:H_id";
-                                $stmt1 = $pdo->prepare($query1);
-                                $stmt1->bindParam(":TName", $TName);
-                                $stmt1->bindParam(":H_id",$_SESSION['H_id']);
-                                $stmt1->execute();
-                                $result1 = $stmt1->fetch();
-                                $result1['TMembers']++;
+                                if ($_SESSION['new_TM']!=2){
+                                    $query1 = "SELECT * FROM team_data WHERE TName=:TName and H_id=:H_id";
+                                    $stmt1 = $pdo->prepare($query1);
+                                    $stmt1->bindParam(":TName", $TName);
+                                    $stmt1->bindParam(":H_id",$_SESSION['H_id']);
+                                    $stmt1->execute();
+                                    $result1 = $stmt1->fetch();
+                                    $result1['TMembers']++;
+                                }
                             }   
                         ?>
-                        <h2>Enter Member <?php echo $result1['TMembers'];?> Details For <font color="#F73634"> <?php echo $result2['HName']; ?> </font></h2>
+                        <?php if ($_SESSION['new_TM'] == 2):?>
+                            <h2>Edit Member Details For <font color="#F73634"> <?php echo $result2['HName']; ?> </font></h2>
+                        <?php else: ?>
+                            <h2>Enter Member <?php echo $result1['TMembers'];?> Details For <font color="#F73634"> <?php echo $result2['HName']; ?> </font></h2>
+                        <?php endif ?>
                         <div class="form-group">
-                        <label for="Name">Name</label>
-                        <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
-                    </div>
-            <!--        <div class="form-group">
-                        <label for="school">School</label>
-                        <input type="text" id="school" name="school" class="form-control" placeholder="Enter your school name" required>
-                    </div> -->
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
-                    </div>
+                            <label for="Name">Name</label>
+                            <?php if ($_SESSION['new_TM'] == 2):?>
+                                <input type="text" id="name" name="name" class="form-control" value="<?php echo $memberData['PName']?>" required>
+                            <?php else:?>
+                                <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required> <?php endif; ?>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <?php if ($_SESSION['new_TM'] == 2):?>
+                                <input type="email" id="email" name="email" class="form-control"  value="<?php echo $memberData['PEmail']?>" required>
+                            <?php else:?>
+                                <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required><?php endif; ?>
+                        </div>
                     <?php
                         //$_Session['hackathon'] shud be taken from the dashboard, based on which hackathon user chooses to register;
                         if (isset($_SESSION['H_id'])){
@@ -436,18 +453,18 @@ main {
                             
                             check_mem_errors();
                             
-                            if ($result3[$CName]==1 || $result3['TMembers'] + 1 == $result3['MaxP']) {
+                            if ($result3[$CName]==1 || $result3['TMembers'] + 1 == $result3['MaxP'] || $_SESSION['new_TM'] == 2) {
                                 echo '<button class="form-button" type="submit" name="Done">Done</button>';
                             } 
                             else if ($result3['TMembers']==0) {
                                 echo '<button class="form-button" type="submit" name="Add_Member">Add Member</button>';
-                            } 
+                            }
                             else{
                                 echo '<button class="form-button" type="submit" name="Add_Member">Add Member</button>';
                                 echo '<button class="form-button" type="submit" name="Done">Done</button> ';
                             }
                     endif; ?>
-                    
+                  <input type="hidden" name="solo_Id" value="<?php echo isset($_GET['S']) ? $_GET['S'] : ''; ?>">  
                   <input type="hidden" name="source" value="<?php echo isset($_GET['source']) ? $_GET['source'] : ''; ?>">
                 </form>
             </div>

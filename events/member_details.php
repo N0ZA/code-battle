@@ -21,12 +21,34 @@
     $stmt->bindParam(":user_id",$_SESSION['user_id']);
     $stmt->execute();
     $user = $stmt->fetch();
+    //get member details for a team
+    if (isset($_SESSION['TName']) && !empty($_SESSION['TName'])){
+        $query='SELECT T_id FROM team_data WHERE TName=:TName';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":TName",$_SESSION['TName']);
+        $stmt->execute();
+        $result=$stmt->fetch();
+        $T_id=$result['T_id'];
 
-    //get team details
-    $query1='SELECT * FROM solo_data WHERE H_id=:H_id and Puser_id=:user_id and T_id is NULL';
-    $stmt1=$pdo->prepare($query1);
+        $query1='SELECT * FROM solo_data WHERE H_id=:H_id and Puser_id=:user_id and T_id=:T_id';
+        $stmt1=$pdo->prepare($query1);
+        $stmt1->bindParam(":T_id", $T_id); //tname has T_id from eventedit.php link
+    }    
+    //get member details for solo event
+    else{
+        $query1='SELECT * FROM solo_data WHERE H_id=:H_id and Puser_id=:user_id and T_id IS NULL';
+        $stmt1=$pdo->prepare($query1);
+        $stmt1->bindParam(":user_id",$_SESSION['user_id']);
+        $stmt1->bindParam(":H_id",$_SESSION['H_id']);   
+        $stmt1->execute();
+        $solos=$stmt1->fetchAll();
+        if (!$solos) {
+            header("Location: team_details.php");
+            exit(); 
+        }
+    }
     $stmt1->bindParam(":user_id",$_SESSION['user_id']);
-    $stmt1->bindParam(":H_id",$_SESSION['H_id']);
+    $stmt1->bindParam(":H_id",$_SESSION['H_id']);   
     $stmt1->execute();
     $solos=$stmt1->fetchAll();
 
@@ -106,12 +128,14 @@
         </div>
     </div>   
     <div class="teams-title">
-        <h2>Registered Members </h2> <h4>For Hackathon <span class="username"><?php echo $Hdetails['HName']; ?></h4></span>
+        <h2>Registered Members </h2> <h4>For Hackathon <span class="username"><?php echo $Hdetails['HName'];?> </span>
+        <?php if ($_SESSION['is_team']==1): ?> for Team <span class="username"><?php echo $_SESSION['TName'];  endif ?>  </span></h4>
     </div>
         <div class="team-card-container">
         <?php 
         if (!empty($solos)): ?>
-           <?php foreach ($solos as $solo): ?>
+           <?php $memCount = 1;
+            foreach ($solos as $solo): ?>
                 <div class="team-card" id="<?php echo $solo['PName']; ?>" onclick="CardClick(this)">
                     <div class="card-inner">
                         <div class="card-front">
@@ -126,8 +150,12 @@
                         </div>
                         <div class="card-back">
                             <div class="card-members">
-                                <p> MEMBER DETAILS</p>
-                                <ul class="member-list">
+                                <?php if ($solo['T_id']==NULL): ?>
+                                    <p> MEMBER DETAILS</p>
+                                <?php else: ?>
+                                    <p> MEMBER <?php echo $memCount; ?> DETAILS</p>
+                                <?php endif; ?>
+                                        <ul class="member-list">
                                             <li>Name: <?php echo $solo['PName']; ?></li>
                                             <li>Category: <?php echo $CName; ?></li>
                                             <li>Email: <?php echo $solo['PEmail']; ?></li>
@@ -135,11 +163,13 @@
                                 </ul>
                             </div>  
                             <div class="card-actions">
-                                 <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $solo['PName']; ?>')"><i class="fas fa-trash"></i></a>   
+                                <a href="eventedit.php?Solo=<?php echo $solo['P_id']; ?>&action=Sedit" class="icon-link" ><i class="fas fa-edit"></i></a>
+                                <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $solo['PName']; ?>')"><i class="fas fa-trash"></i></a>   
                             </div>
                         </div>
                     </div>
                 </div>
+                <?php $memCount++; ?>
             <?php endforeach; ?>
             <?php else: ?>
                 <p>You have not registered any members yet.</p>

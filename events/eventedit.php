@@ -6,10 +6,11 @@
     require_once '../includes/config_session.inc.php';
 
     if ($_SERVER['REQUEST_METHOD']=='GET') {
-        $_SESSION['TName'] = $_GET['team'];
+        $_SESSION['TName'] = isset($_GET['team']) ? $_GET['team']:  $_SESSION['TName'];
         $PName=$_GET['solo'];
+        $P_id=$_GET['Solo'];
         $action = $_GET['action'];
-
+        echo $_SESSION['TName'];
 
         if ($action=="add"){
             $_SESSION['new_TM']=1;
@@ -21,6 +22,7 @@
             $stmt1->bindParam(":TName", $_SESSION['TName']);
             $stmt1->execute();
             $result1=$stmt1->fetch();
+            unset($_SESSION['TName']);
             header("Location: team_details.php");
         }
         else if  ($action=="Sdelete"){
@@ -29,11 +31,20 @@
             $stmt1->bindParam(":PName", $PName);
             $stmt1->execute();
             $result1=$stmt1->fetch();
-            header("Location: member_details.php");
+
+            $query2="UPDATE team_data SET TMembers=TMembers-1 WHERE TName=:TName";
+            $stmt2= $pdo->prepare($query2);
+            $stmt2->bindParam(":TName", $_SESSION['TName']);
+            $stmt2->execute();
+            unset($_SESSION['TName']);
+            header("Location: team_details.php");
         }
         else if  ($action=="edit"){
-
-
+            header("Location: member_details.php");
+        }
+        else if  ($action=="Sedit"){
+            $_SESSION['new_TM']=2;
+            header("Location: ../teams/memberReg.php?S=" .$P_id);
         }
     
     }

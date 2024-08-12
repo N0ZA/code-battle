@@ -33,6 +33,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
             $stmt4=$pdo->prepare($query4);
             $stmt4->bindParam(":T_id",$team['T_id']);
             $stmt4->execute();
+            unset($_SESSION['TName']);
         }
     }
 
