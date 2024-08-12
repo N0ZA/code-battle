@@ -403,32 +403,52 @@ main {
                     <?php if ($_SESSION['is_team'] == 0): ?>
                         <div class="form-group">
                             <label for="school">School</label>
-                            <select class="form-control" name="school" id="school" required>
+                                <select class="form-control" name="school" id="school" required>
                                     <option value="" disabled selected>Select your School Name</option>
                                 <?php foreach ($schools as $school): ?>
-                                    <option value="<?php echo $school['ScName'] ?>"><?php echo $school['ScName']?></option>
+                                    <?php if ($_SESSION['new_TM'] == 2):?>
+                                        <option value="<?php echo $school['ScName']?>" <?php if ($school['ScName']==$memberData['PSchool']):?> selected <?php endif; ?>><?php echo $school['ScName']?></option>
+                                    <?php else:?>
+                                        <option value="<?php echo $school['ScName'] ?>"><?php echo $school['ScName']?></option>
+                                    <?php endif; ?>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="form-group">
+                            <?php $CName =($memberData['C_id']==1)?'Jr_Cadet' : (($memberData['C_id']==2)?'Jr_Captain' : (($memberData['C_id']==3)?'Jr_Colonel' : 'Unknown')); ?>
                             <label for="category">Category</label>
                             <div class="category-container">
                                 <div class="form-check">
-                                    <input type="radio" id="cadet" name="category" class="form-check-input" value="1" <?php if ($jrCadet == 0) echo 'disabled'; ?> required>
-                                    <label for="cadet" class="form-check-label">Jr Cadet</label>
+                                    <?php if ($_SESSION['new_TM'] == 2):?>
+                                        <input type="radio" id="cadet" name="category" class="form-check-input" value="1" <?php if ($jrCadet==0) echo 'disabled'; ?> 
+                                        <?php if ($CName=='Jr_Cadet') echo 'checked'; ?> required>       
+                                    <?php else:?>
+                                        <input type="radio" id="cadet" name="category" class="form-check-input" value="1" <?php if ($jrCadet==0) echo 'disabled'; ?> required>
+                                    <?php endif; ?>    
+                                        <label for="cadet" class="form-check-label">Jr Cadet</label>
                                 </div>
                                 <!--<span>Available seats: <?php echo $jrCadet; ?></span> -->
                             </div>
                             <div class="category-container">
                                 <div class="form-check">
+                                <?php if ($_SESSION['new_TM'] == 2):?> 
+                                    <input type="radio" id="captain" name="category" class="form-check-input" value="2" <?php if ($jrCaptain == 0) echo 'disabled'; ?> 
+                                    <?php if ($CName=='Jr_Captain') echo 'checked'; ?> required>
+                                <?php else:?> 
                                     <input type="radio" id="captain" name="category" class="form-check-input" value="2" <?php if ($jrCaptain == 0) echo 'disabled'; ?> required>
+                                <?php endif; ?>
                                     <label for="captain" class="form-check-label">Jr Captain</label>
                                 </div>
                                 <!--<span>Available seats: <?php echo $jrCaptain; ?></span> -->
                             </div>
                             <div class="category-container">
                                 <div class="form-check">
+                                <?php if ($_SESSION['new_TM'] == 2):?>
+                                    <input type="radio" id="colonel" name="category" class="form-check-input" value="3" <?php if ($jrColonel == 0) echo 'disabled'; ?> 
+                                    <?php if ($CName=='Jr_Colonel') echo 'checked'; ?> required>
+                                <?php else:?>
                                     <input type="radio" id="colonel" name="category" class="form-check-input" value="3" <?php if ($jrColonel == 0) echo 'disabled'; ?> required>
+                                <?php endif; ?>
                                     <label for="colonel" class="form-check-label">Jr Colonel</label>
                                 </div>
                                 <!--<span>Available seats: <?php echo $jrColonel; ?></span> -->
