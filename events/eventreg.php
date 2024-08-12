@@ -45,12 +45,14 @@
         $result=$stmt->fetchColumn();     //fetchColumn gives count directly
 
         if ($result==0){            //to make sure, if event already exists, we dont have to insert again
-            $query1='INSERT INTO event_reg (user_id,H_id) VALUES (:user_id, :H_id)';
-            $stmt1 = $pdo->prepare($query1);
-            $stmt1->bindParam(":H_id", $_SESSION['H_id']);
-            $stmt1->bindParam(":user_id", $_SESSION['user_id']);
-            $stmt1->execute();
-        }
+            if (!empty($_SESSION['H_id'])) {
+                $query1='INSERT INTO event_reg (user_id,H_id) VALUES (:user_id, :H_id)';
+                $stmt1 = $pdo->prepare($query1);
+                $stmt1->bindParam(":H_id", $_SESSION['H_id']);
+                $stmt1->bindParam(":user_id", $_SESSION['user_id']);
+                $stmt1->execute();
+            }
         header("Location: registered_events.php");         
         exit();
+        }
     }
