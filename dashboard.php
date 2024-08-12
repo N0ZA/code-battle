@@ -58,17 +58,22 @@
             const preloader = document.querySelector('.preloader');
             preloader.style.display = 'none';
         });
-
+        const baseURL = window.location.origin;
         function showModal(h_id,is_team) {
-                const eventLink =`/code-battle/events/eventreg.php?H=${h_id}&T=${is_team}`;
+            <?php if (isset($_SESSION['user_isadmin']) && $_SESSION['user_isadmin'] == 3): ?>
+                const eventLink =`${baseURL}/code-battle/events/eventreg.php?H=${h_id}&T=${is_team}&L=yes`;
                 document.getElementById("event-link").textContent=eventLink ;
                 document.getElementById("register-button").onclick= function() {
                     window.location.href = `events/eventreg.php?H=${h_id}&T=${is_team}`;
                 }
                 document.getElementById("modal").style.display = "flex";
-            }
-            function hideModal() {
-                document.getElementById("modal").style.display = "none";}
+            <?php else: ?>
+                window.location.href = `events/eventreg.php?H=${h_id}&T=${is_team}`;
+            <?php endif; ?>
+        }
+            
+        function hideModal() {
+            document.getElementById("modal").style.display = "none";}
 
     </script>
 </head>

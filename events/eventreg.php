@@ -6,7 +6,7 @@
 
     //checks if you already signed in and you press register or if you just logged in 
     if (($_SERVER["REQUEST_METHOD"]=="POST") || (isset($_GET["login"]) && $_GET["login"] === "success") || ($_SERVER['REQUEST_METHOD']=='GET')) {
-        if (($_SERVER["REQUEST_METHOD"]=="POST") || (isset($_GET["H"]))){
+        if ($_SERVER["REQUEST_METHOD"]=="POST" || isset($_GET["H"])){
             //h_id and is_team taken from dashboard page
             $_SESSION['H_id']=isset($_POST['H_id'])? $_POST['H_id'] : $_GET['H'];
             $_SESSION['is_team']=isset($_POST['is_team'])? $_POST['is_team']: $_GET['T'];
@@ -14,6 +14,11 @@
                 header("Location: ../index.php?H=" . $_SESSION['H_id'] . "&T=" . $_SESSION['is_team']);  // if user is not logged in and they press register, take them to log in page
                 exit();
             }
+            else if (isset($_GET["L"])){
+                header("Location: ../events/eventpage.php?H=" . $_SESSION['H_id'] . "&T=" . $_SESSION['is_team']); //show details abt the event
+                exit();
+            }
+            //after registered events page
             else if (isset($_POST['Add_Team'])){         //Direct to team registration
                 $_SESSION['new_TM']=1;
                 header("Location: ../teams/teamReg.php");
@@ -52,7 +57,8 @@
                 $stmt1->bindParam(":user_id", $_SESSION['user_id']);
                 $stmt1->execute();
             }
+        }
         header("Location: registered_events.php");         
         exit();
-        }
     }
+    
