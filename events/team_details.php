@@ -23,14 +23,17 @@
     $user = $stmt->fetch();
 
     //get team details
-    echo $_SESSION['is_team']; 
-    $query1='SELECT * FROM team_data WHERE H_id=:H_id and Tuser_id=:user_id';
-    $stmt1=$pdo->prepare($query1);
-    $stmt1->bindParam(":user_id",$_SESSION['user_id']);
-    $stmt1->bindParam(":H_id",$_SESSION['H_id']);
-    $stmt1->execute();
-    $teams=$stmt1->fetchAll();
-
+    if ($_SESSION['is_team']==1){
+        $query1='SELECT * FROM team_data WHERE H_id=:H_id and Tuser_id=:user_id';
+        $stmt1=$pdo->prepare($query1);
+        $stmt1->bindParam(":user_id",$_SESSION['user_id']);
+        $stmt1->bindParam(":H_id",$_SESSION['H_id']);
+        $stmt1->execute();
+        $teams=$stmt1->fetchAll();
+    }
+    else{
+        header('Location:registered_events.php');
+    }
     $query2 ='SELECT * FROM hackathon_data WHERE H_id = :H_id';
     $stmt2 = $pdo->prepare($query2);
     $stmt2->bindParam(':H_id', $_SESSION['H_id']);
