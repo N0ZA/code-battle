@@ -8,6 +8,7 @@
         exit();
     }
     unset($_SESSION['new_TM']);
+    unset($_SESSION['TName']);
  
     function getImage($eventImage) {
         $folder = '../Images/eventreg/';

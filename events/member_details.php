@@ -21,8 +21,10 @@
     $stmt->bindParam(":user_id",$_SESSION['user_id']);
     $stmt->execute();
     $user = $stmt->fetch();
+
+    echo $_SESSION['is_team'];
     //get member details for a team
-    if (isset($_SESSION['TName']) && !empty($_SESSION['TName'])){
+    if ($_SESSION['is_team']==1){
         $query='SELECT T_id FROM team_data WHERE TName=:TName';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":TName",$_SESSION['TName']);
@@ -43,7 +45,7 @@
         $stmt1->execute();
         $solos=$stmt1->fetchAll();
         if (!$solos) {
-            header("Location: team_details.php");
+            header("Location: registered_events.php");
             exit(); 
         }
     }
@@ -65,7 +67,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Members</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="stylesheet" href="../css/styles.css">
     <script>

@@ -23,6 +23,7 @@
     $user = $stmt->fetch();
 
     //get team details
+    echo $_SESSION['is_team']; 
     $query1='SELECT * FROM team_data WHERE H_id=:H_id and Tuser_id=:user_id';
     $stmt1=$pdo->prepare($query1);
     $stmt1->bindParam(":user_id",$_SESSION['user_id']);
@@ -56,7 +57,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Teams</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="stylesheet" href="../css/styles.css">
     <script>

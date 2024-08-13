@@ -13,7 +13,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $H_id = $_SESSION['H_id'];
         $C_id = $_POST['category'];
         $PSchool = $_POST['school'];
-
         $query1 = "SELECT * FROM hackathon_data WHERE H_id=:H_id";
         $stmt1 = $pdo->prepare($query1);
         $stmt1->bindParam(":H_id", $H_id);
@@ -50,8 +49,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         if ($result2==$result1['reg_per_user']){
             $_SESSION['errors_mem']= "You can only make " .$result1['reg_per_user']. " registration/s for this hackathon. <br> You have reached your limit!";
         }
-        $query = 'SELECT * FROM solo_data WHERE T_id IS NULL AND PName=:Pname AND H_id=:H_id';
-        $stmt = $pdo->prepare($query);
+        if ($_SESSION['new_TM'] == 2){
+            $query = 'SELECT * FROM solo_data WHERE T_id IS NULL AND PName=:Pname AND H_id=:H_id and P_id!=:P_id';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":P_id",$_POST['solo_Id']);
+        }
+        else{
+            $query = 'SELECT * FROM solo_data WHERE T_id IS NULL AND PName=:Pname AND H_id=:H_id';
+            $stmt = $pdo->prepare($query);
+        }
     }
     else if($_SESSION['is_team']==1) {
         if ($_SESSION['new_TM'] == 2){
@@ -87,10 +93,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     else{
         if ($_SESSION['new_TM'] == 2) {
             //Update existing data
-            $query6 = "UPDATE solo_data SET PName=:PName, PEmail=:PEmail, PSchool=:PSchool WHERE H_id=:H_id AND Puser_id=:Puser_id and P_id=:P_id";
+            $query6 = "UPDATE solo_data SET PName=:PName, C_id=:C_id, PEmail=:PEmail, PSchool=:PSchool WHERE H_id=:H_id AND Puser_id=:Puser_id and P_id=:P_id";
             $stmt6 = $pdo->prepare($query6);
             $stmt6->bindParam(":PName", $Pname);
             $stmt6->bindParam(":PEmail", $PEmail);
+            $stmt6->bindParam(":C_id", $C_id);
             $stmt6->bindParam(":PSchool", $PSchool);
             $stmt6->bindParam(":H_id", $H_id);
             $stmt6->bindParam(":Puser_id", $_SESSION['user_id']);

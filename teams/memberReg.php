@@ -16,9 +16,11 @@
 
     if ($_SESSION['new_TM'] == 2) {
         //existing member data
-        $query = "SELECT * FROM solo_data WHERE P_id=:P_id";
+        $query = "SELECT * FROM solo_data WHERE P_id=:P_id and H_id=:H_id AND Puser_id=:Puser_id";
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":P_id", $_GET['S']);
+        $stmt->bindParam(":H_id", $_SESSION['H_id']);
+        $stmt->bindParam(":Puser_id", $_SESSION['user_id']);
         $stmt->execute();
         $memberData = $stmt->fetch();
     }
