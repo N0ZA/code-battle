@@ -22,9 +22,8 @@
     $stmt->execute();
     $user = $stmt->fetch();
 
-    echo $_SESSION['is_team'];
     //get member details for a team
-    if ($_SESSION['is_team']==1){
+    if ($_SESSION['is_team']==1 && isset($_SESSION['TName'])){
         $query='SELECT T_id FROM team_data WHERE TName=:TName';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":TName",$_SESSION['TName']);
@@ -44,10 +43,10 @@
         $stmt1->bindParam(":H_id",$_SESSION['H_id']);   
         $stmt1->execute();
         $solos=$stmt1->fetchAll();
-        if (!$solos) {
-            header("Location: registered_events.php");
-            exit(); 
-        }
+        //if (!$solos) {
+            //header("Location: registered_events.php");
+          //  exit(); 
+        //}
     }
     $stmt1->bindParam(":user_id",$_SESSION['user_id']);
     $stmt1->bindParam(":H_id",$_SESSION['H_id']);   
@@ -165,6 +164,9 @@
                                 </ul>
                             </div>  
                             <div class="card-actions">
+                                <!--<?php if ($_SESSION['is_team']==0):?>
+                                <a href="generate_ticket.php?team=<?php echo $team['TName']; ?>" class="icon-link"><i class="fas fa-ticket-alt"></i></a> 
+                                <?php endif; ?>-->
                                 <a href="eventedit.php?Solo=<?php echo $solo['P_id']; ?>&action=Sedit" class="icon-link" ><i class="fas fa-edit"></i></a>
                                 <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $solo['PName']; ?>')"><i class="fas fa-trash"></i></a>   
                             </div>

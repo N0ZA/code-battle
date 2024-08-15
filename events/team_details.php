@@ -163,17 +163,21 @@
                                         <p>You have not registered any members for this team.</p>
                                     <?php endif; ?>
                                 </ul>
-                            </div>  
+                                <!--<div class="card-actions">
+                                    <a href="generate_ticket.php?team=<?php echo $team['TName']; ?>" class="icon-link" style="font-size:20px;">
+                                    <i class="fas fa-ticket-alt"></i> Generate QR code </a> 
+                                </div>-->
+                            </div>
                             <div class="card-actions">
-                                    <?php 
-                                        if ($Hdetails[$CName]==0 || $team['TMembers']==$Hdetails['MaxP']): ?>
-                                            <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>
-                                            <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $team['TName']; ?>')"><i class="fas fa-trash"></i></a>
-                                    <?php else: ?>
-                                        <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=add" class="icon-link" ><i class="fas fa-plus"></i></a>
-                                        <a href="eventedit.php? team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>
+                                <?php 
+                                    if ($Hdetails[$CName]==0 || $team['TMembers']==$Hdetails['MaxP']): ?>
+                                        <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>
                                         <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $team['TName']; ?>')"><i class="fas fa-trash"></i></a>
-                                    <?php endif; ?>
+                                <?php else: ?>
+                                    <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=add" class="icon-link" ><i class="fas fa-plus"></i></a>
+                                    <a href="eventedit.php? team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>
+                                    <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $team['TName']; ?>')"><i class="fas fa-trash"></i></a>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
