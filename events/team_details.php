@@ -123,7 +123,7 @@
         </div>
     </div>   
     <div class="teams-title">
-        <h2>Registered Teams</h2> <h4>For Hackathon <span class="username"><?php echo $Hdetails['HName']; ?></h4></span>
+        <h2>Registered Teams</h2> <h4>Hackathon: <span class="username"><?php echo $Hdetails['HName']; ?></h4></span>
     </div>
      <div class="team-card-container">
         <?php if (!empty($teams)): ?>

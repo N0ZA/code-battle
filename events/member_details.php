@@ -34,6 +34,14 @@
         $query1='SELECT * FROM solo_data WHERE H_id=:H_id and Puser_id=:user_id and T_id=:T_id';
         $stmt1=$pdo->prepare($query1);
         $stmt1->bindParam(":T_id", $T_id); //tname has T_id from eventedit.php link
+        $stmt1->bindParam(":user_id",$_SESSION['user_id']);
+        $stmt1->bindParam(":H_id",$_SESSION['H_id']);   
+        $stmt1->execute();
+        $solos=$stmt1->fetchAll();
+        if (!$solos) {
+            header("Location: registered_events.php");
+            exit(); 
+            }    
     }    
     //get member details for solo event
     else{
@@ -43,16 +51,7 @@
         $stmt1->bindParam(":H_id",$_SESSION['H_id']);   
         $stmt1->execute();
         $solos=$stmt1->fetchAll();
-        //if (!$solos) {
-            //header("Location: registered_events.php");
-          //  exit(); 
-        //}
     }
-    $stmt1->bindParam(":user_id",$_SESSION['user_id']);
-    $stmt1->bindParam(":H_id",$_SESSION['H_id']);   
-    $stmt1->execute();
-    $solos=$stmt1->fetchAll();
-
     $query2 ='SELECT * FROM hackathon_data WHERE H_id = :H_id';
     $stmt2 = $pdo->prepare($query2);
     $stmt2->bindParam(':H_id', $_SESSION['H_id']);
@@ -129,8 +128,10 @@
         </div>
     </div>   
     <div class="teams-title">
-        <h2>Registered Members </h2> <h4>For Hackathon <span class="username"><?php echo $Hdetails['HName'];?> </span>
-        <?php if ($_SESSION['is_team']==1): ?> for Team <span class="username"><?php echo $_SESSION['TName'];  endif ?>  </span></h4>
+        <?php if ($_SESSION['is_team']==1): ?><h2>Edit Members </h2> 
+        <?php else: ?> <h2>Registered Members </h2> <?php endif ?>  
+        <h4>Hackathon: <span class="username"><?php echo $Hdetails['HName'];?> </span>
+        <?php if ($_SESSION['is_team']==1): ?>Team: <span class="username"><?php echo $_SESSION['TName'];  endif ?>  </span></h4>
     </div>
         <div class="team-card-container">
         <?php 
