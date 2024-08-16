@@ -144,7 +144,7 @@
                             <img src="<?php echo getImage(); ?>" alt="<?php echo $team['TName']; ?>" class="team-img">
                         </div>
                             <div class="card-text">
-                                <h3><strong><?php echo $team['TName']; ?></strong>
+                                <h3><strong><?php echo $team['TName'], $team['Tchecked_in'];; ?></strong>
                                 <?php $C_id=$team['C_id']; 
                                 $CName = ($C_id==1)?'Jr_Cadet' : (($C_id==2)?'Jr_Captain' : (($C_id==3)?'Jr_Colonel' : 'Unknown'));
                                 ?></h3>
@@ -163,20 +163,24 @@
                                         <p>You have not registered any members for this team.</p>
                                     <?php endif; ?>
                                 </ul>
-                                <div class="card-actions">
-                                    <a href="generate_ticket.php?tick=<?php echo $team['T_id']; ?>" class="icon-link" style="font-size:20px;">
-                                    <i class="fas fa-ticket-alt"></i> Download Ticket </a> 
-                                </div>
+                                <?php if ($team['Tchecked_in']==0): ?> 
+                                    <div class="card-actions">
+                                        <a href="generate_ticket.php?tick=<?php echo $team['T_id']; ?>" class="icon-link" style="font-size:20px;">
+                                        <i class="fas fa-ticket-alt"></i> Download Ticket </a> 
+                                    </div>
+                                <?php endif; ?>
                             </div>
                             <div class="card-actions">
-                                <?php 
-                                    if ($Hdetails[$CName]==0 || $team['TMembers']==$Hdetails['MaxP']): ?>
-                                        <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>
+                                <?php if ($team['Tchecked_in']==0): ?> 
+                                    <?php 
+                                        if ($Hdetails[$CName]==0 || $team['TMembers']==$Hdetails['MaxP']): ?>
+                                            <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>
+                                            <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $team['TName']; ?>')"><i class="fas fa-trash"></i></a>
+                                    <?php else: ?>
+                                        <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=add" class="icon-link" ><i class="fas fa-plus"></i></a>
+                                        <a href="eventedit.php? team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>
                                         <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $team['TName']; ?>')"><i class="fas fa-trash"></i></a>
-                                <?php else: ?>
-                                    <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=add" class="icon-link" ><i class="fas fa-plus"></i></a>
-                                    <a href="eventedit.php? team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>
-                                    <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $team['TName']; ?>')"><i class="fas fa-trash"></i></a>
+                                    <?php endif; ?>
                                 <?php endif; ?>
                             </div>
                         </div>
