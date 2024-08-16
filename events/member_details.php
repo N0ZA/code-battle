@@ -156,17 +156,17 @@
                                 <?php else: ?>
                                     <p> MEMBER <?php echo $memCount; ?> DETAILS</p>
                                 <?php endif; ?>
-                                        <ul class="member-list">
-                                            <li>Name: <?php echo $solo['PName']; ?></li>
-                                            <li>Category: <?php echo $CName; ?></li>
-                                            <li>Email: <?php echo $solo['PEmail']; ?></li>
-                                            <li>School: <?php echo $solo['PSchool']; ?></li>
-                                </ul>
+                                    <ul class="member-list">
+                                        <li>Name: <?php echo $solo['PName']; ?></li>
+                                        <li>Category: <?php echo $CName; ?></li>
+                                        <li>Email: <?php echo $solo['PEmail']; ?></li>
+                                        <li>School: <?php echo $solo['PSchool']; ?></li>
+                                    </ul>
+                                    <?php if ($_SESSION['is_team']==0):?>
+                                    <a href="generate_ticket.php?tick=<?php echo $solo['P_id']; ?>" class="icon-link"><i class="fas fa-ticket-alt"></i></a> 
+                                    <?php endif; ?>
                             </div>  
                             <div class="card-actions">
-                                <!--<?php if ($_SESSION['is_team']==0):?>
-                                <a href="generate_ticket.php?team=<?php echo $team['TName']; ?>" class="icon-link"><i class="fas fa-ticket-alt"></i></a> 
-                                <?php endif; ?>-->
                                 <a href="eventedit.php?Solo=<?php echo $solo['P_id']; ?>&action=Sedit" class="icon-link" ><i class="fas fa-edit"></i></a>
                                 <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $solo['PName']; ?>')"><i class="fas fa-trash"></i></a>   
                             </div>

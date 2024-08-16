@@ -163,10 +163,10 @@
                                         <p>You have not registered any members for this team.</p>
                                     <?php endif; ?>
                                 </ul>
-                                <!--<div class="card-actions">
-                                    <a href="generate_ticket.php?team=<?php echo $team['TName']; ?>" class="icon-link" style="font-size:20px;">
-                                    <i class="fas fa-ticket-alt"></i> Generate QR code </a> 
-                                </div>-->
+                                <div class="card-actions">
+                                    <a href="generate_ticket.php?tick=<?php echo $team['T_id']; ?>" class="icon-link" style="font-size:20px;">
+                                    <i class="fas fa-ticket-alt"></i> Download Ticket </a> 
+                                </div>
                             </div>
                             <div class="card-actions">
                                 <?php 
