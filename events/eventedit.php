@@ -17,8 +17,10 @@
             header("Location: ../teams/memberReg.php?source=eventedit");
         }
         else if  ($action=="delete"){
-            $query1='DELETE FROM team_data WHERE TName=:TName';
+            $query1='DELETE FROM team_data WHERE TName=:TName and H_id=:H_id and Tuser_id=:user_id ';
             $stmt1=$pdo->prepare($query1);
+            $stmt1->bindParam(":user_id",$_SESSION['user_id']);
+            $stmt1->bindParam(":H_id",$_SESSION['H_id']);   
             $stmt1->bindParam(":TName", $_SESSION['TName']);
             $stmt1->execute();
             $result1=$stmt1->fetch();

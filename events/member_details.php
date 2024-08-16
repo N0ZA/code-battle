@@ -7,6 +7,7 @@
         header("Location: index.php");
         exit();
     }
+    unset($_SESSION['new_TM']);
     function getImage($Folder = '../Images/teams/') {
         static $lastImage=-1; //static allows it to retain the value during function calls
         $images=glob($Folder.'*.{jpg,jpeg,png,gif}', GLOB_BRACE); 
@@ -23,8 +24,10 @@
     $user = $stmt->fetch();
     //get member details for a team
     if ($_SESSION['is_team']==1 && isset($_SESSION['TName'])){
-        $query='SELECT T_id FROM team_data WHERE TName=:TName';
+        $query='SELECT T_id FROM team_data WHERE H_id=:H_id and Tuser_id=:user_id and TName=:TName';
         $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id",$_SESSION['user_id']);
+        $stmt->bindParam(":H_id",$_SESSION['H_id']);   
         $stmt->bindParam(":TName",$_SESSION['TName']);
         $stmt->execute();
         $result=$stmt->fetch();

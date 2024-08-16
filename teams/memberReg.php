@@ -9,11 +9,14 @@
         header("Location: ../index.php");
         exit();
     }    
+    if (!isset($_SESSION["is_team"])) {
+        header("Location: registered_events.php");
+        exit(); 
+    }  
     if ($_SESSION['new_TM']!=1 && $_SESSION['new_TM']!=2){
         header("Location: ../events/registered_events.php");
         exit();
     }
-
     if ($_SESSION['new_TM'] == 2) {
         //existing member data
         $query = "SELECT * FROM solo_data WHERE P_id=:P_id and H_id=:H_id AND Puser_id=:Puser_id";
@@ -395,7 +398,6 @@ main {
                 <div class="form-wrapper">
                     <form id='editForm' action="accept_member_data.php" method="POST">
                         <?php
-                            echo $_SESSION['new_TM'];
                             $query2="SELECT HName FROM hackathon_data WHERE H_id=:H_id";
                             $stmt2=$pdo->prepare($query2);
                             $stmt2->bindParam(":H_id", $_SESSION['H_id']);
@@ -407,13 +409,14 @@ main {
                             }
                             else if ($_SESSION['is_team'] == 1){
                                 $TName = $_SESSION['TName'];
+                                $query1 = "SELECT * FROM team_data WHERE TName=:TName and H_id=:H_id  and Tuser_id=:user_id";
+                                $stmt1 = $pdo->prepare($query1);
+                                $stmt1->bindParam(":user_id",$_SESSION['user_id']);
+                                $stmt1->bindParam(":TName", $TName);
+                                $stmt1->bindParam(":H_id",$_SESSION['H_id']);
+                                $stmt1->execute();
+                                $result1 = $stmt1->fetch();
                                 if ($_SESSION['new_TM']!=2){
-                                    $query1 = "SELECT * FROM team_data WHERE TName=:TName and H_id=:H_id";
-                                    $stmt1 = $pdo->prepare($query1);
-                                    $stmt1->bindParam(":TName", $TName);
-                                    $stmt1->bindParam(":H_id",$_SESSION['H_id']);
-                                    $stmt1->execute();
-                                    $result1 = $stmt1->fetch();
                                     $result1['TMembers']++;
                                 }
                             }   
@@ -523,9 +526,9 @@ main {
                         <?php
                             $query3='SELECT T.TMembers,T.C_id, H.MaxP, H.Jr_Cadet, H.Jr_Captain, H.Jr_Colonel FROM team_data T
                             JOIN hackathon_data H ON T.H_id = H.H_id
-                            WHERE T.TName=:TName AND H.H_id=:H_id';
+                            WHERE T.T_id=:T_id AND H.H_id=:H_id';
                             $stmt3 = $pdo->prepare($query3);
-                            $stmt3->bindParam(":TName", $TName);
+                            $stmt3->bindParam(":T_id", $result1['T_id']);
                             $stmt3->bindParam(":H_id", $_SESSION['H_id']);  
                             $stmt3->execute();
                             $result3=$stmt3->fetch();
