@@ -123,10 +123,10 @@
                                 <input type="hidden" name="is_team" value="<?php echo $eventDetails['is_team']; ?>">
                                 <?php if ($_SESSION['is_team']): ?> 
                                     <button type="submit" name="Add_Team">Add Team</button>
-                                    <button type="submit" name="Edit_Teams">Edit Teams</button>
+                                    <button type="submit" name="Edit_Teams">View Teams</button>
                                 <?php else: ?> 
                                     <button type="submit" name="Add_Member">Add Member</button>
-                                    <button type="submit" name="Edit_Members">Edit Members</button>
+                                    <button type="submit" name="Edit_Members">View Members</button>
                                 <?php endif; ?>
                             </form>
                            
