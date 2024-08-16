@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
             unset($_SESSION['TName']);
         }
     }
-
+    //tname is unique at event level
     $query1 = "SELECT * FROM team_data WHERE TName=:TName AND H_id=:H_id";
     $stmt1 = $pdo->prepare($query1);
     $stmt1->bindParam(":TName", $_SESSION['TName']);

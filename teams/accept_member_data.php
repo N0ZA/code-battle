@@ -25,9 +25,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     else if ($_SESSION['is_team']) {    //team regis of members-set variables
         $TName = $_SESSION['TName'];
-        $query1 = "SELECT * FROM team_data WHERE TName=:TName and H_id=:H_id";
+        $query1 = "SELECT * FROM team_data WHERE TName=:TName and H_id=:H_id and Tuser_id=:user_id";
         $stmt1 = $pdo->prepare($query1);
         $stmt1->bindParam(":TName", $TName);
+        $stmt1->bindParam(":user_id",$_SESSION['user_id']);
         $stmt1->bindParam(":H_id",$_SESSION['H_id']);
         $stmt1->execute();
         $result1 = $stmt1->fetch();

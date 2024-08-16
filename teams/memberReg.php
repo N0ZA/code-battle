@@ -409,7 +409,7 @@ main {
                             }
                             else if ($_SESSION['is_team'] == 1){
                                 $TName = $_SESSION['TName'];
-                                $query1 = "SELECT * FROM team_data WHERE TName=:TName and H_id=:H_id  and Tuser_id=:user_id";
+                                $query1 = "SELECT * FROM team_data WHERE TName=:TName and H_id=:H_id and Tuser_id=:user_id";
                                 $stmt1 = $pdo->prepare($query1);
                                 $stmt1->bindParam(":user_id",$_SESSION['user_id']);
                                 $stmt1->bindParam(":TName", $TName);
