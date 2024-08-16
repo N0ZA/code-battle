@@ -4,7 +4,9 @@ declare(strict_types=1);
 require_once '../includes/dbh.inc.php';
 require_once '../includes/config_session.inc.php';
 
+echo "hi";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    echo "hi 2";
     $Pname = $_POST['name'];
     $PEmail = $_POST['email'];
     
@@ -91,6 +93,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }   
     }
     else{
+        echo "hi 3";
+        if (isset($_POST['Done'])) {
+            echo "The 'Done' button was clicked.";
+        } else {
+            echo "The 'Done' button was not clicked.";
+        }
         if ($_SESSION['new_TM'] == 2) {
             //Update existing data
             $query6 = "UPDATE solo_data SET PName=:PName, C_id=:C_id, PEmail=:PEmail, PSchool=:PSchool WHERE H_id=:H_id AND Puser_id=:Puser_id and P_id=:P_id";

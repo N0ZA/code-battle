@@ -9,6 +9,8 @@
     }
     unset($_SESSION['new_TM']);
     unset($_SESSION['TName']);
+    unset($_SESSION['H_id']);
+    unset($_SESSION['is_team']);
  
     function getImage($eventImage) {
         $folder = '../Images/eventreg/';
@@ -107,21 +109,21 @@
                         $stmt2->bindParam(':H_id', $event['H_id']);
                         $stmt2->execute();
                         $eventDetails=$stmt2->fetch();
-                        $_SESSION['is_team']=$eventDetails['is_team']
+                        $is_team=$eventDetails['is_team']
                      ?>
 
                     <div class="events-card">
                         <img src="<?php echo getImage($eventDetails['HImage']); ?>" alt="<?php echo $eventDetails['HName'];?>">
                         <div class="card-details">
                             <h3><u> <?php echo strtoupper($eventDetails['HName']); ?> </u> <br></br>
-                            <?php if ($_SESSION['is_team']): ?> Team Based
+                            <?php if ($is_team): ?> Team Based
                             <?php else: ?>  Solo Based
                             <?php endif; ?></h3>
                             <?php // echo  $eventDetails['H_id'] ?>
                             <form action="eventreg.php" method="POST">
                                 <input type="hidden" name="H_id" value="<?php echo $eventDetails['H_id']; ?>">
                                 <input type="hidden" name="is_team" value="<?php echo $eventDetails['is_team']; ?>">
-                                <?php if ($_SESSION['is_team']): ?> 
+                                <?php if ($is_team): ?> 
                                     <button type="submit" name="Add_Team">Add Team</button>
                                     <button type="submit" name="Edit_Teams">View Teams</button>
                                 <?php else: ?> 

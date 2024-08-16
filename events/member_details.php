@@ -21,7 +21,6 @@
     $stmt->bindParam(":user_id",$_SESSION['user_id']);
     $stmt->execute();
     $user = $stmt->fetch();
-
     //get member details for a team
     if ($_SESSION['is_team']==1 && isset($_SESSION['TName'])){
         $query='SELECT T_id FROM team_data WHERE TName=:TName';
@@ -38,13 +37,9 @@
         $stmt1->bindParam(":H_id",$_SESSION['H_id']);   
         $stmt1->execute();
         $solos=$stmt1->fetchAll();
-        if (!$solos) {
-            header("Location: registered_events.php");
-            exit(); 
-            }    
     }    
     //get member details for solo event
-    else{
+    else if ($_SESSION['is_team']==0){
         $query1='SELECT * FROM solo_data WHERE H_id=:H_id and Puser_id=:user_id and T_id IS NULL';
         $stmt1=$pdo->prepare($query1);
         $stmt1->bindParam(":user_id",$_SESSION['user_id']);
@@ -52,6 +47,10 @@
         $stmt1->execute();
         $solos=$stmt1->fetchAll();
     }
+    if (!isset($_SESSION["is_team"])) {
+        header("Location: registered_events.php");
+        exit(); 
+        }    
     $query2 ='SELECT * FROM hackathon_data WHERE H_id = :H_id';
     $stmt2 = $pdo->prepare($query2);
     $stmt2->bindParam(':H_id', $_SESSION['H_id']);
