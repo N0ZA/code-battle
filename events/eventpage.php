@@ -195,7 +195,7 @@ $eventLocation = "Digital Park, Silicon Oasis, Dubai, United Arab Emirates";
             width: 100%; 
             height: 350px;
             position: relative;
-            background-image: url("../Images/eventreg/CB24Sharjah.jpg");
+            background-image: url("../Images/eventreg/event3.jpg");
         }
         .event-image-blur {
             overflow: hidden;
@@ -471,7 +471,7 @@ $eventLocation = "Digital Park, Silicon Oasis, Dubai, United Arab Emirates";
             <!-- Event Image -->
             <div class="event-image">
                 <div class="event-image-blur">
-                    <img src="../Images/eventreg/CB24Sharjah.jpg" alt="Event Image">
+                    <img src="../Images/eventreg/event3.jpg" alt="Event Image">
                 </div>
             </div> 
 
