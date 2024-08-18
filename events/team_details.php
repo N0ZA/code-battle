@@ -23,13 +23,17 @@
     $user = $stmt->fetch();
 
     //get team details
-    $query1='SELECT * FROM team_data WHERE H_id=:H_id and Tuser_id=:user_id';
-    $stmt1=$pdo->prepare($query1);
-    $stmt1->bindParam(":user_id",$_SESSION['user_id']);
-    $stmt1->bindParam(":H_id",$_SESSION['H_id']);
-    $stmt1->execute();
-    $teams=$stmt1->fetchAll();
-
+    if ($_SESSION['is_team']==1){
+        $query1='SELECT * FROM team_data WHERE H_id=:H_id and Tuser_id=:user_id';
+        $stmt1=$pdo->prepare($query1);
+        $stmt1->bindParam(":user_id",$_SESSION['user_id']);
+        $stmt1->bindParam(":H_id",$_SESSION['H_id']);
+        $stmt1->execute();
+        $teams=$stmt1->fetchAll();
+    }
+    else{
+        header('Location:registered_events.php');
+    }
     $query2 ='SELECT * FROM hackathon_data WHERE H_id = :H_id';
     $stmt2 = $pdo->prepare($query2);
     $stmt2->bindParam(':H_id', $_SESSION['H_id']);
@@ -43,11 +47,12 @@
             $stmt4=$pdo->prepare($query4);
             $stmt4->bindParam(":T_id",$team['T_id']);
             $stmt4->execute();
+            unset($_SESSION['TName']);
         }
     }
     //get the team details again after updating
     $stmt1->execute();
-    $teams=$stmt1->fetchAll();
+    $teams=$stmt1->fetchAll();   
 ?>
 
 <!DOCTYPE html>
@@ -55,7 +60,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Teams</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="stylesheet" href="../css/styles.css">
     <script>
@@ -118,7 +123,7 @@
         </div>
     </div>   
     <div class="teams-title">
-        <h2>Registered Teams</h2> <h4>For Hackathon <span class="username"><?php echo $Hdetails['HName']; ?></h4></span>
+        <h2>Registered Teams</h2> <h4>Hackathon: <span class="username"><?php echo $Hdetails['HName']; ?></h4></span>
     </div>
      <div class="team-card-container">
         <?php if (!empty($teams)): ?>
@@ -139,7 +144,7 @@
                             <img src="<?php echo getImage(); ?>" alt="<?php echo $team['TName']; ?>" class="team-img">
                         </div>
                             <div class="card-text">
-                                <h3><strong><?php echo $team['TName']; ?></strong>
+                                <h3><strong><?php echo $team['TName'], $team['Tchecked_in'];; ?></strong>
                                 <?php $C_id=$team['C_id']; 
                                 $CName = ($C_id==1)?'Jr_Cadet' : (($C_id==2)?'Jr_Captain' : (($C_id==3)?'Jr_Colonel' : 'Unknown'));
                                 ?></h3>
@@ -158,17 +163,25 @@
                                         <p>You have not registered any members for this team.</p>
                                     <?php endif; ?>
                                 </ul>
-                            </div>  
+                                <?php if ($team['Tchecked_in']==0): ?> 
+                                    <div class="card-actions">
+                                        <a href="generate_ticket.php?tick=<?php echo $team['T_id']; ?>" class="icon-link" style="font-size:20px;">
+                                        <i class="fas fa-ticket-alt"></i> Download Ticket </a> 
+                                    </div>
+                                <?php endif; ?>
+                            </div>
                             <div class="card-actions">
+                                <?php if ($team['Tchecked_in']==0): ?> 
                                     <?php 
                                         if ($Hdetails[$CName]==0 || $team['TMembers']==$Hdetails['MaxP']): ?>
-                                    <!-- <a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>  -->
+                                            <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>
                                             <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $team['TName']; ?>')"><i class="fas fa-trash"></i></a>
                                     <?php else: ?>
                                         <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=add" class="icon-link" ><i class="fas fa-plus"></i></a>
-                                    <!--<a href="eventedit.php??team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a> -->
+                                        <a href="eventedit.php? team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>
                                         <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $team['TName']; ?>')"><i class="fas fa-trash"></i></a>
                                     <?php endif; ?>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>

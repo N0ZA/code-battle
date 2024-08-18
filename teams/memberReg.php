@@ -9,9 +9,23 @@
         header("Location: ../index.php");
         exit();
     }    
-    if ($_SESSION['new_TM']!=1){
+    if (!isset($_SESSION["is_team"])) {
+        header("Location: registered_events.php");
+        exit(); 
+    }  
+    if ($_SESSION['new_TM']!=1 && $_SESSION['new_TM']!=2){
         header("Location: ../events/registered_events.php");
         exit();
+    }
+    if ($_SESSION['new_TM'] == 2) {
+        //existing member data
+        $query = "SELECT * FROM solo_data WHERE P_id=:P_id and H_id=:H_id AND Puser_id=:Puser_id";
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":P_id", $_GET['S']);
+        $stmt->bindParam(":H_id", $_SESSION['H_id']);
+        $stmt->bindParam(":Puser_id", $_SESSION['user_id']);
+        $stmt->execute();
+        $memberData = $stmt->fetch();
     }
 ?>
 
@@ -199,6 +213,59 @@ main {
             width: 100%;
             margin-top: 10px;
         }
+        .modal-background {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+                }
+
+        .modal-content {
+            position: absolute;
+            font-weight: bold;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgb(255, 255, 255);
+            padding: 20px;
+            border-radius: 1rem;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            text-align :center;
+            max-width: 400px; 
+        }
+
+        .modal-content p{
+            margin-top: 1rem;
+        }
+        .modal-text {
+            margin-bottom: 20px;
+        }
+
+        .modal-button-container button {
+            background-color: #000000;
+            border: 1px;
+            border-radius: 25px;
+            color: #ffffff;
+            font-size: 1rem;
+            padding: 0.5rem;
+            width: 25%;
+            margin-top:1rem;  
+        }
+
+        .modal-button-container button:hover {
+        background-color: #DF2724; 
+        }
+
+        .modal-button:first-child {
+        margin-right: 1rem;
+        }
+
+        .modal-button:last-child {
+        margin-left: 1rem; 
+        }
         h2 {
             text-align: center;
         }
@@ -329,7 +396,7 @@ main {
         <div class="container-fluid container-custom">
             <div class="row flex-grow-1">
                 <div class="form-wrapper">
-                    <form action="accept_member_data.php" method="POST">
+                    <form id='editForm' action="accept_member_data.php" method="POST">
                         <?php
                             $query2="SELECT HName FROM hackathon_data WHERE H_id=:H_id";
                             $stmt2=$pdo->prepare($query2);
@@ -340,30 +407,39 @@ main {
                             if ($_SESSION['is_team'] == 0){
                                 $result1['TMembers']=NULL;
                             }
-                            else{
+                            else if ($_SESSION['is_team'] == 1){
                                 $TName = $_SESSION['TName'];
-                                $query1 = "SELECT * FROM team_data WHERE TName=:TName and H_id=:H_id";
+                                $query1 = "SELECT * FROM team_data WHERE TName=:TName and H_id=:H_id and Tuser_id=:user_id";
                                 $stmt1 = $pdo->prepare($query1);
+                                $stmt1->bindParam(":user_id",$_SESSION['user_id']);
                                 $stmt1->bindParam(":TName", $TName);
                                 $stmt1->bindParam(":H_id",$_SESSION['H_id']);
                                 $stmt1->execute();
                                 $result1 = $stmt1->fetch();
-                                $result1['TMembers']++;
+                                if ($_SESSION['new_TM']!=2){
+                                    $result1['TMembers']++;
+                                }
                             }   
                         ?>
-                        <h2>Enter Member <?php echo $result1['TMembers'];?> Details For <font color="#F73634"> <?php echo $result2['HName']; ?> </font></h2>
+                        <?php if ($_SESSION['new_TM'] == 2):?>
+                            <h2>Edit Member Details For <font color="#F73634"> <?php echo $result2['HName']; ?> </font></h2>
+                        <?php else: ?>
+                            <h2>Enter Member <?php echo $result1['TMembers'];?> Details For <font color="#F73634"> <?php echo $result2['HName']; ?> </font></h2>
+                        <?php endif ?>
                         <div class="form-group">
-                        <label for="Name">Name</label>
-                        <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required>
-                    </div>
-            <!--        <div class="form-group">
-                        <label for="school">School</label>
-                        <input type="text" id="school" name="school" class="form-control" placeholder="Enter your school name" required>
-                    </div> -->
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required>
-                    </div>
+                            <label for="Name">Name</label>
+                            <?php if ($_SESSION['new_TM'] == 2):?>
+                                <input type="text" id="name" name="name" class="form-control" value="<?php echo $memberData['PName']?>" required>
+                            <?php else:?>
+                                <input type="text" id="name" name="name" class="form-control" placeholder="Enter your name" required> <?php endif; ?>
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <?php if ($_SESSION['new_TM'] == 2):?>
+                                <input type="email" id="email" name="email" class="form-control"  value="<?php echo $memberData['PEmail']?>" required>
+                            <?php else:?>
+                                <input type="email" id="email" name="email" class="form-control" placeholder="Enter your email" required><?php endif; ?>
+                        </div>
                     <?php
                         //$_Session['hackathon'] shud be taken from the dashboard, based on which hackathon user chooses to register;
                         if (isset($_SESSION['H_id'])){
@@ -386,32 +462,52 @@ main {
                     <?php if ($_SESSION['is_team'] == 0): ?>
                         <div class="form-group">
                             <label for="school">School</label>
-                            <select class="form-control" name="school" id="school" required>
+                                <select class="form-control" name="school" id="school" required>
                                     <option value="" disabled selected>Select your School Name</option>
                                 <?php foreach ($schools as $school): ?>
-                                    <option value="<?php echo $school['ScName'] ?>"><?php echo $school['ScName']?></option>
+                                    <?php if ($_SESSION['new_TM'] == 2):?>
+                                        <option value="<?php echo $school['ScName']?>" <?php if ($school['ScName']==$memberData['PSchool']):?> selected <?php endif; ?>><?php echo $school['ScName']?></option>
+                                    <?php else:?>
+                                        <option value="<?php echo $school['ScName'] ?>"><?php echo $school['ScName']?></option>
+                                    <?php endif; ?>
                                 <?php endforeach; ?>
                             </select>
                         </div>
                         <div class="form-group">
+                            <?php if ($_SESSION['new_TM'] == 2){ $CName =($memberData['C_id']==1)?'Jr_Cadet' : (($memberData['C_id']==2)?'Jr_Captain' : (($memberData['C_id']==3)?'Jr_Colonel' : 'Unknown'));} ?>
                             <label for="category">Category</label>
                             <div class="category-container">
                                 <div class="form-check">
-                                    <input type="radio" id="cadet" name="category" class="form-check-input" value="1" <?php if ($jrCadet == 0) echo 'disabled'; ?> required>
-                                    <label for="cadet" class="form-check-label">Jr Cadet</label>
+                                    <?php if ($_SESSION['new_TM'] == 2):?>
+                                        <input type="radio" id="cadet" name="category" class="form-check-input" value="1" <?php if ($jrCadet==0) echo 'disabled'; ?> 
+                                        <?php if ($CName=='Jr_Cadet') echo 'checked'; ?> required>       
+                                    <?php else:?>
+                                        <input type="radio" id="cadet" name="category" class="form-check-input" value="1" <?php if ($jrCadet==0) echo 'disabled'; ?> required>
+                                    <?php endif; ?>    
+                                        <label for="cadet" class="form-check-label">Jr Cadet</label>
                                 </div>
                                 <!--<span>Available seats: <?php echo $jrCadet; ?></span> -->
                             </div>
                             <div class="category-container">
                                 <div class="form-check">
+                                <?php if ($_SESSION['new_TM'] == 2):?> 
+                                    <input type="radio" id="captain" name="category" class="form-check-input" value="2" <?php if ($jrCaptain == 0) echo 'disabled'; ?> 
+                                    <?php if ($CName=='Jr_Captain') echo 'checked'; ?> required>
+                                <?php else:?> 
                                     <input type="radio" id="captain" name="category" class="form-check-input" value="2" <?php if ($jrCaptain == 0) echo 'disabled'; ?> required>
+                                <?php endif; ?>
                                     <label for="captain" class="form-check-label">Jr Captain</label>
                                 </div>
                                 <!--<span>Available seats: <?php echo $jrCaptain; ?></span> -->
                             </div>
                             <div class="category-container">
                                 <div class="form-check">
+                                <?php if ($_SESSION['new_TM'] == 2):?>
+                                    <input type="radio" id="colonel" name="category" class="form-check-input" value="3" <?php if ($jrColonel == 0) echo 'disabled'; ?> 
+                                    <?php if ($CName=='Jr_Colonel') echo 'checked'; ?> required>
+                                <?php else:?>
                                     <input type="radio" id="colonel" name="category" class="form-check-input" value="3" <?php if ($jrColonel == 0) echo 'disabled'; ?> required>
+                                <?php endif; ?>
                                     <label for="colonel" class="form-check-label">Jr Colonel</label>
                                 </div>
                                 <!--<span>Available seats: <?php echo $jrColonel; ?></span> -->
@@ -420,14 +516,19 @@ main {
                         <?php
                             check_mem_errors();
                         ?>
-                        <button class="form-button" type="submit" name="Done">Done</button>    
+                        <?php
+                            if ( $_SESSION['new_TM'] == 2) {
+                                echo '<button class="form-button" type="button" name="Done" onclick="showModal()">Edit</button>';
+                                }
+                            else {
+                                echo '<button class="form-button" type="submit" name="Done">Done</button>';} ?>
                     <?php else: ?>
                         <?php
                             $query3='SELECT T.TMembers,T.C_id, H.MaxP, H.Jr_Cadet, H.Jr_Captain, H.Jr_Colonel FROM team_data T
                             JOIN hackathon_data H ON T.H_id = H.H_id
-                            WHERE T.TName=:TName AND H.H_id=:H_id';
+                            WHERE T.T_id=:T_id AND H.H_id=:H_id';
                             $stmt3 = $pdo->prepare($query3);
-                            $stmt3->bindParam(":TName", $TName);
+                            $stmt3->bindParam(":T_id", $result1['T_id']);
                             $stmt3->bindParam(":H_id", $_SESSION['H_id']);  
                             $stmt3->execute();
                             $result3=$stmt3->fetch();
@@ -436,27 +537,60 @@ main {
                             
                             check_mem_errors();
                             
-                            if ($result3[$CName]==1 || $result3['TMembers'] + 1 == $result3['MaxP']) {
+                            if ( $_SESSION['new_TM'] == 2) {
+                                echo '<button class="form-button" type="button" name="Done" onclick="showModal()">Edit</button>';
+                            }
+                            else if ($result3[$CName]==1 || $result3['TMembers'] + 1 == $result3['MaxP'] || $_SESSION['new_TM'] == 2) {
                                 echo '<button class="form-button" type="submit" name="Done">Done</button>';
-                            } 
+                            }  
                             else if ($result3['TMembers']==0) {
                                 echo '<button class="form-button" type="submit" name="Add_Member">Add Member</button>';
-                            } 
+                            }
                             else{
                                 echo '<button class="form-button" type="submit" name="Add_Member">Add Member</button>';
                                 echo '<button class="form-button" type="submit" name="Done">Done</button> ';
                             }
                     endif; ?>
-                    
+                  <input type="hidden" name="solo_Id" value="<?php echo isset($_GET['S']) ? $_GET['S'] : ''; ?>">  
                   <input type="hidden" name="source" value="<?php echo isset($_GET['source']) ? $_GET['source'] : ''; ?>">
                 </form>
             </div>
         </div>
     </main>
+    
+    <div id="modal" class="modal-background">
+        <div class="modal-content">
+            <p class="modal-text">Are you sure you want to edit?</p>
+            <div class="modal-button-container">
+                <button class="modal-button" onclick="hideModal()">Cancel</button>
+                <button class="modal-button" onclick="Sdelete()">Yes</button>
+            </div>
+        </div>
+    </div>
+    
     <footer>
         <p>Code Battle © 2024. All rights reserved. Made with <span class="heart">❤</span> in U.A.E</p>
         <p>Contact us at: info@codebattle.com</p>
     </footer>
+
+                
+    <script>
+        function showModal() {
+            document.getElementById("modal").style.display = "flex";}
+
+        function hideModal() {
+            document.getElementById("modal").style.display = "none";}
+
+        function Sdelete() {
+            hideModal();
+            var form = document.getElementById('editForm');
+            var input=document.createElement('input');
+            input.type='hidden';
+            input.name='Done';
+            form.appendChild(input);
+            form.submit();
+        }
+    </script>
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>

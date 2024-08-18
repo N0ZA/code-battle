@@ -1,14 +1,36 @@
 <?php
+    declare(strict_types=1);
+
+    require_once '../includes/dbh.inc.php';
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
+        header("Location: ../index.php");
+        exit();
+    }
+
+
 header("Content-Type: text/html; charset=UTF-8");
 
-// You can include any PHP logic here i.e fetching event details from a database
+    $eventLocation = "Digital Park, Silicon Oasis, Dubai, United Arab Emirates";
+    $H_id=$_GET['H'];
+    //get hackathon details
+    $query='SELECT * FROM hackathon_data WHERE H_id=:H_id'; 
+    $stmt=$pdo->prepare($query);
+    $stmt->bindParam(":H_id",$H_id);
+    $stmt->execute();
+    $event=$stmt->fetch();
 
-// For demonstration purposes, I am using static content
-$eventTitle = "Code Battle Sharjah Chapter";
-$eventDate = "Saturday, August 10, 2024";
-$eventDescription = "Join us for an amazing event that you'll never forget. This is the description of the event. It will have great activities, fun games, and awesome people.";
-$eventTime = "9:00 AM - 04:00 PM";
-$eventLocation = "Digital Park, Silicon Oasis, Dubai, United Arab Emirates";
+    $longDate=$event['HDate'];
+    $date = new DateTime($longDate);
+    $formatDate = $date->format('F j, Y');
+
+    function getImage($eventImage) {
+        $folder = '../Images/eventreg/';
+        $imagePath = $folder . $eventImage;
+        return $imagePath;
+    }
 ?>
 
 <!DOCTYPE html>
@@ -195,7 +217,6 @@ $eventLocation = "Digital Park, Silicon Oasis, Dubai, United Arab Emirates";
             width: 100%; 
             height: 350px;
             position: relative;
-            background-image: url("../Images/eventreg/event3.jpg");
         }
         .event-image-blur {
             overflow: hidden;
@@ -452,7 +473,6 @@ $eventLocation = "Digital Park, Silicon Oasis, Dubai, United Arab Emirates";
             <div class="header-left">
                 <img src="../images/codebattlelogo.png" alt="Logo" class="logo">
                 <ul class="nav">
-                    <li><a href="../dashboard.php">Home</a></li>
                     <li><a href="registered_events.php">Registered Events</a></li>
                 </ul>
             </div>
@@ -469,15 +489,15 @@ $eventLocation = "Digital Park, Silicon Oasis, Dubai, United Arab Emirates";
 
         <div class="event-container">
             <!-- Event Image -->
-            <div class="event-image">
+            <div class="event-image" style="background-image: url('<?php echo getImage($event['HImage']); ?>');">
                 <div class="event-image-blur">
-                    <img src="../Images/eventreg/event3.jpg" alt="Event Image">
+                    <img src="<?php echo getImage($event['HImage']); ?>" alt="Event Image">
                 </div>
             </div> 
 
             <!-- Event Details -->
             <div class="event-header">
-                <h1><?php echo htmlspecialchars($eventTitle); ?></h1>
+                <h1><?php echo $event['HName']; ?></h1>
                 <div class="event-icons">
                     <button class="share-button" title="Share">
                         <i class="fas fa-share"></i>
@@ -490,28 +510,32 @@ $eventLocation = "Digital Park, Silicon Oasis, Dubai, United Arab Emirates";
             <div class="details-flex">
 
                 <div class="event-details">
-                    <p class="event-date"><?php echo htmlspecialchars($eventDate); ?></p>
+                    
+                    <p class="event-date"><?php echo $formatDate; ?></p>
     
                     <div class="event-description">
-                        <p><?php echo htmlspecialchars($eventDescription); ?></p>
+                        <p><?php echo $event['Hdesc']; ?></p>
                     </div>
     
                     <div class="event-timing">
                         <div class="timing-item">
                             <span class="icon">🕒</span>
-                            <p><?php echo htmlspecialchars($eventTime); ?></p>
+                            <p><?php echo $event['HTime']; ?></p>
                         </div>
                         <!-- Add more timing items if needed -->
                     </div>
     
                 </div>
                 <div class="register-div">
-                    <button class="register-button">Register</button>
+                <form action="eventreg.php" method="POST">
+                    <input type="hidden" name="H_id" value="<?php echo $event['H_id']; ?>">
+                    <input type="hidden" name="is_team" value="<?php echo $event['is_team']; ?>">
+                    <button type="submit" class="register-button">Register</button>
                 </div>
             </div>
             <div class="event-location">
-                <h2><i class="fa-solid fa-location-dot"></i> Location</h2>
-                <p><?php echo htmlspecialchars($eventLocation); ?></p>
+                <h2><i class="fa-solid fa-location-dot"></i> Location (LOCATIONNNN PLSSS)</h2>
+                <p><?php echo $eventLocation ?></p>
                 <button class="view-map-button" id="map-toggle-button" onclick="toggleMap()">View Map</button>
                 <div class="map-container" id="map-container">
                     <!-- Embed Google Map or other map service here -->

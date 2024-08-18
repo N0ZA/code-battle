@@ -250,7 +250,12 @@ footer {
                 <!--<hr>-->
                 <button type="submit">Log In</button>
                 <p  style="font-size:large; text-align: center; color: red;">Don't have an account? 
-                <a href="sign_up/signup.php?H=<?php echo $H_id; ?>&T=<?php echo $is_team; ?>">Sign up</a>
+                
+                <?php if (empty($_GET['H'])): ?>
+                    <a href="dashboard.php">Sign up</a>
+                <?php else: ?> 
+                    <a href="sign_up/signup.php?H=<?php echo $H_id; ?>&T=<?php echo $is_team; ?>">Sign up</a>
+                <?php endif ?>
                 </p>
             </form>
             <?php

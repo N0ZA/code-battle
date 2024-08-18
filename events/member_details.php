@@ -7,6 +7,7 @@
         header("Location: index.php");
         exit();
     }
+    unset($_SESSION['new_TM']);
     function getImage($Folder = '../Images/teams/') {
         static $lastImage=-1; //static allows it to retain the value during function calls
         $images=glob($Folder.'*.{jpg,jpeg,png,gif}', GLOB_BRACE); 
@@ -21,15 +22,38 @@
     $stmt->bindParam(":user_id",$_SESSION['user_id']);
     $stmt->execute();
     $user = $stmt->fetch();
+    //get member details for a team
+    if (!isset($_SESSION["is_team"]) || (!isset($_SESSION['TName']))) {
+        header("Location: registered_events.php");
+        exit(); 
+        }    
+    else if ($_SESSION['is_team']==1 && isset($_SESSION['TName'])){
+        $query='SELECT T_id FROM team_data WHERE H_id=:H_id and Tuser_id=:user_id and TName=:TName';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id",$_SESSION['user_id']);
+        $stmt->bindParam(":H_id",$_SESSION['H_id']);   
+        $stmt->bindParam(":TName",$_SESSION['TName']);
+        $stmt->execute();
+        $result=$stmt->fetch();
+        $T_id=$result['T_id'];
 
-    //get team details
-    $query1='SELECT * FROM solo_data WHERE H_id=:H_id and Puser_id=:user_id and T_id is NULL';
-    $stmt1=$pdo->prepare($query1);
-    $stmt1->bindParam(":user_id",$_SESSION['user_id']);
-    $stmt1->bindParam(":H_id",$_SESSION['H_id']);
-    $stmt1->execute();
-    $solos=$stmt1->fetchAll();
-
+        $query1='SELECT * FROM solo_data WHERE H_id=:H_id and Puser_id=:user_id and T_id=:T_id';
+        $stmt1=$pdo->prepare($query1);
+        $stmt1->bindParam(":T_id", $T_id); //tname has T_id from eventedit.php link
+        $stmt1->bindParam(":user_id",$_SESSION['user_id']);
+        $stmt1->bindParam(":H_id",$_SESSION['H_id']);   
+        $stmt1->execute();
+        $solos=$stmt1->fetchAll();
+    }    
+    //get member details for solo event
+    else if ($_SESSION['is_team']==0){
+        $query1='SELECT * FROM solo_data WHERE H_id=:H_id and Puser_id=:user_id and T_id IS NULL';
+        $stmt1=$pdo->prepare($query1);
+        $stmt1->bindParam(":user_id",$_SESSION['user_id']);
+        $stmt1->bindParam(":H_id",$_SESSION['H_id']);   
+        $stmt1->execute();
+        $solos=$stmt1->fetchAll();
+    }
     $query2 ='SELECT * FROM hackathon_data WHERE H_id = :H_id';
     $stmt2 = $pdo->prepare($query2);
     $stmt2->bindParam(':H_id', $_SESSION['H_id']);
@@ -43,7 +67,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard</title>
+    <title>Members</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     <link rel="stylesheet" href="../css/styles.css">
     <script>
@@ -106,12 +130,16 @@
         </div>
     </div>   
     <div class="teams-title">
-        <h2>Registered Members </h2> <h4>For Hackathon <span class="username"><?php echo $Hdetails['HName']; ?></h4></span>
+        <?php if ($_SESSION['is_team']==1): ?><h2>Edit Members </h2> 
+        <?php else: ?> <h2>Registered Members </h2> <?php endif ?>  
+        <h4>Hackathon: <span class="username"><?php echo $Hdetails['HName'];?> </span>
+        <?php if ($_SESSION['is_team']==1): ?>Team: <span class="username"><?php echo $_SESSION['TName'];  endif ?>  </span></h4>
     </div>
         <div class="team-card-container">
         <?php 
         if (!empty($solos)): ?>
-           <?php foreach ($solos as $solo): ?>
+           <?php $memCount = 1;
+            foreach ($solos as $solo): ?>
                 <div class="team-card" id="<?php echo $solo['PName']; ?>" onclick="CardClick(this)">
                     <div class="card-inner">
                         <div class="card-front">
@@ -126,20 +154,35 @@
                         </div>
                         <div class="card-back">
                             <div class="card-members">
-                                <p> MEMBER DETAILS</p>
-                                <ul class="member-list">
-                                            <li>Name: <?php echo $solo['PName']; ?></li>
-                                            <li>Category: <?php echo $CName; ?></li>
-                                            <li>Email: <?php echo $solo['PEmail']; ?></li>
-                                            <li>School: <?php echo $solo['PSchool']; ?></li>
-                                </ul>
+                                <?php if ($solo['T_id']==NULL): ?>
+                                    <p> MEMBER DETAILS</p>
+                                <?php else: ?>
+                                    <p> MEMBER <?php echo $memCount; ?> DETAILS</p>
+                                <?php endif; ?>
+                                    <ul class="member-list">
+                                        <li>Name: <?php echo $solo['PName']; ?></li>
+                                        <li>Category: <?php echo $CName; ?></li>
+                                        <li>Email: <?php echo $solo['PEmail']; ?></li>
+                                        <li>School: <?php echo $solo['PSchool']; ?></li>
+                                    </ul>
+                                    <?php if ($solo['Pchecked_in']==0): ?> 
+                                        <?php if ($_SESSION['is_team']==0):?>
+                                            <div class="card-actions">
+                                                <a href="generate_ticket.php?tick=<?php echo $solo['P_id']; ?>" class="icon-link" style="font-size:20px;">
+                                                <i class="fas fa-ticket-alt"></i> Download Ticket</a> 
+                                            </div>  <?php endif; ?>
+                                    <?php endif; ?>
                             </div>  
-                            <div class="card-actions">
-                                 <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $solo['PName']; ?>')"><i class="fas fa-trash"></i></a>   
-                            </div>
+                            <?php if ($solo['Pchecked_in']==0): ?> 
+                                <div class="card-actions">
+                                    <a href="eventedit.php?Solo=<?php echo $solo['P_id']; ?>&action=Sedit" class="icon-link" ><i class="fas fa-edit"></i></a>
+                                    <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $solo['P_id']; ?>')"><i class="fas fa-trash"></i></a>   
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
+                <?php $memCount++; ?>
             <?php endforeach; ?>
             <?php else: ?>
                 <p>You have not registered any members yet.</p>
@@ -149,7 +192,7 @@
 
     <div id="modal" class="modal-background">
         <div class="modal-content">
-            <p class="modal-text">Are you sure you want to delete member: <span id="solo-name"></span>?</p>
+            <p class="modal-text">Are you sure you want to delete member: <span id="solo-ID"></span>?</p>
             <div class="modal-button-container">
                 <button class="modal-button" onclick="hideModal()">Cancel</button>
                 <button class="modal-button" onclick="Sdelete()">Yes</button>
@@ -158,15 +201,15 @@
     </div>
                 
     <script>
-        function showModal(teamName) {
-            document.getElementById("solo-name").textContent = teamName;
+        function showModal(soloID) {
+            document.getElementById("solo-ID").textContent = soloID;
             document.getElementById("modal").style.display = "flex";}
 
         function hideModal() {
             document.getElementById("modal").style.display = "none";}
 
         function Sdelete() {
-            window.location.href = `eventedit.php?solo=${document.getElementById("solo-name").textContent}&action=Sdelete`;}
+            window.location.href = `eventedit.php?solo=${document.getElementById("solo-ID").textContent}&action=Sdelete`;}
     </script>
 </body>
 </html>

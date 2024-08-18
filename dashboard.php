@@ -14,7 +14,12 @@
         $images=glob($Folder.'*.{jpg,jpeg,png,gif}', GLOB_BRACE); 
         sort($images);
         $lastImage=($lastImage+1) % count($images);
-        return $images[$lastImage];
+        $imagePath = $images[$lastImage];
+        $imageName = basename($imagePath);
+        return [
+            'path' => $imagePath,
+            'name' => $imageName
+        ];
     }
  
     //get user details
@@ -58,17 +63,22 @@
             const preloader = document.querySelector('.preloader');
             preloader.style.display = 'none';
         });
-
+        const baseURL = window.location.origin;
         function showModal(h_id,is_team) {
-                const eventLink =`/code-battle/events/eventreg.php?H=${h_id}&T=${is_team}`;
+            <?php if (isset($_SESSION['user_isadmin']) && $_SESSION['user_isadmin']==1): ?>
+                const eventLink =`${baseURL}/code-battle/events/eventreg.php?H=${h_id}&T=${is_team}&L=yes`;
                 document.getElementById("event-link").textContent=eventLink ;
                 document.getElementById("register-button").onclick= function() {
                     window.location.href = `events/eventreg.php?H=${h_id}&T=${is_team}`;
                 }
                 document.getElementById("modal").style.display = "flex";
-            }
-            function hideModal() {
-                document.getElementById("modal").style.display = "none";}
+            <?php else: ?>
+                window.location.href = `events/eventreg.php?H=${h_id}&T=${is_team}`;
+            <?php endif; ?>
+        }
+            
+        function hideModal() {
+            document.getElementById("modal").style.display = "none";}
 
     </script>
 </head>
@@ -83,7 +93,7 @@
                 <ul class="nav">
                    <!-- <li><a href="dashboard.php">Home</a></li>
                     <li><a href="events/registered_events.php">Registered Events</a></li>
-                </ul>
+                </ul>-->
             </div>
             <div class="header-right">
                 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
@@ -92,7 +102,7 @@
                         <div id="profile-dropdown" class="dropdown-content">
                             <a onclick="window.location.href='logout.php';">Logout</a>
                         </div>
-                    </div> -->
+                    </div> 
                 <!--<img src="images/profile-icon.png" alt="Profile" class="profile-icon" onclick="toggleDropdown()">
                 <div id="profile-dropdown" class="dropdown-content">
                     <a href="#">Logout</a> 
@@ -120,7 +130,18 @@
             <div class="events">
                 <?php foreach ($events as $event): ?>
                     <div class="events-card">
-                        <img src="<?php echo getImage(); ?>" alt="<?php echo $event['HName']; ?>">
+                        <?php 
+                            $imageData = getImage();
+                            $imagePath = $imageData['path'];
+                            $imageName = $imageData['name'];
+
+                            $query = 'UPDATE hackathon_data SET HImage=:HImage WHERE H_id=:H_id';
+                            $stmt = $pdo->prepare($query);
+                            $stmt->bindParam(':HImage', $imageName);
+                            $stmt->bindParam(':H_id', $event['H_id']);
+                            $stmt->execute();
+                        ?>
+                        <img src="<?php echo $imagePath ?>" alt="<?php echo $event['HName']; ?>">
                         <div class="card-details">
                             <h3><?php echo $event['HName']; ?>
                             <?php if ($event['is_team']): ?>
@@ -129,10 +150,6 @@
                                 [SOLO BASED]
                             <?php endif; ?></h3>
                             <ul>   
-                                <li>Seats in Each Category:</li>
-                                <li>Jr Cadet:<?php echo $event['Jr_Cadet']; ?>
-                                Jr Captain:<?php echo $event['Jr_Captain']; ?>
-                                Jr Colonel:<?php echo $event['Jr_Colonel']; ?></li>
                                 <li>Max Number of People: <?php echo $event['MaxP']; ?></li>
                                 <li>Date: <?php echo $event['HDate']; ?></li>
                                 <li>Time: <?php echo $event['HTime']; ?></li>

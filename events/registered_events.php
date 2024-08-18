@@ -8,15 +8,15 @@
         exit();
     }
     unset($_SESSION['new_TM']);
-
-    function getImage($Folder = '../Images/eventreg/') {
-        static $lastImage=-1; //static allows it to retain the value during function calls
-        $images=glob($Folder.'*.{jpg,jpeg,png,gif}', GLOB_BRACE); 
-        sort($images);
-        $lastImage=($lastImage+1) % count($images);
-        return $images[$lastImage];
-    }
+    unset($_SESSION['TName']);
+    unset($_SESSION['H_id']);
+    unset($_SESSION['is_team']);
  
+    function getImage($eventImage) {
+        $folder = '../Images/eventreg/';
+        $imagePath = $folder . $eventImage;
+        return $imagePath;
+    }
     //get user details
     $query='SELECT RName FROM registration_data WHERE R_id = :user_id';
     $stmt=$pdo->prepare($query);
@@ -104,31 +104,31 @@
             <?php if (!empty($events)): ?>
                 <?php foreach ($events as $event): ?>
                     <?php
-                        $query2 ='SELECT H_id, HName, is_team FROM hackathon_data WHERE H_id = :H_id';
+                        $query2 ='SELECT * FROM hackathon_data WHERE H_id = :H_id';
                         $stmt2 = $pdo->prepare($query2);
                         $stmt2->bindParam(':H_id', $event['H_id']);
                         $stmt2->execute();
                         $eventDetails=$stmt2->fetch();
-                        $_SESSION['is_team']=$eventDetails['is_team']
+                        $is_team=$eventDetails['is_team']
                      ?>
 
                     <div class="events-card">
-                        <img src="<?php echo getImage(); ?>" alt="<?php echo $eventDetails['HName'];?>">
+                        <img src="<?php echo getImage($eventDetails['HImage']); ?>" alt="<?php echo $eventDetails['HName'];?>">
                         <div class="card-details">
                             <h3><u> <?php echo strtoupper($eventDetails['HName']); ?> </u> <br></br>
-                            <?php if ($_SESSION['is_team']): ?> Team Based
+                            <?php if ($is_team): ?> Team Based
                             <?php else: ?>  Solo Based
                             <?php endif; ?></h3>
                             <?php // echo  $eventDetails['H_id'] ?>
                             <form action="eventreg.php" method="POST">
                                 <input type="hidden" name="H_id" value="<?php echo $eventDetails['H_id']; ?>">
                                 <input type="hidden" name="is_team" value="<?php echo $eventDetails['is_team']; ?>">
-                                <?php if ($_SESSION['is_team']): ?> 
+                                <?php if ($is_team): ?> 
                                     <button type="submit" name="Add_Team">Add Team</button>
-                                    <button type="submit" name="Edit_Teams">Edit Teams</button>
+                                    <button type="submit" name="Edit_Teams">View Teams</button>
                                 <?php else: ?> 
                                     <button type="submit" name="Add_Member">Add Member</button>
-                                    <button type="submit" name="Edit_Members">Edit Members</button>
+                                    <button type="submit" name="Edit_Members">View Members</button>
                                 <?php endif; ?>
                             </form>
                            

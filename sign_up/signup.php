@@ -11,6 +11,12 @@
       $H_id=$_GET['H'];
       $is_team=$_GET['T'];
     } 
+    
+    $schools=[];
+    $query="SELECT * FROM school_data";
+    $stmt=$pdo->prepare($query);
+    $stmt->execute();
+    $schools=$stmt->fetchAll();
 ?>
 
 <!DOCTYPE html>
@@ -215,9 +221,14 @@
             <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
           </div>
           <div class="form-group">
-            <label for="school-name">School Name:</label>
-            <input type="text" class="form-control" id="school-name" name="school-name" placeholder="Enter your school name" required>
-          </div> 
+            <label for="school">School:</label>
+            <select class="form-control" id="school-name" name="school-name" required>
+              <option value="" disabled selected>Select your School Name</option>
+            <?php foreach ($schools as $school): ?>
+              <option value="<?php echo $school['ScName'] ?>"><?php echo $school['ScName']?></option>
+            <?php endforeach; ?>
+            </select>
+          </div>  
           <div class="form-group">
             <label for="Username">Username:</label>
             <input type="text" class="form-control" id="Username" name="Username" placeholder="Choose a username" required>
@@ -251,9 +262,14 @@
             <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
           </div>
           <div class="form-group">
-            <label for="school-name">School Name:</label>
-            <input type="text" class="form-control" id="school-name" name="school-name" placeholder="Enter your school name" required>
-          </div>
+            <label for="school">School:</label>
+            <select class="form-control" id="school-name" name="school-name" required>
+              <option value="" disabled selected>Select your School Name</option>
+            <?php foreach ($schools as $school): ?>
+              <option value="<?php echo $school['ScName'] ?>"><?php echo $school['ScName']?></option>
+            <?php endforeach; ?>
+            </select>
+          </div>  
           <div class="form-group">
             <label for="Username">Username:</label>
             <input type="text" class="form-control" id="Username" name="Username" placeholder="Choose a username" required>
@@ -287,10 +303,15 @@
             <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email" required>
           </div>
           <div class="form-group">
-            <label for="school-name">School Name:</label>
-            <input type="text" class="form-control" id="school-name" name="school-name" placeholder="Enter your school name" required>
+            <label for="school">School:</label>
+            <select class="form-control" id="school-name" name="school-name" required>
+              <option value="" disabled selected>Select your School Name</option>
+            <?php foreach ($schools as $school): ?>
+              <option value="<?php echo $school['ScName'] ?>"><?php echo $school['ScName']?></option>
+            <?php endforeach; ?>
+            </select>
           </div>  
-          <div class="form-group">
+         <div class="form-group">
             <label for="username">Username:</label>
             <input type="text" class="form-control" id="Username" name="Username" placeholder="Choose a username" required>
           </div>
