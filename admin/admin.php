@@ -12,15 +12,18 @@ require_once "../admin/admin_functions.php";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
     <title>Code Battle - Admin</title>
     <style>
         header{
             display: inline-block;
             width: 100%;
         }
+        .welcome-container{
+            margin-left:35px;
+        }
         h1{
             width: 50%;
-
         }
         .logout{
             text-align: right;
@@ -166,6 +169,29 @@ require_once "../admin/admin_functions.php";
         0% { transform: rotate(0deg); }
         100% { transform: rotate(360deg); }
     }
+
+    .qr-icon {
+        position: fixed;
+        bottom: 60px;
+        right: 20px;
+        background-color: #F73634;
+        color: white;
+        padding: 14px 14px;
+        border-radius: 50%;
+        box-shadow: rgba(0, 0, 0, .15) 0 0 10px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 9999;
+        width: 50px;
+        height: 50px;
+    }
+
+    .qr-icon:hover {
+    background-color: #000;
+    color: #fff;
+    }
     </style>
 </head>
 
@@ -185,10 +211,11 @@ require_once "../admin/admin_functions.php";
         </div>
         </div>
     </div>
+    <div class="welcome-container">
     <?php
         echo '<h1>Welcome <font color="#F73634">'.$_SESSION["user_username"].',</font></h1>';
     ?>
-    
+    </div>
     <h2>Hackathon Details</h2>
     <div id="table">
         <script>
@@ -216,7 +243,9 @@ require_once "../admin/admin_functions.php";
         
 </script>
           
-    
+    <div class="qr-icon">
+        <i class="bi bi-qr-code" style="font-size:48px;"></i>
+    </div>
 </body>
 <footer>
     <p>Code Battle &copy; 2024. All rights reserved. Made with ❤️ in U.A.E</p>
