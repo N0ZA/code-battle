@@ -11,9 +11,8 @@ require_once "../admin/admin_functions.php";
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-    <title>Code Battle - Admin</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
         header{
             display: inline-block;
@@ -172,26 +171,41 @@ require_once "../admin/admin_functions.php";
 
     .qr-icon {
         position: fixed;
-        bottom: 60px;
-        right: 20px;
+        bottom: 80px;
+        left: 50%;
+        transform: translateX(-50%);
         background-color: #F73634;
         color: white;
-        padding: 14px 14px;
-        border-radius: 50%;
+        padding: 7px 15px;
+        border-radius: 20px;
         box-shadow: rgba(0, 0, 0, .15) 0 0 10px 0;
         display: flex;
+        font-weight: 600;
         align-items: center;
         justify-content: center;
         cursor: pointer;
         z-index: 9999;
-        width: 50px;
+        width: 250px; 
         height: 50px;
+        font-size: large;
+    
+    }
+
+    .qr-icon span {
+        font-size: 40px;
+    }
+
+    .qr-icon p {
+        font-size: 25px;
     }
 
     .qr-icon:hover {
-    background-color: #000;
-    color: #fff;
+        background-color: #000000;
+        color: white;
     }
+    a {
+  text-decoration: none;
+}
     </style>
 </head>
 
@@ -243,9 +257,15 @@ require_once "../admin/admin_functions.php";
         
 </script>
           
-    <div class="qr-icon">
-        <i class="bi bi-qr-code" style="font-size:48px;"></i>
-    </div>
+    <a href="qr_scanner.php" class="qr-icon">
+  <span class="material-symbols-outlined">
+    qr_code_scanner
+  </span>
+  <p>Scan Ticket</p>
+</a>
+
+
+</div>
 </body>
 <footer>
     <p>Code Battle &copy; 2024. All rights reserved. Made with ❤️ in U.A.E</p>
