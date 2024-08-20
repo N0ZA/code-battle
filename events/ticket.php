@@ -53,6 +53,7 @@
     $eventTitle=$result1['HName'];
     $eventDate=$result1['HDate'];
     $eventTime=$result1['HTime'];
+    $qrData = isset($_GET['Ttick']) ? $T_id : (isset($_GET['Stick']) ? $P_id : '');
 
 ?>
 
@@ -64,11 +65,24 @@
     <title>Event Details</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css">
     
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <script>
         window.addEventListener('load', function(){
             const preloader = document.querySelector('.preloader');
             preloader.style.display = 'none';
+            generateQRCode();
         });
+
+        function generateQRCode() {
+            const qrData = "<?php echo $qrData; ?>";
+            const qrCodeElement = document.getElementById("qrcode");
+            qrCodeElement.innerHTML = ''; // Clear previous QR code if any
+            new QRCode(qrCodeElement, {
+                text: qrData,
+                width: 80,
+                height: 80
+            });
+        }
     </script>
     <style>
         @font-face {
@@ -495,10 +509,8 @@
                 <div class="image-container">
                     <img src="<?php echo getImage($result1['HImage']); ?>" alt="Event Image">
                     <div class="qr-code">
-                        <img src="../Images/qr.png" alt="QR Code">
-                        <div class="print-icon" id="printButton">
-                            <i class="fas fa-print"></i>
-                        </div>
+                        <div id="qrcode" class="qr-code-placeholder"></div>
+                        <div class="print-icon" id="printButton"><i class="fas fa-print"></i> </div>
                     </div>
                 </div>
             </div>
