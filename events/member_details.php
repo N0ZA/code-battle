@@ -23,11 +23,11 @@
     $stmt->execute();
     $user = $stmt->fetch();
     //get member details for a team
-    if (!isset($_SESSION["is_team"]) || (!isset($_SESSION['TName']))) {
-        header("Location: registered_events.php");
-        exit(); 
-        }    
-    else if ($_SESSION['is_team']==1 && isset($_SESSION['TName'])){
+    //if (!isset($_SESSION["is_team"]) || (!isset($_SESSION['TName']))) {
+      //  header("Location: registered_events.php");
+      //  exit(); 
+      //  }    
+    if ($_SESSION['is_team']==1 && isset($_SESSION['TName'])){
         $query='SELECT T_id FROM team_data WHERE H_id=:H_id and Tuser_id=:user_id and TName=:TName';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":user_id",$_SESSION['user_id']);
@@ -168,7 +168,7 @@
                                     <?php if ($solo['Pchecked_in']==0): ?> 
                                         <?php if ($_SESSION['is_team']==0):?>
                                             <div class="card-actions">
-                                                <a href="generate_ticket.php?tick=<?php echo $solo['P_id']; ?>" class="icon-link" style="font-size:20px;">
+                                                <a href="ticket.php?Stick=<?php echo $solo['P_id']; ?>" class="icon-link" style="font-size:20px;">
                                                 <i class="fas fa-ticket-alt"></i> Download Ticket</a> 
                                             </div>  <?php endif; ?>
                                     <?php endif; ?>
@@ -176,7 +176,7 @@
                             <?php if ($solo['Pchecked_in']==0): ?> 
                                 <div class="card-actions">
                                     <a href="eventedit.php?Solo=<?php echo $solo['P_id']; ?>&action=Sedit" class="icon-link" ><i class="fas fa-edit"></i></a>
-                                    <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $solo['P_id']; ?>')"><i class="fas fa-trash"></i></a>   
+                                    <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $solo['PName']; ?>')"><i class="fas fa-trash"></i></a>    
                                 </div>
                             <?php endif; ?>
                         </div>
