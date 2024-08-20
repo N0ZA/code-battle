@@ -53,7 +53,7 @@
     $eventTitle=$result1['HName'];
     $eventDate=$result1['HDate'];
     $eventTime=$result1['HTime'];
-    $qrData = isset($_GET['Ttick']) ? $T_id : (isset($_GET['Stick']) ? $P_id : '');
+    $qrData = isset($_GET['Ttick']) ? 'T' . $_GET['Ttick'] : (isset($_GET['Stick']) ? 'P' . $_GET['Stick'] : '');
 
 ?>
 
@@ -474,8 +474,8 @@
             <div class="header-left">
                 <img src="../images/codebattlelogo.png" alt="Logo" class="logo">
                 <ul class="nav">
-                    <li><a href="../dashboard.php">Home</a></li>
-                    <li><a href="registered_events.php">Registered Events</a></li>
+                    <!--<li><a href="../dashboard.php">Home</a></li>-->
+                    <li><a href="../events/registered_events.php">Registered Events</a></li>
                 </ul>
             </div>
             <div class="header-right">

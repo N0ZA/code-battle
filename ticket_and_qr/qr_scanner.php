@@ -1,3 +1,15 @@
+<?php
+    require_once "../includes/dbh.inc.php";
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
+        header("Location: index.php");
+        exit();
+    }
+    
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -232,8 +244,8 @@
         <div class="header-left">
             <img src="../images/codebattlelogo.png" alt="Logo" class="logo">
             <ul class="nav">
-                <li><a href="../dashboard.php">Home</a></li>
-                <li><a href="registered_events.php">Registered Events</a></li>
+                <!--<li><a href="../dashboard.php">Home</a></li>-->
+                <li><a href="../events/registered_events.php">Registered Events</a></li>
             </ul>
         </div>
         <div class="header-right">
@@ -246,14 +258,19 @@
         </div>
     </div>
     <div class="scan-title">
-        <h2>Scan your Tickets!</h2>
+        <?php if (isset($_GET['status']) && $_GET['status']=='checked_in'):?>
+            <h2>Checked In!</h2>
+        <?php else:?>
+            <h2>Scan your Tickets!</h2>
+        <?php endif ?>
     </div>
 
-    <div id="camera-view">
-        <video id="camera" autoplay></video>
-        <div id="loading">Scanning...</div>
-    </div>
-
+    <?php if (!isset($_GET['status']) || $_GET['status']!='checked_in'): ?>
+        <div id="camera-view">
+            <video id="camera" autoplay></video>
+            <div id="loading">Scanning...</div>
+        </div>
+    <?php endif ?>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 
 
@@ -261,16 +278,17 @@
         const video = document.getElementById('camera');
         const loading = document.getElementById('loading');
 
-        function startCamera() {
-            navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
-                .then(stream => {
-                    video.srcObject = stream;
-                })
-                .catch(err => {
-                    alert('Error accessing the camera: ' + err.message);
-                });
+        if (video) {
+            function startCamera() {
+                navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } })
+                    .then(stream => {
+                        video.srcObject = stream;
+                    })
+                    .catch(err => {
+                        alert('Error accessing the camera: ' + err.message);
+                    });
+            }
         }
-
         function scanQRCode() {
             const canvas = document.createElement('canvas');
             const context = canvas.getContext('2d');
@@ -287,12 +305,16 @@
                 console.log("QR Code Data:", qrCode ? qrCode.data : "No QR Code detected");
 
                 if (qrCode) {
+                    
+                    
                     loading.innerText = 'QR Code Detected! Redirecting...';
                     loading.style.display = 'block';
 
                     // Redirect to the URL in the QR code
                     setTimeout(() => {
-                        window.location.href = qrCode.data;
+                        const qrData=qrCode.data;
+                        window.location.href = `process_qr.php?qrData=${encodeURIComponent(qrCode.data)}`;
+                       
                     }, 1000); // Add a short delay before redirecting
                 }
             }, 300);
