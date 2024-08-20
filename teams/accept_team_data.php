@@ -51,7 +51,19 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
     $stmt2->execute();
     $result2=$stmt2->rowCount();
 
-    if ($result2==$result['reg_per_user']){
+    $query3="SELECT * FROM team_data WHERE Tschool=:school AND H_id=:H_id";
+    $stmt3=$pdo->prepare($query3);
+    $stmt3->bindParam(":school", $school);
+    $stmt3->bindParam(":H_id", $hackathon);
+    $stmt3->execute();
+    $result3=$stmt3->rowCount();
+
+    if ($result3==$result['reg_per_schl']){
+        $_SESSION['errors_team']=   $school. " can only make " .$result['reg_per_schl']. " registration/s for this hackathon.";
+        header("Location: teamReg.php");
+        exit(); 
+    }
+    else if ($result2==$result['reg_per_user']){
         $_SESSION['errors_team']= "You can only make " .$result['reg_per_user']. " registration/s for this hackathon. <br> You have reached your limit!";
         header("Location: teamReg.php");
         exit(); 

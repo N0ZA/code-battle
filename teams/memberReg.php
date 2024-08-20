@@ -9,10 +9,10 @@
         header("Location: ../index.php");
         exit();
     }    
-    if (!isset($_SESSION["is_team"])) {
-        header("Location: registered_events.php");
-        exit(); 
-    }  
+    //if (!isset($_SESSION["is_team"])) {
+     //   header("Location: registered_events.php");
+     //   exit(); 
+    //}  
     if ($_SESSION['new_TM']!=1 && $_SESSION['new_TM']!=2){
         header("Location: ../events/registered_events.php");
         exit();

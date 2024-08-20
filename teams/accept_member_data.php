@@ -4,9 +4,7 @@ declare(strict_types=1);
 require_once '../includes/dbh.inc.php';
 require_once '../includes/config_session.inc.php';
 
-echo "hi";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    echo "hi 2";
     $Pname = $_POST['name'];
     $PEmail = $_POST['email'];
     
@@ -47,9 +45,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt2->bindParam(":H_id", $H_id);
     $stmt2->execute();
     $result2=$stmt2->rowCount();
+    
+    $query3="SELECT * FROM team_data WHERE Tschool=:school AND H_id=:H_id";
+    $stmt3=$pdo->prepare($query3);
+    $stmt3->bindParam(":school", $PSchool);
+    $stmt3->bindParam(":H_id", $hackathon);
+    $stmt3->execute();
+    $result3=$stmt3->rowCount();
 
     if($_SESSION['is_team']==0){
-        if ($result2==$result1['reg_per_user']){
+        if ($result3==$result['reg_per_schl']){
+            $_SESSION['errors_mem']=   $PSchool. " can only make " .$result1['reg_per_schl']. " registration/s for this hackathon.";
+        }
+        else if ($result2==$result1['reg_per_user']){
             $_SESSION['errors_mem']= "You can only make " .$result1['reg_per_user']. " registration/s for this hackathon. <br> You have reached your limit!";
         }
         if ($_SESSION['new_TM'] == 2){
