@@ -1,14 +1,59 @@
 <?php
-header("Content-Type: text/html; charset=UTF-8");
+    require_once "../includes/dbh.inc.php";
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
+        header("Location: index.php");
+        exit();
+    }
+    function getImage($eventImage) {
+        $folder = '../Images/eventreg/';
+        $imagePath = $folder . $eventImage;
+        return $imagePath;
+    }
+    header("Content-Type: text/html; charset=UTF-8");
+    $eventLocation = "Tech Village, Global Square, Abu Dhabi, UAE";
 
-// You can include any PHP logic here i.e fetching event details from a database
+    if (isset($_GET['Ttick'])){
+        $T_id=$_GET['Ttick'];
+        $query='SELECT * from team_data WHERE T_id=:T_id AND Tuser_id=:user_id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id",$_SESSION['user_id']);
+        $stmt->bindParam(":T_id",$T_id);
+        $stmt->execute();
+        $result=$stmt->fetch();
+        $C_id=$result['C_id'];
 
-// For demonstration purposes, I am using static content
-$eventTitle = "Abu Dhabi Chapter";
-$eventDate = "Saturday, August 10, 2024";
-$eventDescription = "Join us for an amazing event that you'll never forget. This is the description of the event. It will have great activities, fun games, and awesome people.";
-$eventTime = "9:00 AM - 04:00 PM";
-$eventLocation = "Tech Village, Global Square, Abu Dhabi, UAE";
+        $query2='SELECT * from solo_data WHERE T_id=:T_id AND Puser_id=:user_id';
+        $stmt2=$pdo->prepare($query2);
+        $stmt2->bindParam(":user_id",$_SESSION['user_id']);
+        $stmt2->bindParam(":T_id",$T_id);
+        $stmt2->execute();
+        $result2=$stmt2->fetchAll();
+    }
+
+    else if (isset($_GET['Stick'])){
+        $P_id=$_GET['Stick'];
+        $query='SELECT * from solo_data WHERE P_id=:P_id AND Puser_id=:user_id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id",$_SESSION['user_id']);
+        $stmt->bindParam(":P_id",$P_id);
+        $stmt->execute();
+        $result=$stmt->fetch();
+    }
+    $CName =($result['C_id']==1)?'Jr_Cadet' : (($result['C_id']==2)?'Jr_Captain' : (($result['C_id']==3)?'Jr_Colonel' : 'Unknown'));
+    $H_id=$result['H_id'];
+    $query1='SELECT * from hackathon_data WHERE H_id=:H_id';
+    $stmt1 = $pdo->prepare($query1);
+    $stmt1->bindParam(":H_id",$H_id);
+    $stmt1->execute();
+    $result1=$stmt1->fetch();
+
+    $eventTitle=$result1['HName'];
+    $eventDate=$result1['HDate'];
+    $eventTime=$result1['HTime'];
+
 ?>
 
 <!DOCTYPE html>
@@ -232,7 +277,7 @@ $eventLocation = "Tech Village, Global Square, Abu Dhabi, UAE";
         .event-category, .event-info p {
             font: Lalezar;
             margin: 5px 0;
-            font-size: 1em;
+            font-size: 1.5em;
             font-weight: bold;
         }
         .contact{
@@ -433,22 +478,22 @@ $eventLocation = "Tech Village, Global Square, Abu Dhabi, UAE";
             <div class="ticket-details">
                 <div class="event-header">
                     <img src="../images/codebattlelogo.png" alt="Logo" class="logo">
-                    <h1 class="event-name"><?php echo htmlspecialchars($eventTitle); ?></h1>
+                    <h1 class="event-name"><?php echo $eventTitle; ?></h1>
                 </div>
-                <h2 class="event-date"><?php echo htmlspecialchars($eventDate); ?></h2>
+                <h2 class="event-date"><?php echo $eventDate; ?></h2>
 
                 <div class="event-info">
-                    <p class="event-category">JR. CADET</p>
+                    <p class="event-category"> <?php echo $CName ?> </p>
                     <div class="event-time">
                         <span><i class="fa-solid fa-clock"></i></span>
-                        <h1><?php echo htmlspecialchars($eventTime); ?></h1>
+                        <h1><?php echo $eventTime; ?></h1>
                     </div>
-                    <h3><i class="fa-solid fa-location-dot"></i> <?php echo htmlspecialchars($eventLocation); ?></h3>
+                    <h3><i class="fa-solid fa-location-dot"></i> <?php echo $eventLocation; ?></h3>
                 </div>
             </div>
             <div class="ticket-image">
                 <div class="image-container">
-                    <img src="../Images/eventreg/event9.jpg" alt="Event Image">
+                    <img src="<?php echo getImage($result1['HImage']); ?>" alt="Event Image">
                     <div class="qr-code">
                         <img src="../Images/qr.png" alt="QR Code">
                         <div class="print-icon" id="printButton">
@@ -463,30 +508,41 @@ $eventLocation = "Tech Village, Global Square, Abu Dhabi, UAE";
                 <div class="ticket-details">
                     <div class="event-header">
                         <img src="../images/codebattlelogo.png" alt="Logo" class="logo">
-                        <h1 class="event-name">TEAM DETAILS</h1>
+                        <?php if ($result1['is_team']==1): ?>
+                            <h1 class="event-name">TEAM DETAILS</h1>
+                        <?php elseif ($result1['is_team']==0): ?>
+                            <h1 class="event-name">MEMBER DETAILS</h1>  
+                        <?php endif ?>
                     </div>
-                    <h3 class="event-date">Members:</h3>
-                    <ul class="member-list">
-                        <li>Team Member 1  Member 1</li>
-                        <li>Team Member 2</li>
-                        <li>Team Member 3</li>
-                        <li>Team Member 3</li>
-                        <li>Team Member 3</li>
-                        <li>Team Member 3</li>
-                    </ul>
+                    <?php if ($result1['is_team']==1): ?>
+                        <h3 class="event-date"> Team Name: <?php echo $result['TName'];?></h3> 
+                        <h3 class="event-date"> School Name: <?php echo $result['TSchool'];?></h3> 
+                        <h3 class="event-date">Members:</h3>
+                        <?php if ($result2): ?>
+                            <ul class="member-list">
+                            <?php foreach ($result2 as $mem): ?>
+                                <li><?php echo($mem['PName']); ?></li>
+                            <?php endforeach; ?>
+                        <?php else : ?>
+                            <p>No members found.</p>
+                        <?php endif; ?>
+                    <?php elseif ($result1['is_team']==0): ?>
+                        <h3 class="event-date"> </h3> 
+                        <h3 class="event-date"> Member Name: <?php echo $result['PName'];?></h3> 
+                        <h3 class="event-date"> School Name: <?php echo $result['PSchool'];?></h3> 
                     <div class="contact">
-                        <p>Contact</p>
                         <div class="contact-info">
                             <span><i class="fa-solid fa-envelope"></i></span>
-                            <p>khaleeji.amer@outlook.com</p>
+                            <h3 class="event-date">Contact Info: <?php echo $result['PEmail'];?></h3>
                         </div>
                     </div>
+                    <?php endif ?>
                 </div>
             </div>
         </div>
     </div>
 
-    <a href="../Images/eventreg/ticket.pdf" target="_blank" id="pdfLink" style="display:none;">Sample PDF</a>
+    <a href="ticket.pdf" target="_blank" id="pdfLink" style="display:none;">Sample PDF</a>
 
     <script>
         document.getElementById('printButton').addEventListener('click', function() {

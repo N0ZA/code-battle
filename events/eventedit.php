@@ -7,7 +7,7 @@
 
     if ($_SERVER['REQUEST_METHOD']=='GET') {
         $_SESSION['TName'] = isset($_GET['team']) ? $_GET['team']:  $_SESSION['TName'];
-        $P_id= isset($_GET['solo']) ? $_GET['Solo'] :$_GET['solo']; ;
+        $P_id= isset($_GET['solo']) ? $_GET['solo'] :$_GET['Solo']; ;
         $action = $_GET['action'];
         echo $_SESSION['TName'];
 
