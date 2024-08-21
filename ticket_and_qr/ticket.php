@@ -42,7 +42,7 @@
         $stmt->execute();
         $result=$stmt->fetch();
     }
-    $CName =($result['C_id']==1)?'Jr_Cadet' : (($result['C_id']==2)?'Jr_Captain' : (($result['C_id']==3)?'Jr_Colonel' : 'Unknown'));
+    $CName =($result['C_id']==1)?'Jr Cadet' : (($result['C_id']==2)?'Jr Captain' : (($result['C_id']==3)?'Jr Colonel' : 'Unknown'));
     $H_id=$result['H_id'];
     $query1='SELECT * from hackathon_data WHERE H_id=:H_id';
     $stmt1 = $pdo->prepare($query1);
@@ -492,17 +492,25 @@
             <div class="ticket-details">
                 <div class="event-header">
                     <img src="../images/codebattlelogo.png" alt="Logo" class="logo">
-                    <h1 class="event-name"><?php echo $eventTitle; ?></h1>
+                    <h1 class="event-name">Welcome to Hackathon: <?php echo $eventTitle; ?></h1>
                 </div>
-                <h2 class="event-date"><?php echo $eventDate; ?></h2>
-
+                <?php if ($result1['is_team']==1): ?>
+                    <h4 class="event-date"> Team Name: <?php echo ucfirst($result['TName']);?></h4> 
+                    <h4 class="event-date"> School Name: <?php echo $result['TSchool'];?></h4> 
+                <?php elseif ($result1['is_team']==0): ?>
+                    <h4 class="event-date"> Name: <?php echo $result['PName'];?></h4> 
+                    <h4 class="event-date"> School Name: <?php echo $result['PSchool'];?></h4> 
+                <?php endif; ?>   
+                <h4 class="event-date"> Category: <?php echo $CName ?></h4> 
+                <h4 class="event-date">Date: <?php echo $eventDate; ?></h4>
+                <h4>Time: <?php echo $eventTime; ?></h4>
                 <div class="event-info">
-                    <p class="event-category"> <?php echo $CName ?> </p>
+                    <!--<p class="event-category"> <?php echo $CName ?> </p>
                     <div class="event-time">
                         <span><i class="fa-solid fa-clock"></i></span>
-                        <h1><?php echo $eventTime; ?></h1>
-                    </div>
-                    <h3><i class="fa-solid fa-location-dot"></i> <?php echo $eventLocation; ?></h3>
+                     
+                    </div>-->
+                    <h4><i class="fa-solid fa-location-dot"></i> <?php echo $eventLocation; ?></h4>
                 </div>
             </div>
             <div class="ticket-image">
@@ -527,11 +535,14 @@
                         <?php endif ?>
                     </div>
                     <?php if ($result1['is_team']==1): ?>
-                        <h3 class="event-date"> Team Name: <?php echo $result['TName'];?></h3> 
-                        <h3 class="event-date"> School Name: <?php echo $result['TSchool'];?></h3> 
-                        <h3 class="event-date">Members:</h3>
+                        
+                        <h4 class="event-date">Members:</h4>
                         <?php if ($result2): ?>
                             <ul class="member-list">
+                            <li>misbah </li>
+                            <li>syeda</li>
+                            <li>misbah </li>
+                            <li>syeda</li>
                             <?php foreach ($result2 as $mem): ?>
                                 <li><?php echo($mem['PName']); ?></li>
                             <?php endforeach; ?>
@@ -539,9 +550,7 @@
                             <p>No members found.</p>
                         <?php endif; ?>
                     <?php elseif ($result1['is_team']==0): ?>
-                        <h3 class="event-date"> </h3> 
-                        <h3 class="event-date"> Member Name: <?php echo $result['PName'];?></h3> 
-                        <h3 class="event-date"> School Name: <?php echo $result['PSchool'];?></h3> 
+                       
                     <div class="contact">
                         <div class="contact-info">
                             <span><i class="fa-solid fa-envelope"></i></span>

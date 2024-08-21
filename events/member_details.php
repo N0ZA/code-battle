@@ -168,7 +168,7 @@
                                     <?php if ($solo['Pchecked_in']==0): ?> 
                                         <?php if ($_SESSION['is_team']==0):?>
                                             <div class="card-actions">
-                                                <a href="ticket.php?Stick=<?php echo $solo['P_id']; ?>" class="icon-link" style="font-size:20px;">
+                                                <a href="../ticket_and_qr/ticket.php?Stick=<?php echo $solo['P_id']; ?>" class="icon-link" style="font-size:20px;">
                                                 <i class="fas fa-ticket-alt"></i> Download Ticket</a> 
                                             </div>  <?php endif; ?>
                                     <?php endif; ?>
