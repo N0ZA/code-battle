@@ -257,15 +257,22 @@
             </div>
         </div>
     </div>
-    <div class="scan-title">
+    
         <?php if (isset($_GET['status']) && $_GET['status']=='checked_in'):?>
-            <h2>Checked In!</h2>
+            <div class="scan-title">
+                <h2>Checked In!</h2>
+            </div>
+            <div class="scan-title">
+                <h2 onclick="window.location.href='qr_scanner.php';" style="cursor: pointer;">SCAN NEXT</h2> 
+            </div>
         <?php else:?>
-            <h2>Scan your Tickets!</h2>
+            <div class="scan-title">
+                <h2>Scan your Tickets!</h2>
+            </div>
         <?php endif ?>
-    </div>
 
     <?php if (!isset($_GET['status']) || $_GET['status']!='checked_in'): ?>
+        <div class="content-container"></div>
         <div id="camera-view">
             <video id="camera" autoplay></video>
             <div id="loading">Scanning...</div>
