@@ -9,19 +9,33 @@
         header("Location: ../index.php");
         exit();
     }
-
-
-header("Content-Type: text/html; charset=UTF-8");
+    header("Content-Type: text/html; charset=UTF-8");
 
     $eventLocation = "Digital Park, Silicon Oasis, Dubai, United Arab Emirates";
-    $H_id=$_GET['H'];
-    //get hackathon details
-    $query='SELECT * FROM hackathon_data WHERE H_id=:H_id'; 
-    $stmt=$pdo->prepare($query);
-    $stmt->bindParam(":H_id",$H_id);
+    
+    if ($_SERVER["REQUEST_METHOD"]=="GET"){
+        if (isset($_GET['H']) || isset($_GET['T'])){
+            $H_id=$_GET['H'];
+            $is_team=$_GET['T'];
+            if ($H_id==NULL || $is_team==NULL){     //if only one of them is set then direct to error
+                header('Location: error404.html');
+                exit();
+            }
+            $query='SELECT * FROM hackathon_data WHERE H_id=:H_id AND is_team=:is_team';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":H_id",$H_id);
+            $stmt->bindParam(":is_team",$is_team);
+            $stmt->execute();
+            $result=$stmt->fetch();  
+            //if user makes any changes with hid or isteam tht is invalid then it goes to error page 
+            if ($result['H_id']!=$H_id || $result['is_team']!=$is_team){
+                header('Location: ../error404.html');
+                exit();
+            }
+        }
+    }
     $stmt->execute();
     $event=$stmt->fetch();
-
     $longDate=$event['HDate'];
     $date = new DateTime($longDate);
     $formatDate = $date->format('F j, Y');
