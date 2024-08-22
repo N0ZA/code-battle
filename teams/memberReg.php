@@ -26,6 +26,14 @@
         $stmt->bindParam(":Puser_id", $_SESSION['user_id']);
         $stmt->execute();
         $memberData = $stmt->fetch();
+        if ($memberData['P_id']!=$_GET['S']){
+            header('Location: ../error404.html');
+            exit();
+        }
+    }
+    if (isset($_GET['source']) && $_GET['source']!='eventedit'){
+        header('Location: ../error404.html');
+            exit();
     }
 ?>
 

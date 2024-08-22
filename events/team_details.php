@@ -173,7 +173,7 @@
                             <div class="card-actions">
                                 <?php if ($team['Tchecked_in']==0): ?> 
                                     <?php 
-                                        if ($Hdetails[$CName]==0 || $team['TMembers']==$Hdetails['MaxP']): ?>
+                                        if ($Hdetails[$CName]==0 || $team['TMembers']>=$Hdetails['MaxP']): ?>
                                             <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>
                                             <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $team['TName']; ?>')"><i class="fas fa-trash"></i></a>
                                     <?php else: ?>

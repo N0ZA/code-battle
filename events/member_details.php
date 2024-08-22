@@ -176,7 +176,7 @@
                             <?php if ($solo['Pchecked_in']==0): ?> 
                                 <div class="card-actions">
                                     <a href="eventedit.php?Solo=<?php echo $solo['P_id']; ?>&action=Sedit" class="icon-link" ><i class="fas fa-edit"></i></a>
-                                    <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $solo['PName']; ?>')"><i class="fas fa-trash"></i></a>    
+                                    <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $solo['P_id']; ?>')"><i class="fas fa-trash"></i></a>    
                                 </div>
                             <?php endif; ?>
                         </div>
@@ -192,7 +192,7 @@
 
     <div id="modal" class="modal-background">
         <div class="modal-content">
-            <p class="modal-text">Are you sure you want to delete member: <span id="solo-ID"></span>?</p>
+            <p class="modal-text">Are you sure you want to delete the member?</p>
             <div class="modal-button-container">
                 <button class="modal-button" onclick="hideModal()">Cancel</button>
                 <button class="modal-button" onclick="Sdelete()">Yes</button>
@@ -201,15 +201,16 @@
     </div>
                 
     <script>
+        let currentSoloID = '';
         function showModal(soloID) {
-            document.getElementById("solo-ID").textContent = soloID;
+            currentSoloID = soloID;
             document.getElementById("modal").style.display = "flex";}
 
         function hideModal() {
             document.getElementById("modal").style.display = "none";}
 
         function Sdelete() {
-            window.location.href = `eventedit.php?solo=${document.getElementById("solo-ID").textContent}&action=Sdelete`;}
+            window.location.href = `eventedit.php?solo=${currentSoloID}&action=Sdelete`;}
     </script>
 </body>
 </html>

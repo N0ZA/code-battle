@@ -20,7 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $result1=$stmt1->fetch();
 
     }
-
     else if ($_SESSION['is_team']) {    //team regis of members-set variables
         $TName = $_SESSION['TName'];
         $query1 = "SELECT * FROM team_data WHERE TName=:TName and H_id=:H_id and Tuser_id=:user_id";
@@ -46,8 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
    // $stmt2->execute();
    // $result2=$stmt2->rowCount();
     
-    
-
     if($_SESSION['is_team']==0){
         //if user is editing make sure to leave our the current data
         if ($_SESSION['new_TM'] == 2){
@@ -55,20 +52,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $query = 'SELECT * FROM solo_data WHERE T_id IS NULL AND PName=:Pname AND H_id=:H_id and P_id!=:P_id';
             $stmt = $pdo->prepare($query);
             $stmt->bindParam(":P_id",$_POST['solo_Id']);
-            //
+            //reg per schl checking
             $query3="SELECT * FROM solo_data WHERE Pschool=:school AND H_id=:H_id AND P_id!=:P_id";
             $stmt3=$pdo->prepare($query3);
             $stmt3->bindParam(":P_id",$_POST['solo_Id']);
         }
-        //if user is adding member
-        else{
+        //if user is adding a member
+        else{//name uniqueness checking at hackathon level
             $query = 'SELECT * FROM solo_data WHERE T_id IS NULL AND PName=:Pname AND H_id=:H_id';
             $stmt = $pdo->prepare($query);
-
+            //reg per schl checking
             $query3="SELECT * FROM solo_data WHERE Pschool=:school AND H_id=:H_id";
             $stmt3=$pdo->prepare($query3);
         }
-
+        //reg per school only to be checked for solo
+        $stmt3->bindParam(":school", $PSchool);
+        $stmt3->bindParam(":H_id", $H_id);
+        $stmt3->execute();
+        $result3=$stmt3->rowCount();
+    
+        if ($result3==$result1['reg_per_schl']){
+            $_SESSION['errors_mem']= $PSchool. " can only make " .$result1['reg_per_schl']. " registration/s for this hackathon." ;
+        }
        // else if ($result2==$result1['reg_per_user']){
        //     $_SESSION['errors_mem']= "You can only make " .$result1['reg_per_user']. " registration/s for this hackathon. <br> You have reached your limit!";
        // }
@@ -92,15 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $stmt->execute();
     $result = $stmt->fetch();  
     
-    $stmt3->bindParam(":school", $PSchool);
-    $stmt3->bindParam(":H_id", $H_id);
-    $stmt3->execute();
-    $result3=$stmt3->rowCount();
-
-    if ($result3==$result1['reg_per_schl']){
-        $_SESSION['errors_mem']= $PSchool. " can only make " .$result1['reg_per_schl']. " registration/s for this hackathon." ;
-    }
-    else if ($result){
+    if ($result){
         $_SESSION['errors_mem']="A registration with this name already exists";
     }
     
