@@ -76,10 +76,17 @@
             padding-top: 50px;
             color: #fff;
             height: 100vh;
+            background-color: #000000;
+            overflow-x: hidden;
             display: flex;
             flex-direction: column;
+        }
+        .main-container {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            padding-bottom: 70px;
             justify-content: center;
-            align-items: center;
         }
 
         .header {
@@ -125,6 +132,14 @@
             text-decoration: underline;
         }
 
+        .header-right {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-right: 30px;
+        }
+
         .dropdown-container {
             position: relative;
         }
@@ -161,6 +176,21 @@
 
         .dropdown-container:hover .dropdown-content {
             display: block;
+        }
+
+        .welcome-container {
+            padding: 10px 20px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .welcome {
+            text-align: left;
+            color: black;
+            text-shadow: 0 0 5px rgba(0,0,0,0.2);
+        }
+        .username {
+            color: #f44134;
         }
 
         .footer {
