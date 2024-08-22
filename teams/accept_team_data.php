@@ -63,11 +63,11 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
         header("Location: teamReg.php");
         exit(); 
     }
-    else if ($result2==$result['reg_per_user']){
-        $_SESSION['errors_team']= "You can only make " .$result['reg_per_user']. " registration/s for this hackathon. <br> You have reached your limit!";
-        header("Location: teamReg.php");
-        exit(); 
-    }
+    //else if ($result2==$result['reg_per_user']){
+    //    $_SESSION['errors_team']= "You can only make " .$result['reg_per_user']. " registration/s for this hackathon. <br> You have reached your limit!";
+    //    header("Location: teamReg.php");
+     //   exit(); 
+    //}
     else if($result1){ 
         $_SESSION['errors_team']= "This team name already exists. <br>Please chose another team name.";
         header("Location: teamReg.php");
