@@ -22,6 +22,16 @@
     $stmt->execute();
     $user = $stmt->fetch();
 
+    //get hackathon details
+    $query2 ='SELECT * FROM hackathon_data WHERE H_id=:H_id';
+    $stmt2 = $pdo->prepare($query2);
+    $stmt2->bindParam(':H_id', $_SESSION['H_id']);
+    $stmt2->execute();
+    $Hdetails=$stmt2->fetch();
+    if ($Hdetails['is_team']==0){
+        header('Location:registered_events.php');
+    }
+
     //get team details
     if ($_SESSION['is_team']==1){
         $query1='SELECT * FROM team_data WHERE H_id=:H_id and Tuser_id=:user_id';
@@ -31,15 +41,7 @@
         $stmt1->execute();
         $teams=$stmt1->fetchAll();
     }
-    else{
-        header('Location:registered_events.php');
-    }
-    $query2 ='SELECT * FROM hackathon_data WHERE H_id = :H_id';
-    $stmt2 = $pdo->prepare($query2);
-    $stmt2->bindParam(':H_id', $_SESSION['H_id']);
-    $stmt2->execute();
-    $Hdetails=$stmt2->fetch();
-
+    
      //deleting teams tht have  less than 2 members
      foreach ($teams as $team) {
         if ($team['TMembers']<2){
