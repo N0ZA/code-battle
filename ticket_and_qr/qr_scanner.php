@@ -44,7 +44,35 @@
             justify-content: center;
             align-items: center;
         }
+        /* added for text area beside camera*/
+        .content-container {
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            width: 90%;
+            max-width: 800px;
+            margin: auto;
+            gap: 20px; 
+        }
+        #qr-info {
+            background-color: rgba(255, 255, 255, 0.8);
+            padding: 20px;
+            border-radius: 15px;
+            width: 40%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            color: black;
+            text-align: center;
+        }
 
+        #qr-info h3 {
+            margin-top: 0;
+        }
+
+        #qr-data {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        /*ends here */
         .header {
             display: flex;
             justify-content: space-between;
@@ -258,26 +286,49 @@
         </div>
     </div>
     
-        <?php if (isset($_GET['status']) && $_GET['status']=='checked_in'):?>
-            <div class="scan-title">
-                <h2>Checked In!</h2>
-            </div>
+        <?php if (isset($_GET['status'])):?>
+            <?php if ($_GET['status']=='checked_in'):?>
+                <div class="scan-title">
+                    <h2>Checked In!</h2>
+                </div>
+            <?php elseif ($_GET['status']=='already_checked_in'):?>
+                <div class="scan-title">
+                    <h2>Already Checked In!</h2>
+                </div>
+            <?php endif; ?>
             <div class="scan-title">
                 <h2 onclick="window.location.href='qr_scanner.php';" style="cursor: pointer;">SCAN NEXT</h2> 
-            </div>
+            </div> 
         <?php else:?>
             <div class="scan-title">
                 <h2>Scan your Tickets!</h2>
             </div>
-        <?php endif ?>
+        <?php endif; ?>
 
-    <?php if (!isset($_GET['status']) || $_GET['status']!='checked_in'): ?>
-        <div class="content-container"></div>
-        <div id="camera-view">
-            <video id="camera" autoplay></video>
-            <div id="loading">Scanning...</div>
+    <?php if (!isset($_GET['status']) || ($_GET['status']!='checked_in' && $_GET['status']!='already_checked_in')): ?>
+        <div class="content-container">
+            <div id="camera-view">
+                <video id="camera" autoplay></video>
+                <div id="loading">Scanning...</div>
+            </div>
+            <div id="qr-info">
+                <?php if (isset($_SESSION['details'])){
+                        $team= $_SESSION['details']; ?>
+                        <p id="qr-data"> Team Name: <?php echo  $team['TName']?> </p>
+                        <p id="qr-data"> School Name: <?php echo  $team['TSchool']?> </p>
+                        <p id="qr-data"> Members Count: <?php echo  $team['TMembers']?> </p>
+                        <form action="process_qr.php" method="GET">
+                            <input type="hidden" name="Data" value="T<?php echo $team['T_id']; ?>">
+                            <button type="submit" style="cursor: pointer;">CHECK IN</button>
+                        </form>
+                        <?php
+                            unset($_SESSION['details']);}
+                    else{
+                        echo '<p id="qr-data">Waiting for QR Code...</p>';
+                    }?>
+            </div>   
         </div>
-    <?php endif ?>
+    <?php endif; ?>
     <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
 
 
@@ -312,17 +363,19 @@
                 console.log("QR Code Data:", qrCode ? qrCode.data : "No QR Code detected");
 
                 if (qrCode) {
-                    
-                    
-                    loading.innerText = 'QR Code Detected! Redirecting...';
-                    loading.style.display = 'block';
-
-                    // Redirect to the URL in the QR code
-                    setTimeout(() => {
-                        const qrData=qrCode.data;
-                        window.location.href = `process_qr.php?qrData=${encodeURIComponent(qrCode.data)}`;
-                       
-                    }, 1000); // Add a short delay before redirecting
+                    const qrData=qrCode.data;
+                    const pattern = /^([TP]\d{3})$/;   //pattern start with T or P and followed by 3 digits thts the id, to make sure it doesnt accept any other QR code
+                    if (pattern.test(qrData)) {
+                        loading.innerText = 'QR Code Detected! Redirecting...';
+                        loading.style.display = 'block';
+                        setTimeout(() => {
+                            window.location.href = `process_qr.php?qrData=${encodeURIComponent(qrCode.data)}`;
+                        }, 1000); // Add a short delay before redirecting
+                    }
+                    else {
+                        loading.innerText = 'Invalid QR Code Data';
+                        loading.style.display = 'block';
+                        checkInButton.style.display = 'none';}
                 }
             }, 300);
         }
