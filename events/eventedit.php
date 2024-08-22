@@ -15,6 +15,7 @@
             $_SESSION['new_TM']=1;
             header("Location: ../teams/memberReg.php?source=eventedit");
         }
+        //deleting a team 
         else if  ($action=="delete"){
             $query1='DELETE FROM team_data WHERE TName=:TName and H_id=:H_id and Tuser_id=:user_id ';
             $stmt1=$pdo->prepare($query1);
@@ -30,7 +31,9 @@
             unset($_SESSION['TName']);
             header("Location: team_details.php");
         }
+        //deleting a member of team or solo
         else if  ($action=="Sdelete"){
+            //for team decreement the count as well
             if ($_SESSION['is_team']==1){
                 $query1='DELETE FROM solo_data WHERE P_id=:P_id and H_id=:H_id and Tuser_id=:user_id ';
                 $stmt1=$pdo->prepare($query1);
@@ -52,7 +55,8 @@
                 unset($_SESSION['TName']);
                 header("Location: team_details.php");
             }
-            else{ 
+            //for solo just delete using pid
+            else if ($_SESSION['is_team']==0){ 
                 $query1='DELETE FROM solo_data WHERE P_id=:P_id and H_id=:H_id and Puser_id=:user_id ';
                 $stmt1=$pdo->prepare($query1);
                 $stmt1->bindParam(":P_id", $P_id);
