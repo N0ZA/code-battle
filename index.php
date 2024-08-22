@@ -44,8 +44,10 @@
                 exit();
             }
         }
-        $H_id=NULL;
-        $is_team=NULL;
+        else{
+            $H_id=NULL;
+            $is_team=NULL;
+        }
     } 
 
 ?>

@@ -8,10 +8,26 @@
         die();
     }
     if ($_SERVER["REQUEST_METHOD"]=="GET"){
-      $H_id=$_GET['H'];
-      $is_team=$_GET['T'];
+      if (isset($_GET['H']) || isset($_GET['T'])){
+          $H_id=$_GET['H'];
+          $is_team=$_GET['T'];
+          if ($H_id==NULL || $is_team==NULL){     //if only one of them is set then direct to error
+              header('Location: ../error404.html');
+              exit();
+          }
+          $query='SELECT * FROM hackathon_data WHERE H_id=:H_id AND is_team=:is_team';
+          $stmt = $pdo->prepare($query);
+          $stmt->bindParam(":H_id",$H_id);
+          $stmt->bindParam(":is_team",$is_team);
+          $stmt->execute();
+          $result=$stmt->fetch();  
+          //if user makes any changes with hid or isteam in URL tht is invalid then it goes to error page 
+          if ($result['H_id']!=$H_id || $result['is_team']!=$is_team){
+              header('Location: ../error404.html');
+              exit();
+          }
+      }
     } 
-    
     $schools=[];
     $query="SELECT * FROM school_data";
     $stmt=$pdo->prepare($query);
