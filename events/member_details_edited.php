@@ -7,6 +7,7 @@
         header("Location: index.php");
         exit();
     }
+    unset($_SESSION['new_TM']);
     function getImage($Folder = '../Images/teams/') {
         static $lastImage=-1; //static allows it to retain the value during function calls
         $images=glob($Folder.'*.{jpg,jpeg,png,gif}', GLOB_BRACE); 
@@ -14,25 +15,43 @@
         $lastImage=($lastImage+1) % count($images);
         return $images[$lastImage];
     }
- 
     //get user details
     $query='SELECT RName FROM registration_data WHERE R_id = :user_id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":user_id",$_SESSION['user_id']);
     $stmt->execute();
     $user = $stmt->fetch();
+    //get member details for a team
+    //if (!isset($_SESSION["is_team"]) || (!isset($_SESSION['TName']))) {
+      //  header("Location: registered_events.php");
+      //  exit(); 
+      //  }    
+    if ($_SESSION['is_team']==1 && isset($_SESSION['TName'])){
+        $query='SELECT T_id FROM team_data WHERE H_id=:H_id and Tuser_id=:user_id and TName=:TName';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id",$_SESSION['user_id']);
+        $stmt->bindParam(":H_id",$_SESSION['H_id']);   
+        $stmt->bindParam(":TName",$_SESSION['TName']);
+        $stmt->execute();
+        $result=$stmt->fetch();
+        $T_id=$result['T_id'];
 
-    //get team details
-    if ($_SESSION['is_team']==1){
-        $query1='SELECT * FROM team_data WHERE H_id=:H_id and Tuser_id=:user_id';
+        $query1='SELECT * FROM solo_data WHERE H_id=:H_id and Puser_id=:user_id and T_id=:T_id';
+        $stmt1=$pdo->prepare($query1);
+        $stmt1->bindParam(":T_id", $T_id); //tname has T_id from eventedit.php link
+        $stmt1->bindParam(":user_id",$_SESSION['user_id']);
+        $stmt1->bindParam(":H_id",$_SESSION['H_id']);   
+        $stmt1->execute();
+        $solos=$stmt1->fetchAll();
+    }    
+    //get member details for solo event
+    else if ($_SESSION['is_team']==0){
+        $query1='SELECT * FROM solo_data WHERE H_id=:H_id and Puser_id=:user_id and T_id IS NULL';
         $stmt1=$pdo->prepare($query1);
         $stmt1->bindParam(":user_id",$_SESSION['user_id']);
-        $stmt1->bindParam(":H_id",$_SESSION['H_id']);
+        $stmt1->bindParam(":H_id",$_SESSION['H_id']);   
         $stmt1->execute();
-        $teams=$stmt1->fetchAll();
-    }
-    else{
-        header('Location:registered_events.php');
+        $solos=$stmt1->fetchAll();
     }
     $query2 ='SELECT * FROM hackathon_data WHERE H_id = :H_id';
     $stmt2 = $pdo->prepare($query2);
@@ -40,19 +59,6 @@
     $stmt2->execute();
     $Hdetails=$stmt2->fetch();
 
-     //deleting teams tht have  less than 2 members
-     foreach ($teams as $team) {
-        if ($team['TMembers']<2){
-            $query4='DELETE FROM team_data WHERE T_id=:T_id';
-            $stmt4=$pdo->prepare($query4);
-            $stmt4->bindParam(":T_id",$team['T_id']);
-            $stmt4->execute();
-            unset($_SESSION['TName']);
-        }
-    }
-    //get the team details again after updating
-    $stmt1->execute();
-    $teams=$stmt1->fetchAll();   
 ?>
 
 <!DOCTYPE html>
@@ -520,96 +526,87 @@
         </div>
     </div>   
     <div class="teams-title">
-        <h2>Registered Teams</h2> <h4>Hackathon: <span class="username"><?php echo $Hdetails['HName']; ?></h4></span>
+        <?php if ($_SESSION['is_team']==1): ?><h2>Edit Members </h2> 
+        <?php else: ?> <h2>Registered Members </h2> <?php endif ?>  
+        <h4>Hackathon: <span class="username"><?php echo $Hdetails['HName'];?> </span>
+        <?php if ($_SESSION['is_team']==1): ?>Team: <span class="username"><?php echo $_SESSION['TName'];  endif ?>  </span></h4>
     </div>
-     <div class="team-card-container">
-        <?php if (!empty($teams)): ?>
-           <?php foreach ($teams as $team): ?>
-                <?php 
-                     $query3 = 'SELECT * FROM solo_data WHERE H_id=:H_id and Puser_id=:user_id and T_id=:T_id';
-                     $stmt3 = $pdo->prepare($query3);
-                     $stmt3->bindParam(":user_id", $_SESSION['user_id']);
-                     $stmt3->bindParam(":H_id", $_SESSION['H_id']);
-                     $stmt3->bindParam(":T_id", $team['T_id']);
-                     $stmt3->execute();
-                     $members = $stmt3->fetchAll();
-                ?>
-                <div class="team-card" id="<?php echo $team['TName']; ?>" onclick="CardClick(this)">
+        <div class="team-card-container">
+        <?php 
+        if (!empty($solos)): ?>
+           <?php $memCount = 1;
+            foreach ($solos as $solo): ?>
+                <div class="team-card" id="<?php echo $solo['PName']; ?>" onclick="CardClick(this)">
                     <div class="card-inner">
                         <!--<div class="card-front">
                             <div id="team-image">
-                            <img src="<?php echo getImage(); ?>" alt="<?php echo $team['TName']; ?>" class="team-img">
+                            <img src="<?php echo getImage(); ?>" alt="<?php echo $solo['PName']; ?>" class="team-img">
                         </div>
                             <div class="card-text">
-                                <h3><strong><?php echo $team['TName'], $team['Tchecked_in'];; ?></strong>
-                                <?php $C_id=$team['C_id']; 
-                                $CName = ($C_id==1)?'Jr_Cadet' : (($C_id==2)?'Jr_Captain' : (($C_id==3)?'Jr_Colonel' : 'Unknown'));
-                                ?></h3>
-                                
+                                <h3><strong><?php echo $solo['PName']; ?></strong></h3>   
+                                <?php $C_id=$solo['C_id']; 
+                                $CName = ($C_id==1)?'Jr_Cadet' : (($C_id==2)?'Jr_Captain' : (($C_id==3)?'Jr_Colonel' : 'Unknown'));?>
                             </div>
                         </div>-->
                         <div class="card-back">
                             <div class="card-members">
-                                <p>MEMBERS  (<?php echo $CName; ?>)</p>
-                                <ul class="member-list">
-                                    <?php if (!empty($members)): ?>
-                                        <?php foreach ($members as $member): ?>
-                                            <li><?php echo $member['PName']; ?></li>
-                                        <?php endforeach; ?>
-                                    <?php else: ?>
-                                        <p>You have not registered any members for this team.</p>
-                                    <?php endif; ?>
-                                </ul>
-                                <?php if ($team['Tchecked_in']==0): ?> 
-                                    <div class="card-actions">
-                                        <a href="generate_ticket.php?tick=<?php echo $team['T_id']; ?>" class="icon-link" style="font-size:20px;">
-                                        <i class="fas fa-ticket-alt"></i> Download Ticket </a> 
-                                    </div>
+                                <?php if ($solo['T_id']==NULL): ?>
+                                    <p> MEMBER DETAILS</p>
+                                <?php else: ?>
+                                    <p> MEMBER <?php echo $memCount; ?> DETAILS</p>
                                 <?php endif; ?>
-                            </div>
-                            <div class="card-actions">
-                                <?php if ($team['Tchecked_in']==0): ?> 
-                                    <?php 
-                                        if ($Hdetails[$CName]==0 || $team['TMembers']==$Hdetails['MaxP']): ?>
-                                            <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>
-                                            <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $team['TName']; ?>')"><i class="fas fa-trash"></i></a>
-                                    <?php else: ?>
-                                        <a href="eventedit.php?team=<?php echo $team['TName']; ?>&action=add" class="icon-link" ><i class="fas fa-plus"></i></a>
-                                        <a href="eventedit.php? team=<?php echo $team['TName']; ?>&action=edit" class="icon-link" ><i class="fas fa-edit"></i></a>
-                                        <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $team['TName']; ?>')"><i class="fas fa-trash"></i></a>
+                                    <ul class="member-list">
+                                        <li>Name: <?php echo $solo['PName']; ?></li>
+                                        <li>Category: <?php echo $CName; ?></li>
+                                        <li>Email: <?php echo $solo['PEmail']; ?></li>
+                                        <li>School: <?php echo $solo['PSchool']; ?></li>
+                                    </ul>
+                                    <?php if ($solo['Pchecked_in']==0): ?> 
+                                        <?php if ($_SESSION['is_team']==0):?>
+                                            <div class="card-actions">
+                                                <a href="../ticket_and_qr/ticket.php?Stick=<?php echo $solo['P_id']; ?>" class="icon-link" style="font-size:20px;">
+                                                <i class="fas fa-ticket-alt"></i> Download Ticket</a> 
+                                            </div>  <?php endif; ?>
                                     <?php endif; ?>
-                                <?php endif; ?>
-                            </div>
+                            </div>  
+                            <?php if ($solo['Pchecked_in']==0): ?> 
+                                <div class="card-actions">
+                                    <a href="eventedit.php?Solo=<?php echo $solo['P_id']; ?>&action=Sedit" class="icon-link" ><i class="fas fa-edit"></i></a>
+                                    <a href="javascript:void(0);" class="icon-link"  onclick="showModal('<?php echo $solo['P_id']; ?>')"><i class="fas fa-trash"></i></a>    
+                                </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
+                <?php $memCount++; ?>
             <?php endforeach; ?>
             <?php else: ?>
-                <p>You have not created any teams yet.</p>
+                <p>You have not registered any members yet.</p>
             <?php endif; ?>
         </div>
     </div>
-    
+
     <div id="modal" class="modal-background">
         <div class="modal-content">
-            <p class="modal-text">Are you sure you want to delete team: <span id="team-name"></span>?</p>
+            <p class="modal-text">Are you sure you want to delete the member?</p>
             <div class="modal-button-container">
                 <button class="modal-button" onclick="hideModal()">Cancel</button>
-                <button class="modal-button" onclick="Tdelete()">Yes</button>
+                <button class="modal-button" onclick="Sdelete()">Yes</button>
             </div>
         </div>
     </div>
-  
+                
     <script>
-        function showModal(teamName) {
-            document.getElementById("team-name").textContent = teamName;
+        let currentSoloID = '';
+        function showModal(soloID) {
+            currentSoloID = soloID;
             document.getElementById("modal").style.display = "flex";}
 
         function hideModal() {
             document.getElementById("modal").style.display = "none";}
 
-        function Tdelete() {
-            window.location.href = `eventedit.php?team=${document.getElementById("team-name").textContent}&action=delete`;}
+        function Sdelete() {
+            window.location.href = `eventedit.php?solo=${currentSoloID}&action=Sdelete`;}
     </script>
 </body>
 </html>

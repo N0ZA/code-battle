@@ -71,7 +71,7 @@
             }
         }
         else if  ($action=="edit"){
-            header("Location: member_details.php");
+            header("Location: member_details_edited.php");
         }
         else if  ($action=="Sedit"){
             $_SESSION['new_TM']=2;
