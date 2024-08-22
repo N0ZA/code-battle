@@ -7,14 +7,27 @@
     //checks if you already signed in and you press register or if you just logged in 
     if (($_SERVER["REQUEST_METHOD"]=="POST") || (isset($_GET["login"]) && $_GET["login"] === "success") || ($_SERVER['REQUEST_METHOD']=='GET')) {
         if ($_SERVER["REQUEST_METHOD"]=="POST" || isset($_GET["H"])){
-            //h_id and is_team taken from dashboard page
+            //h_id and is_team taken from dashboard page url, we need to make sure its valid
             $_SESSION['H_id']=isset($_POST['H_id'])? $_POST['H_id'] : $_GET['H'];
             $_SESSION['is_team']=isset($_POST['is_team'])? $_POST['is_team']: $_GET['T'];
-            if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
+            
+            $query='SELECT * FROM hackathon_data WHERE H_id=:H_id AND is_team=:is_team';
+            $stmt = $pdo->prepare($query);
+            $stmt->bindParam(":H_id",$_SESSION['H_id']);
+            $stmt->bindParam(":is_team",$_SESSION['is_team']);
+            $stmt->execute();
+            $result=$stmt->fetch();  
+            //if user makes any changes with LINK then it goes to error page
+            if ($result['H_id']!= $_SESSION['H_id'] || $result['is_team']!=$_SESSION['is_team'] || (isset($_GET['L']) && $_GET['L']!='yes')){
+                header('Location: ../error404.html');
+                exit();
+            }
+            
+           if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
                 header("Location: ../index.php?H=" . $_SESSION['H_id'] . "&T=" . $_SESSION['is_team']);  // if user is not logged in and they press register, take them to log in page
                 exit();
             }
-            else if (isset($_GET["L"])){
+            else if (isset($_GET["L"]) && $_GET['L']=='yes'){
                 header("Location: ../events/eventpage.php?H=" . $_SESSION['H_id'] . "&T=" . $_SESSION['is_team']); //show details abt the event
                 exit();
             }
