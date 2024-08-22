@@ -17,13 +17,13 @@
             $stmt->bindParam(":is_team",$_SESSION['is_team']);
             $stmt->execute();
             $result=$stmt->fetch();  
-            //if user makes any changes with LINK then it goes to error page
+            //if user makes any changes with LINK then it goes to error page 
             if ($result['H_id']!= $_SESSION['H_id'] || $result['is_team']!=$_SESSION['is_team'] || (isset($_GET['L']) && $_GET['L']!='yes')){
                 header('Location: ../error404.html');
                 exit();
             }
             
-           if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
+            if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
                 header("Location: ../index.php?H=" . $_SESSION['H_id'] . "&T=" . $_SESSION['is_team']);  // if user is not logged in and they press register, take them to log in page
                 exit();
             }
