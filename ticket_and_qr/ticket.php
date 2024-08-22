@@ -17,31 +17,45 @@
 
     if (isset($_GET['Ttick'])){
         $T_id=$_GET['Ttick'];
-        $query='SELECT * from team_data WHERE T_id=:T_id AND Tuser_id=:user_id';
+        $query='SELECT * from team_data WHERE T_id=:T_id AND Tuser_id=:user_id and H_id=:H_id';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":user_id",$_SESSION['user_id']);
+        $stmt->bindParam(":H_id",$_SESSION['H_id']); 
         $stmt->bindParam(":T_id",$T_id);
         $stmt->execute();
         $result=$stmt->fetch();
         $C_id=$result['C_id'];
-
-        $query2='SELECT * from solo_data WHERE T_id=:T_id AND Puser_id=:user_id';
+        
+        $query2='SELECT * from solo_data WHERE T_id=:T_id AND Puser_id=:user_id and H_id=:H_id';
         $stmt2=$pdo->prepare($query2);
         $stmt2->bindParam(":user_id",$_SESSION['user_id']);
+        $stmt2->bindParam(":H_id",$_SESSION['H_id']); 
         $stmt2->bindParam(":T_id",$T_id);
         $stmt2->execute();
         $result2=$stmt2->fetchAll();
+    
+        if ($result['T_id']!=$T_id){
+            header("Location: ../error404.html");
+            exit();
+        }
     }
 
     else if (isset($_GET['Stick'])){
         $P_id=$_GET['Stick'];
-        $query='SELECT * from solo_data WHERE P_id=:P_id AND Puser_id=:user_id';
+        $query='SELECT * from solo_data WHERE P_id=:P_id AND Puser_id=:user_id and H_id=:H_id';
         $stmt = $pdo->prepare($query);
         $stmt->bindParam(":user_id",$_SESSION['user_id']);
+        $stmt->bindParam(":H_id",$_SESSION['H_id']); 
         $stmt->bindParam(":P_id",$P_id);
         $stmt->execute();
         $result=$stmt->fetch();
+
+        if ($result['P_id']!=$P_id){
+            header("Location: ../error404.html");
+            exit();
+        }
     }
+
     $CName =($result['C_id']==1)?'Jr Cadet' : (($result['C_id']==2)?'Jr Captain' : (($result['C_id']==3)?'Jr Colonel' : 'Unknown'));
     $H_id=$result['H_id'];
     $query1='SELECT * from hackathon_data WHERE H_id=:H_id';
