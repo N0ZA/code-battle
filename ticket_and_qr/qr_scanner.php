@@ -333,6 +333,7 @@
             <div id="qr-info">
                 <?php if (isset($_SESSION['details'])){
                         $details= $_SESSION['details']; 
+                        $id=isset($details['T_id']) ? 'T'.$details['T_id']: 'P'.$details['P_id'];
                         $Name= isset($details['TName']) ? $details['TName']: $details['PName'];
                         $School= isset($details['TSchool']) ? $details['TSchool']: $details['PSchool'];
                         $members= isset($details['TMembers']) ? $details['TMembers']: '';?>
@@ -340,7 +341,7 @@
                         <p id="qr-data"> School: <?php echo  $School?> </p>
                         <?php if ($members):?> <p id="qr-data">Members Count: <?php echo $members; ?> Members</p> <?php endif; ?>
                         <form action="process_qr.php" method="GET">
-                            <input type="hidden" name="Data" value="T<?php echo $team['T_id']; ?>">
+                            <input type="hidden" name="Data" value="<?php echo $id;?>">
                             <button type="submit" style="cursor: pointer;">CHECK IN</button>
                         </form>
                         <?php

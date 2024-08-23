@@ -47,7 +47,7 @@
         else if ($is_team=='P'){
             $P_id=$val;
             //if member already set to 1
-            $query="SELECT * FROM solo_data WHERE P_id = :P_id AND T_id IS NULL";
+            $query="SELECT * FROM solo_data WHERE P_id=:P_id AND T_id IS NULL";
             $stmt=$pdo->prepare($query);
             $stmt->bindParam(":P_id",$P_id);
             $stmt->execute();
