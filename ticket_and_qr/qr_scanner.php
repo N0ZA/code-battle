@@ -8,10 +8,10 @@
         exit();
     }
     //only admins can access this page
-    //if ($_SESSION['user_isadmin']!=1) {
-      //  header("Location: ../error404.html");
-        //exit();
-    //}
+    if ($_SESSION['user_isadmin']!=1) {
+        header("Location: ../error404.html");
+        exit();
+    }
     
 ?>
 
@@ -285,8 +285,8 @@
         <div class="header-left">
             <img src="../images/codebattlelogo.png" alt="Logo" class="logo">
             <ul class="nav">
-                <!--<li><a href="../dashboard.php">Home</a></li>-->
-                <li><a href="../events/registered_events.php">Registered Events</a></li>
+                <li><a href="../admin/admin.php">Home</a></li>
+                <!--<li><a href="../events/registered_events.php">Registered Events</a></li>-->
             </ul>
         </div>
         <div class="header-right">

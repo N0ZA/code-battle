@@ -12,6 +12,7 @@ require_once "../admin/admin_functions.php";
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Code Battle</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     <style>
         header{
@@ -257,7 +258,7 @@ require_once "../admin/admin_functions.php";
         
 </script>
           
-    <a href="qr_scanner.php" class="qr-icon">
+    <a href="../ticket_and_qr/qr_scanner.php" class="qr-icon">
   <span class="material-symbols-outlined">
     qr_code_scanner
   </span>
