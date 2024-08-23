@@ -113,7 +113,5 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($error_message) {
         echo "<p style='color: red;'>$error_message</p>";
         
-    } else {
-     
-    }
+    }
 }
