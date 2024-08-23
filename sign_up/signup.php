@@ -251,7 +251,7 @@
           </div>
           <div class="form-group">
             <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required>
+            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required pattern="(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,}" title="Password must be at least 8 characters long, contain at least one number, one uppercase letter, and one lowercase letter">
           </div>
           <?php
               check_signup_errors();
@@ -292,7 +292,7 @@
           </div>
           <div class="form-group">
             <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required>
+            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required pattern="(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,}" title="Password must be at least 8 characters long, contain at least one number, one uppercase letter, and one lowercase letter">
           </div>
           <?php
               check_signup_errors();
@@ -333,7 +333,7 @@
           </div>
           <div class="form-group">
             <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required>
+            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required pattern="(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,}" title="Password must be at least 8 characters long, contain at least one number, one uppercase letter, and one lowercase letter">
           </div>
           <?php
               check_signup_errors();
