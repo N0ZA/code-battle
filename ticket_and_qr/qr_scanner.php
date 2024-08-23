@@ -7,6 +7,11 @@
         header("Location: index.php");
         exit();
     }
+    //only admins can access this page
+    //if ($_SESSION['user_isadmin']!=1) {
+      //  header("Location: ../error404.html");
+        //exit();
+    //}
     
 ?>
 
@@ -162,8 +167,16 @@
             overflow: hidden;
             position: relative;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
-
+        #camera-blocked {
+            font-size: 2rem; 
+            color: black;
+            text-align: center;
+            width: 100%;
+        }
         video {
             width: 100%;
             height: 100%;
@@ -307,16 +320,25 @@
 
     <?php if (!isset($_GET['status']) || ($_GET['status']!='checked_in' && $_GET['status']!='already_checked_in')): ?>
         <div class="content-container">
-            <div id="camera-view">
-                <video id="camera" autoplay></video>
-                <div id="loading">Scanning...</div>
-            </div>
+            <?php if (!isset($_SESSION['details'])):?>
+                <div id="camera-view">
+                    <video id="camera" autoplay></video>
+                    <div id="loading">Scanning...</div>
+                </div>
+            <?php else :?>
+                <div id="camera-view">
+                    <div id="camera-blocked" color:black>Camera Blocked</div>
+                </div>
+            <?php endif; ?>
             <div id="qr-info">
                 <?php if (isset($_SESSION['details'])){
-                        $team= $_SESSION['details']; ?>
-                        <p id="qr-data"> Team Name: <?php echo  $team['TName']?> </p>
-                        <p id="qr-data"> School Name: <?php echo  $team['TSchool']?> </p>
-                        <p id="qr-data"> Members Count: <?php echo  $team['TMembers']?> </p>
+                        $details= $_SESSION['details']; 
+                        $Name= isset($details['TName']) ? $details['TName']: $details['PName'];
+                        $School= isset($details['TSchool']) ? $details['TSchool']: $details['PSchool'];
+                        $members= isset($details['TMembers']) ? $details['TMembers']: '';?>
+                        <p id="qr-data">  Name: <?php echo  $Name?> </p>
+                        <p id="qr-data"> School: <?php echo  $School?> </p>
+                        <?php if ($members):?> <p id="qr-data">Members Count: <?php echo $members; ?> Members</p> <?php endif; ?>
                         <form action="process_qr.php" method="GET">
                             <input type="hidden" name="Data" value="T<?php echo $team['T_id']; ?>">
                             <button type="submit" style="cursor: pointer;">CHECK IN</button>
