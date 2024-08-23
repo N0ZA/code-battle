@@ -96,13 +96,15 @@
                 </ul>-->
             </div>
             <div class="header-right">
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-                    <div class="dropdown-container">
-                        <button class="dropbtn"><i class="fas fa-user"></i>&#x25BC;</button>
-                        <div id="profile-dropdown" class="dropdown-content">
-                            <a onclick="window.location.href='logout.php';">Logout</a>
-                        </div>
-                    </div> 
+                <?php if (isset($_SESSION['user_id']) && isset($_SESSION['user_isadmin'])):?>
+                    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+                        <div class="dropdown-container">
+                            <button class="dropbtn"><i class="fas fa-user"></i>&#x25BC;</button>
+                            <div id="profile-dropdown" class="dropdown-content">
+                                <a onclick="window.location.href='logout.php';">Logout</a>
+                            </div>
+                        </div> 
+                <?php endif; ?>
                 <!--<img src="images/profile-icon.png" alt="Profile" class="profile-icon" onclick="toggleDropdown()">
                 <div id="profile-dropdown" class="dropdown-content">
                     <a href="#">Logout</a> 
