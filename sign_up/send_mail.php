@@ -88,3 +88,30 @@ if (isset($_SESSION['errors_signup'])) {
     session_unset();
 }
 
+function validate_password($password) {
+    // Check if password meets the policy
+    if (strlen($password) < 8) {
+        return "Password must be at least 8 characters long.";
+    }
+    if (!preg_match("/[a-z]/", $password)) {
+        return "Password must include at least one lowercase letter.";
+    }
+    if (!preg_match("/[A-Z]/", $password)) {
+        return "Password must include at least one uppercase letter.";
+    }
+    if (!preg_match("/\d/", $password)) {
+        return "Password must include at least one number.";
+    }
+    return null; // Password is valid
+}
+
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $password = $_POST['pwd'];
+    $error_message = validate_password($password);
+    
+    if ($error_message) {
+        echo "<p style='color: red;'>$error_message</p>";
+        
+    }
+}

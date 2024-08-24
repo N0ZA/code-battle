@@ -14,28 +14,28 @@ $val=$stmt1->fetchColumn();
 
 if ($_SESSION['is_team']==1){
 
-    $query3 = "SELECT td.T_id, td.TName, IFNULL(SUM(ts.Score), 0) AS score
+    $query3 = "SELECT SQL_NO_CACHE  td.T_id, td.TName, IFNULL(SUM(ts.Score), 0) AS score
     FROM team_data td
     LEFT JOIN team_scores ts ON td.T_id = ts.T_id AND ts.J_id = :J_id
-    WHERE td.C_id = :C_id AND td.H_id = :H_id GROUP BY td.T_id, td.TName HAVING score=0;";
+    WHERE td.C_id = :C_id AND td.H_id = :H_id AND td.Tchecked_in = 1 GROUP BY td.T_id, td.TName HAVING score=0;";
 
 }
 else{
    
-    $query3 = "SELECT sd.P_id, sd.PName, IFNULL(SUM(ss.Score), 0) AS score
+    $query3 = "SELECT SQL_NO_CACHE sd.P_id, sd.PName, IFNULL(SUM(ss.Score), 0) AS score
     FROM solo_data sd
     LEFT JOIN solo_scores ss ON sd.P_id = ss.P_id AND ss.J_id = :J_id
-    WHERE sd.C_id = :C_id AND sd.H_id = :H_id GROUP BY sd.P_id, sd.PName HAVING score=0;";
+    WHERE sd.C_id = :C_id AND sd.H_id = :H_id AND sd.Pchecked_in = 1 GROUP BY sd.P_id, sd.PName HAVING score=0;";
 
 }
 
 $stmt3 = $pdo->prepare($query3);
 $stmt3->bindParam(":H_id", $_SESSION['H_id']);
-// echo $_SESSION['H_id'];
+// echo "<br>", $_SESSION['H_id'];
 $stmt3->bindParam(":J_id", $_SESSION['J_id']);
-// echo $_SESSION['J_id'];
+// echo "<br>",$_SESSION['J_id'];
 $stmt3->bindParam(":C_id",$val);
-// echo $val;
+// echo "<br>",$val;
 $stmt3->execute();
 
 //name id and score 
@@ -245,13 +245,14 @@ $result3=$stmt3->fetchAll(PDO::FETCH_ASSOC);
         }
 
     </script>
-</head>
+
 <script>
   window.addEventListener('load', function(){
     const preloader = document.querySelector('.preloader');
     preloader.style.display = 'none';
   });
 </script>
+</head>
 <body>
 <div class="preloader">
   <div class="loader"></div>

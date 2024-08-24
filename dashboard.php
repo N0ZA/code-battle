@@ -23,7 +23,7 @@
     }
  
     //get user details
-    $query='SELECT RName FROM registration_data WHERE R_id = :user_id';
+    $query='SELECT username FROM login WHERE user_id=:user_id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":user_id",$_SESSION['user_id']);
     $stmt->execute();
@@ -65,7 +65,7 @@
         });
         const baseURL = window.location.origin;
         function showModal(h_id,is_team) {
-            <?php if (isset($_SESSION['user_isadmin']) && $_SESSION['user_isadmin']==3): ?>
+            <?php if (isset($_SESSION['user_isadmin']) && $_SESSION['user_isadmin']==1): ?>
                 const eventLink =`${baseURL}/code-battle/events/eventreg.php?H=${h_id}&T=${is_team}&L=yes`;
                 document.getElementById("event-link").textContent=eventLink ;
                 document.getElementById("register-button").onclick= function() {
@@ -113,9 +113,9 @@
         </div>
         <div class="welcome-container">
             <div class="welcome">
-                <?php if (isset($_SESSION['user_id']) || isset($_SESSION['user_isadmin'])):?>
-                    <h1>Welcome, <span class="username"><?php echo $user['RName']; ?></span></h1>
-                <?php endif; ?>
+                <!--<?php if (isset($_SESSION['user_id']) || isset($_SESSION['user_isadmin'])):?>
+                    <h1>Welcome, <span class="username"><?php echo $user['username']; ?></span></h1>
+                <?php endif; ?>-->
             </div>
         </div>
         <div class="content">
@@ -155,7 +155,7 @@
                                 <li>Max Number of People: <?php echo $event['MaxP']; ?></li>
                                 <li>Date: <?php echo $event['HDate']; ?></li>
                                 <li>Time: <?php echo $event['HTime']; ?></li>
-                                <li>Registrations Per User: <?php echo $event['reg_per_schl']; ?></li>
+                                <li>Registrations Per User: <?php echo $event['reg_per_user']; ?></li>
                             </ul>
                         <a href="javascript:void(0);"  onclick="showModal('<?php echo $event['H_id'];?>','<?php echo $event['is_team'];?>')">
                         <button name="Register" class="btn-details">Register</button> </a>

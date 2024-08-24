@@ -60,23 +60,46 @@
             gap: 20px; 
         }
         #qr-info {
-            background-color: rgba(255, 255, 255, 0.8);
+            background-color: rgba(255, 255, 255, 0.8); 
             padding: 20px;
             border-radius: 15px;
-            width: 40%;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
-            color: black;
-            text-align: center;
+            width: 100%;
+            max-width: 350px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); 
+            color: #000000; 
+            text-align: left; 
+            display: flex;
+            flex-direction: column;
+            align-items: center; 
         }
 
         #qr-info h3 {
             margin-top: 0;
+            font-size: 24px;
+            color: #f44134;
         }
 
-        #qr-data {
+        #qr-data{
             font-size: 18px;
             font-weight: bold;
         }
+
+        button[type="submit"] {
+            margin-top: 15px;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            background-color: #f44134;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #d43b2c; 
+        }
+
         /*ends here */
         .header {
             display: flex;
@@ -275,6 +298,18 @@
             text-align: center;
             color: white;
         }
+
+        .scan-title2 {
+            background-color:#f44134 ;   /*rgba(255, 255, 255, 0.8);*/
+            padding: 10px 50px;
+            margin: auto;
+        
+            font-size: larger;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5);
+            text-align: center;
+            color: white;
+        }
     </style>
 </head>
 <body>
@@ -310,8 +345,8 @@
                     <h2>Already Checked In!</h2>
                 </div>
             <?php endif; ?>
-            <div class="scan-title">
-                <h2 onclick="window.location.href='qr_scanner.php';" style="cursor: pointer;">SCAN NEXT</h2> 
+            <div class="scan-title2">
+                <h2 onclick="window.location.href='qr_scanner.php';" style="cursor: pointer;"><i class="fa-solid fa-rotate"></i> SCAN NEXT</h2> 
             </div> 
         <?php else:?>
             <div class="scan-title">

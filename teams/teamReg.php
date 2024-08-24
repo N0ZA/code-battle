@@ -337,7 +337,7 @@
                     <div class="dropdown-container">
                         <button class="dropbtn"><i class="fas fa-user"></i>&#x25BC;</button>
                         <div id="profile-dropdown" class="dropdown-content">
-                            <a onclick="window.location.href='logout.php';">Logout</a>
+                            <a onclick="window.location.href='../logout.php';">Logout</a>
                         </div>
                     </div>
                 <!--<img src="images/profile-icon.png" alt="Profile" class="profile-icon" onclick="toggleDropdown()">
