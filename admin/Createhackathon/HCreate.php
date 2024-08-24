@@ -232,7 +232,7 @@ if(isset($_SESSION['H_created'])){
 <form action="accept_hackathon_data.php" method="POST" class="createForm">
     <br>
     <input id="HName" name="HName" type="text" placeholder=" Name of the Hackathon" required/>
-    <label for="HDate">Date: <input id="HDate" name="HDate" type="date" min="2024-03-01" required/></label>
+    <label for="HDate">Date: <input id="HDate" name="HDate" type="date" min="<?php echo date('Y-m-d'); ?>" required/></label>
     <label for="HTime">Time: <input id="HTime" name="HTime" type="time" required /></label>
 
     <p>Category:</p>
