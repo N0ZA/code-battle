@@ -71,8 +71,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt3->execute();
         $result3=$stmt3->rowCount();
     
-        if ($result3==$result1['reg_per_schl']){
-            $_SESSION['errors_mem']= $PSchool. " can only make " .$result1['reg_per_schl']. " registration/s for this hackathon." ;
+        if ($result3==$result1['reg_per_user']){
+            $_SESSION['errors_mem']= $PSchool. " can only make " .$result1['reg_per_user']. " registration/s for this hackathon." ;
         }
        // else if ($result2==$result1['reg_per_user']){
        //     $_SESSION['errors_mem']= "You can only make " .$result1['reg_per_user']. " registration/s for this hackathon. <br> You have reached your limit!";
