@@ -382,6 +382,7 @@
         @media (max-width: 768px){
             .ticket-container{
                 flex-direction: column-reverse;
+                margin-top: 50px;
             }
             .image-container{
                 max-width: 100%;
