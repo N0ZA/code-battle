@@ -23,7 +23,7 @@
     }
  
     //get user details
-    $query='SELECT RName FROM registration_data WHERE R_id = :user_id';
+    $query='SELECT username FROM login WHERE user_id=:user_id';
     $stmt = $pdo->prepare($query);
     $stmt->bindParam(":user_id",$_SESSION['user_id']);
     $stmt->execute();
@@ -114,7 +114,7 @@
         <div class="welcome-container">
             <div class="welcome">
                 <?php if (isset($_SESSION['user_id']) || isset($_SESSION['user_isadmin'])):?>
-                    <h1>Welcome, <span class="username"><?php echo $user['RName']; ?></span></h1>
+                    <h1>Welcome, <span class="username"><?php echo $user['username']; ?></span></h1>
                 <?php endif; ?>
             </div>
         </div>
