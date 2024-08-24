@@ -98,6 +98,7 @@
         .logo {
             height: 40px;
             margin-right: 20px;
+            margin-left:10px;
         }
 
         .nav {
