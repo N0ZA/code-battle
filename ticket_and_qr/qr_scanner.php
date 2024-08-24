@@ -4,7 +4,7 @@
         session_start();
     }
     if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
-        header("Location: index.php");
+        header("Location: ../index.php");
         exit();
     }
     //only admins can access this page
