@@ -66,26 +66,27 @@ body {
     padding: 0;
     background-color: #E3E3E3;
     background-image: url(images/grids.jpeg);
-    
     background-size: cover;
     overflow-x: hidden;
-    
-    
+    height: 100vh; 
+    position: relative;
 }
 
- .container {
-    display: flex;
+.container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     max-width: 500px;
-    max-height:600px;
-    margin: 1rem auto;
+    width: 100%;
     background-color: #FAFAFA;
     color: white;
     border-radius: 25px;
-    padding: 3rem; 
-    box-sizing: border-box; 
+    padding: 3rem;
+    box-sizing: border-box;
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
-    /*margin-top:9rem;*/
 }
+
 
         .form-container {
             display: flex;
@@ -244,19 +245,13 @@ footer {
 <body>
  <div class="preloader">
   <div class="loader"></div>
-</div> 
-
-    
+</div>    
     <div class="container">
-       
-
         <div class="form-container">
          
-         <div class="logo">
-   
-                <img src="images/logob.png" alt="CodeBattle Image" >
-           
-</div>
+         <div class="logo">   
+                <img src="images/logob.png" alt="CodeBattle Image" >           
+            </div>
               <h1><font color = "Black">Welcome</font> <font color = "#F73634">Back!</font></h1>
             <!--<p>CodeBattle – where young minds transform ideas into digital masterpieces. <br>Join the journey and let your creativity unfold!</p>-->
             <form action="login/login.inc.php" method="POST" class="myform">
