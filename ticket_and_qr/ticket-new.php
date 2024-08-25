@@ -317,6 +317,7 @@
         }
 
         .event-title h1 {
+            text-align:center;
             margin: 0;
             font-size: 36px;
             text-transform: uppercase;
@@ -608,6 +609,7 @@
                     <?php elseif ($result1['is_team']==0): ?>
                         <p> Name: <?php echo $result['PName'];?></p> 
                         <p> School Name: <?php echo $result['PSchool'];?></p> 
+                        <p> Email: <?php echo $result['PEmail'];?></p> 
                     <?php endif; ?>   
                     <p>Category: <?php echo $CName ?></p>
                     <p>Location: Tech Village, Global Square, Abu Dhabi</p>
