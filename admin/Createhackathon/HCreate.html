@@ -1,0 +1,449 @@
+<?php
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+
+if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
+    header("Location: ../../index.php");
+    exit();
+}
+if(isset($_SESSION['H_created'])){
+  header("Location: AddJudge.php");
+  die();
+}
+// if(!isset($_SESSION['H_created'])){
+//   header("Location: ../admin.php");
+//   die();
+// }
+?>
+
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Code Battle - Create</title>
+
+    <style>
+      body {
+            width: 100%;
+            height: 100vh;
+            margin: 0;
+            background-color: #E3E3E3;
+            background-image: url(../../images/grids.jpeg);
+            background-size: cover;
+            color: black;
+            font-family: Tahoma;
+            font-size: 16px;
+        }
+        button {
+            background-color: #F73634;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: large;
+            padding: 5px 30px; 
+            margin-left: 1em;
+            border-radius: 18px;
+            font-weight: bold;
+        }
+        h1, #instruction {
+            margin: 1em auto;
+            text-align: center;
+            color: black;
+        }
+
+        h1 {
+            margin-bottom: 0;
+        }
+
+        #instruction {
+            font-size: large;
+            padding-top: 1em;
+        }
+
+        .createForm {
+            width: 60vw;
+            max-width: 500px;
+            min-width: 300px;
+            margin: 1rem auto;
+            background-color: white;
+            border-radius: 25px;
+            border: 1px solid;
+            padding: 0 3rem 3rem 3rem;
+        }
+
+        input, select, textarea {
+            display: block;
+            margin: 10px 0;
+            width: calc(100% - 20px);
+            min-height: 2em;
+            background-color: white;
+            border: 0.5px solid black;
+            color: #272727;
+            border-radius: 25px;
+            padding: 0.5em;
+        }
+
+        textarea {
+            resize: vertical;
+        }
+
+        input[type="time"], input[type="date"] {
+            display: inline;
+            width: 25%;
+            padding-left: 2rem;
+            margin: 1rem;
+        }
+
+        input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .category-container {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+        }
+
+        .category-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 5px;
+        }
+
+        .category-item label {
+            display: flex;
+            align-items: center;
+            margin-right: 10px;
+        }
+
+        .category-item input[type="number"] {
+            width: 50px;
+    margin-top: 5px;
+    text-align: center; /* Center the text */
+    padding-left: 20px;
+        }
+
+        .team-type {
+            display: flex;
+            align-items: center;
+            margin-top: 1em;
+        }
+
+            .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f44134;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 40px;
+    margin-right: 20px;
+}
+
+.nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav li {
+    display: inline;
+    margin: 0 15px;
+}
+
+.nav li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.nav li a:hover {
+    text-decoration: underline;
+}
+
+.header-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 30px;
+}
+
+.profile-icon {
+    height: 40px;
+    cursor: pointer;
+    padding-right: 30px;
+}
+
+.show {
+    display: block;
+}
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+.dropbtn {
+    background-color: #F73634;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown-container:hover .dropdown-content {
+    display: block;
+}adding: 15px;
+        }
+
+        button {
+            background-color: #F73634;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: large;
+            padding: 5px 30px;
+            margin-left: 1em;
+            border-radius: 18px;
+            font-weight: bold;
+        }
+
+        button:hover {
+            text-decoration: underline;
+        }
+
+        #nextButton {
+            background-color: black;
+            border: 1px;
+            border-radius: 25px;
+            color: #ffffff;
+            font-size: 1rem;
+            padding: 0.5rem;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        #nextButton:hover {
+            background-color: #F73634;
+            color: white;
+            text-decoration: none;
+        }
+
+        footer {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 5px;
+            text-align: center;
+            position: sticky;
+            top: 100%;
+        }
+
+        .preloader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #272727;
+            color: #F73634;
+            font-size: x-large;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .loader {
+            border: 8px solid #0000007c;
+            border-top: 8px solid #F73634;
+            border-radius: 50%;
+            width: 60px;
+            height: 60px;
+            animation: spin 2s linear infinite;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="preloader">
+    <div class="loader"></div>
+</div>
+
+<div class="header">
+            <div class="header-left">
+                <img src="../images/codebattlelogo.png" alt="Logo" class="logo">
+                <ul class="nav">
+                    <button type="submit" onClick="window.location.href='admin.php';">Home</button>
+                    <button type="submit" onClick="window.location.href='HDetail.php';">View Hackathon</button>
+                    <button type="submit" name="create_hackathon" onClick="window.location.href='create.php';">Create Hackathon</button>
+                </ul>
+            </div>
+            <div class="header-right">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+                <div class="dropdown-container">
+                    <button class="dropbtn"><i class="fas fa-user"></i>&#x25BC;</button>
+                    <div id="profile-dropdown" class="dropdown-content">
+                        <a onclick="window.location.href='../logout.php';">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+<h1>Hackathon <font color="#F73634">Details</font></h1>
+<h2 id="instruction">Please fill out the required information</h2>
+
+<form action="accept_hackathon_data.php" method="POST" class="createForm">
+    <br>
+    <input id="HName" name="HName" type="text" placeholder=" Name of the Hackathon" required/>
+    <label for="HDate">Date: <input id="HDate" name="HDate" type="date" min="<?php echo date('Y-m-d'); ?>" required/></label>
+    <label for="HTime">Time: <input id="HTime" name="HTime" type="time" required /></label>
+
+    <p>Category:</p>
+    <div class="category-container">
+        <div class="category-item">
+            <label for="jr-cadet">
+                <input type="checkbox" id="jr-cadet" name="Category[]" value="Jr_Cadet" >
+                Jr Cadet
+            </label>
+            <input id="SeatsCadet" type="number" name="SeatsCadet" placeholder="Seats" style="display: none;" min="0"/>
+        </div>
+
+        <div class="category-item">
+            <label for="jr-captain">
+                <input type="checkbox" id="jr-captain" name="Category[]" value="Jr_Captain">
+                Jr Captain
+            </label>
+            <input id="SeatsCaptain" type="number" name="SeatsCaptain" placeholder="Seats" style="display: none;" min="0"/>
+        </div>
+
+        <div class="category-item">
+            <label for="jr-colonel">
+                <input type="checkbox" id="jr-colonel" name="Category[]" value="Jr_Colonel">
+                Jr Colonel
+            </label>
+            <input id="SeatsColonel" type="number" name="SeatsColonel" placeholder="Seats" style="display: none;" min="0"/>
+        </div>
+    </div>
+
+    <p>Team Type:</p>
+
+    <div class="team-type">
+        <label>Team Based</label>
+        <input type="radio" name="team-type" value="team" required onclick="team()">
+
+        <label>Individual Based</label>
+        <input type="radio" name="team-type" value="individual" required onclick="individual()">
+    </div>
+
+    <div id="max-players">
+        <input id="MaxP" type="number" name="MaxP" max="5" placeholder=" Maximum participants per team" />
+    </div>
+    <textarea id="Hdesc" name="Hdesc" rows="5" placeholder=" Hackathon Description"></textarea>
+    <label for="reg_per_user">Registration per User: <input id="reg_per_user" name="reg_per_user" type="number" min="0" placeholder=" Registration per User" required/></label>
+    <button type="submit" id="nextButton">Next</button>
+    </form>
+
+<script>
+    function team() {
+        var container = document.getElementById("MaxP");
+        container.style.display = 'flex';
+        container.required = true;
+    }
+
+    function individual() {
+        var container = document.getElementById("MaxP");
+        container.style.display = 'none';
+        container.required = false;
+    }
+
+    function showSeatsInput() {
+        var seatsCadet = document.getElementById("SeatsCadet");
+        var seatsCaptain = document.getElementById("SeatsCaptain");
+        var seatsColonel = document.getElementById("SeatsColonel");
+
+        if (document.getElementById("jr-cadet").checked) {
+            seatsCadet.style.display = "block";
+            seatsCadet.required = true;
+        } else {
+            seatsCadet.style.display = "none";
+            seatsCadet.required = false;
+        }
+
+        if (document.getElementById("jr-captain").checked) {
+            seatsCaptain.style.display = "block";
+            seatsCaptain.required = true;
+        } else {
+            seatsCaptain.style.display = "none";
+            seatsCaptain.required = false;
+        }
+
+        if (document.getElementById("jr-colonel").checked) {
+            seatsColonel.style.display = "block";
+            seatsColonel.required = true;
+        } else {
+            seatsColonel.style.display = "none";
+            seatsColonel.required = false;
+        }
+    }
+
+    document.getElementById("jr-cadet").addEventListener("change", showSeatsInput);
+    document.getElementById("jr-captain").addEventListener("change", showSeatsInput);
+    document.getElementById("jr-colonel").addEventListener("change", showSeatsInput);
+
+    function load() {
+        const preloader = document.querySelector('.preloader');
+        preloader.style.display = 'none';
+    }
+
+    window.addEventListener('load', load);
+</script>
+
+<footer>
+    <p>Code Battle &copy; 2024. All rights reserved. Made with ❤️ in U.A.E</p>
+</footer>
+</body>
+</html>
