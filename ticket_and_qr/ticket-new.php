@@ -181,6 +181,7 @@
             display: flex;
             flex-direction: row;
             max-width: 80%;
+            min-height:450px;
             width: 1200px;
             margin:auto;
             background-color: #ff4545;
@@ -240,7 +241,7 @@
             padding: 20px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+        
             border-right: 3px solid white;
         }
 
@@ -285,20 +286,23 @@
         .qr-code-container {
             position:absolute;
             display:flex;
-            bottom:0;
-            right:0;
+            bottom:5px;
+            right:5px;
             width:100px;
             height:100px;
+            background: #fff;
             max-width: fit-content;
             margin-top: 20px;
             align-items: center;
+            border-radius: 12px;
             justify-content: center;
+            border: 2px solid #ddd;
         }
 
         .qr-code-container img {
-            width: 100px;
-            height: 100px;
-            object-fit: contain;
+            width: 60px;
+            height: 60px;
+            
 
         }
 
@@ -334,7 +338,7 @@
         .print-icon {
             position: absolute;
             bottom: 10px;
-            right: 100px; /* Adjust this value to position it correctly */
+            right: 120px; /* Adjust this value to position it correctly */
             width: 30px;
             height: 30px;
             background: #fff;
@@ -444,8 +448,10 @@
             body {
                 background: url(https://github.com/N0ZA/code-battle/blob/main/Images/grids.jpeg?raw=true) no-repeat center center fixed !important;
                 background-size: cover !important;
+                -webkit-print-color-adjust: exact; /* Chrome, Safari, Edge */
+                print-color-adjust: exact;
             }
-
+            
             .ticket-container {
                 max-width: 100%;
                 width: auto;
@@ -457,7 +463,7 @@
 
             .image-container img {
                 width: 100%;
-                height: auto;
+                height: 100%;
                 object-fit: cover;
                 max-height: 100%;
             }
