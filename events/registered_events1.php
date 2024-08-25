@@ -63,12 +63,7 @@
             });
         </script>
     </head>
-    <style>
-        .welcome-container {
-            margin-top: -30px; 
-        }
 
-    </style>
     <body>
         <div class="preloader">
             <div class="loader"></div>
