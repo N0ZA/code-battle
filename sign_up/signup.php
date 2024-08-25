@@ -334,7 +334,17 @@
           </div>
           <div class="form-group">
             <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required pattern="(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,}" title="Password must be at least 8 characters long, contain at least one number, one uppercase letter, and one lowercase letter">
+            <div class="tooltip-container">
+    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required 
+           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}">
+    <span class="tooltip-text">
+        • Password must be at least 8 characters long<br>
+        • Contain at least one number<br>
+        • Contain at least one uppercase letter<br>
+        • Contain at least one lowercase letter<br>
+        • Contain at least one special character (e.g., @$!%*?&)
+    </span>
+</div>
           </div>
           <?php
               check_signup_errors();
@@ -375,7 +385,17 @@
           </div>
           <div class="form-group">
             <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required pattern="(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,}" title="Password must be at least 8 characters long, contain at least one number, one uppercase letter, and one lowercase letter">
+            <div class="tooltip-container">
+    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required 
+           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}">
+    <span class="tooltip-text">
+        • Password must be at least 8 characters long<br>
+        • Contain at least one number<br>
+        • Contain at least one uppercase letter<br>
+        • Contain at least one lowercase letter<br>
+        • Contain at least one special character (e.g., @$!%*?&)
+    </span>
+</div>
           </div>
           <?php
               check_signup_errors();

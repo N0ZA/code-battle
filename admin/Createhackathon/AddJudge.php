@@ -362,28 +362,22 @@ if(isset($_SESSION['H_judges_added'])){
                 // Validate Password
                 judgePass.addEventListener('input', function() {
                     var password = this.value;
-                    var policyPattern = /^(?=.\d)(?=.[a-z])(?=.[A-Z])(?=.\W).{8,}$/;
-
+                    var policyPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
                     if (!policyPattern.test(password)) {
-                        this.setCustomValidity("Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.");
-                        this.reportValidity();
-                    } else {
-                        this.setCustomValidity("");
-                   }
+    this.setCustomValidity(
+        "Password must:\n" +
+        "• Be at least 8 characters long\n" +
+        "• Contain at least one uppercase letter\n" +
+        "• Contain at least one lowercase letter\n" +
+        "• Contain at least one number\n" +
+        "• Contain at least one special character."
+    );
+    this.reportValidity();
+} else {
+    this.setCustomValidity("");
+}
                 });
 
-    // Validate Password
-    judgePass.addEventListener('input', function() {
-        var password = this.value;
-        var policyPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
-
-        if (!policyPattern.test(password)) {
-            this.setCustomValidity("Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.");
-            this.reportValidity();
-        } else {
-            this.setCustomValidity("");
-        }
-    });
                 container.appendChild(document.createElement("br")); 
                 //checkbox starts here
 
