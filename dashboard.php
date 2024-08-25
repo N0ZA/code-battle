@@ -165,30 +165,7 @@
                 <?php endforeach; ?>
             </div>
         </div>
-        <div class="events-carousel">
-            <?php foreach ($events as $index => $event): ?>
-                <input type="radio" name="slider" id="s<?php echo $index + 1; ?>" <?php echo $index === 0 ? 'checked' : ''; ?> >
-            <?php endforeach; ?>
-            <div class="cards">
-                <?php foreach ($events as $index => $event): ?>
-                    <label for="s<?php echo $index + 1; ?>" id="slide<?php echo $index + 1; ?>">
-                <div class="card">
-                    <div class="image">
-                        <img src="<?php echo getImage(); ?>" alt="<?php echo $event['HName']; ?>">
-                    </div>
-                <div class="infos">
-                    <span class="name"><?php echo $event['HName']; ?></span>
-                    <b><?php echo $event['is_team'] ? 'Team Based' : 'Solo Based'; ?></b> <br></br>
-                    <span class="HDate">Date: <?php echo $event['HDate']; ?></span>
-                    <span class="HTime">Time: <?php echo $event['HTime']; ?></span>
-                    <a href="javascript:void(0);"  onclick="showModal('<?php echo $event['H_id'];?>','<?php echo $event['is_team'];?>')">
-                    <button name="Register" class="btn-details">Register</button> </a>                   
-                </div>
-            </div>
-                    </label>
-                <?php endforeach; ?>       
-            </div>
-        </div>
+        
     
         <div id="modal" class="modal-background">
             <div class="modal-content">
