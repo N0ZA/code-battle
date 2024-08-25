@@ -62,14 +62,103 @@ if(isset($_SESSION['H_judges_added'])){
             border-radius: 25px ;
         }
 
-        .button-container {
-            text-align: center;
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            background-color: #F73634;
-            padding: 15px;
-        }
+            .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f44134;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 40px;
+    margin-right: 20px;
+}
+
+.nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav li {
+    display: inline;
+    margin: 0 15px;
+}
+
+.nav li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.nav li a:hover {
+    text-decoration: underline;
+}
+
+.header-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 30px;
+}
+
+.profile-icon {
+    height: 40px;
+    cursor: pointer;
+    padding-right: 30px;
+}
+
+.show {
+    display: block;
+}
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+.dropbtn {
+    background-color: #F73634;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown-container:hover .dropdown-content {
+    display: block;
+}
         
         button {
             background-color: #F73634;
@@ -113,9 +202,6 @@ if(isset($_SESSION['H_judges_added'])){
         display: block;
     }
 
-    #profile-dropdown{
-      margin-left: 10px;
-    }
 
         #nextButton, #discardButton {
             background-color: #272727;
@@ -273,6 +359,18 @@ if(isset($_SESSION['H_judges_added'])){
                 judgePass.name = "JPass_" + (i + 1);
                 judgePass.id = "JPass_" + (i + 1);
                 container.appendChild(judgePass);
+                // Validate Password
+                judgePass.addEventListener('input', function() {
+                    var password = this.value;
+                    var policyPattern = /^(?=.\d)(?=.[a-z])(?=.[A-Z])(?=.\W).{8,}$/;
+
+                    if (!policyPattern.test(password)) {
+                        this.setCustomValidity("Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.");
+                        this.reportValidity();
+                    } else {
+                        this.setCustomValidity("");
+                   }
+                });
 
     // Validate Password
     judgePass.addEventListener('input', function() {
@@ -364,18 +462,25 @@ if(isset($_SESSION['H_judges_added'])){
     </script>
 </head>
 <body>
-<div class="button-container">
-        <button class="navButtons" onClick="window.location.href='../admin.php';">Home</button>
-        <button class="navButtons" onClick="window.location.href='../HDetail.php';">View Hackathon</button>
-        <button class="navButtons" onClick="window.location.href='../create.php';">Create Hackathon</button>
-        <div class="scoreboard-dropdown-container" id ="profile-container">
-        <button class="dropbtn"><i class="fas fa-user"></i>&#x25BC;</button>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-        <div id ="profile-dropdown" class="score-dropdown">
-            <a onclick="window.location.href='../../logout.php';">Logout</a>
+<div class="header">
+            <div class="header-left">
+                <img src="../images/codebattlelogo.png" alt="Logo" class="logo">
+                <ul class="nav">
+                    <button type="submit" onClick="window.location.href='admin.php';">Home</button>
+                    <button type="submit" onClick="window.location.href='HDetail.php';">View Hackathon</button>
+                    <button type="submit" name="create_hackathon" onClick="window.location.href='create.php';">Create Hackathon</button>
+                </ul>
+            </div>
+            <div class="header-right">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+                <div class="dropdown-container">
+                    <button class="dropbtn"><i class="fas fa-user"></i>&#x25BC;</button>
+                    <div id="profile-dropdown" class="dropdown-content">
+                        <a onclick="window.location.href='../logout.php';">Logout</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        </div>
-    </div>
     
     <?php
         echo '<h1>Add Judges for  <font color = "#F73634"> Hackathon '.$_SESSION["HName"].'</font></h1>';

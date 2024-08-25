@@ -1,3 +1,76 @@
+<?php
+    require_once "../includes/dbh.inc.php";
+    if (session_status() == PHP_SESSION_NONE) {
+        session_start();
+    }
+    if (!isset($_SESSION['user_id']) || !isset($_SESSION['user_isadmin'])) {
+        header("Location: index.php");
+        exit();
+    }
+    function getImage($eventImage) {
+        $folder = '../Images/eventreg/';
+        $imagePath = $folder . $eventImage;
+        return $imagePath;
+    }
+    header("Content-Type: text/html; charset=UTF-8");
+    $eventLocation = "Tech Village, Global Square, Abu Dhabi, UAE";
+
+    if (isset($_GET['Ttick'])){
+        $T_id=$_GET['Ttick'];
+        $query='SELECT * from team_data WHERE T_id=:T_id AND Tuser_id=:user_id and H_id=:H_id';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id",$_SESSION['user_id']);
+        $stmt->bindParam(":H_id",$_SESSION['H_id']); 
+        $stmt->bindParam(":T_id",$T_id);
+        $stmt->execute();
+        $result=$stmt->fetch();
+        $C_id=$result['C_id'];
+        
+        $query2='SELECT * from solo_data WHERE T_id=:T_id AND Puser_id=:user_id and H_id=:H_id';
+        $stmt2=$pdo->prepare($query2);
+        $stmt2->bindParam(":user_id",$_SESSION['user_id']);
+        $stmt2->bindParam(":H_id",$_SESSION['H_id']); 
+        $stmt2->bindParam(":T_id",$T_id);
+        $stmt2->execute();
+        $result2=$stmt2->fetchAll();
+    
+        if ($result['T_id']!=$T_id){
+            header("Location: ../error404.html");
+            exit();
+        }
+    }
+
+    else if (isset($_GET['Stick'])){
+        $P_id=$_GET['Stick'];
+        $query='SELECT * from solo_data WHERE P_id=:P_id AND Puser_id=:user_id and H_id=:H_id AND T_id is NULL';
+        $stmt = $pdo->prepare($query);
+        $stmt->bindParam(":user_id",$_SESSION['user_id']);
+        $stmt->bindParam(":H_id",$_SESSION['H_id']); 
+        $stmt->bindParam(":P_id",$P_id);
+        $stmt->execute();
+        $result=$stmt->fetch();
+
+        if ($result['P_id']!=$P_id){
+            header("Location: ../error404.html");
+            exit();
+        }
+    }
+
+    $CName =($result['C_id']==1)?'Jr Cadet' : (($result['C_id']==2)?'Jr Captain' : (($result['C_id']==3)?'Jr Colonel' : 'Unknown'));
+    $H_id=$result['H_id'];
+    $query1='SELECT * from hackathon_data WHERE H_id=:H_id';
+    $stmt1 = $pdo->prepare($query1);
+    $stmt1->bindParam(":H_id",$H_id);
+    $stmt1->execute();
+    $result1=$stmt1->fetch();
+
+    $eventTitle=$result1['HName'];
+    $eventDate=$result1['HDate'];
+    list($year, $month, $date) = explode('-', $eventDate);
+    $eventTime=$result1['HTime'];
+    $qrData = isset($_GET['Ttick']) ? 'T' . $_GET['Ttick'] : (isset($_GET['Stick']) ? 'P' . $_GET['Stick'] : '');
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -15,8 +88,8 @@
             generateQRCode();
         });
 
-        /*function generateQRCode() {
-            const qrData = "";
+        function generateQRCode() {
+            const qrData = "<?php echo $qrData; ?>";
             const qrCodeElement = document.getElementById("qrcode");
             qrCodeElement.innerHTML = ''; // Clear previous QR code if any
             new QRCode(qrCodeElement, {
@@ -24,8 +97,7 @@
                 width: 80,
                 height: 80
             });
-        }*/
-
+        }
     </script>
     <style>
         @font-face {
@@ -245,6 +317,7 @@
         }
 
         .event-title h1 {
+            text-align:center;
             margin: 0;
             font-size: 36px;
             text-transform: uppercase;
@@ -283,14 +356,15 @@
         }
 
         .qr-code-container {
-            position:absolute;
-            display:flex;
-            bottom:0;
-            right:0;
-            width:100px;
-            height:100px;
-            max-width: fit-content;
-            margin-top: 20px;
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            width: 80px;
+            height: 80px;
+            background: #fff;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            display: flex;
             align-items: center;
             justify-content: center;
         }
@@ -490,8 +564,8 @@
             <div class="header-left">
                 <img src="../images/codebattlelogo.png" alt="Logo" class="logo">
                 <ul class="nav">
-                    <li><a href="../dashboard.php">Home</a></li>
-                    <li><a href="registered_events.php">Registered Events</a></li>
+                    <!--<li><a href="../dashboard.php">Home</a></li>-->
+                    <li><a href="../events/registered_events.php">Registered Events</a></li>
                 </ul>
             </div>
             <div class="header-right">
@@ -505,60 +579,63 @@
             </div>
         </div>
 
-        <div class="ticket-container">
-           
+        <div class="ticket-container">   
             <div class="date-time-container">
                 <div class="date">
                     <span class="label">Date</span>
-                    <span class="day">10</span>
+                    <span class="day"><?php echo $date; ?></span>
                 </div>
                 <div class="month">
                     <span class="label">Month</span>
-                    <span class="month-num">08</span>
+                    <span class="month-num"><?php echo $month; ?></span>
                 </div>
                 <div class="year">
                     <span class="label">Year</span>
-                    <span class="year-num">24</span>
+                    <span class="year-num"><?php echo $year; ?></span>
                 </div>
             </div>
             <div class="time-container">
                 <div class="time">
-                    <span class="time-range">9 AM - 4 PM</span>
+                    <span class="time-range"><?php echo $eventTime; ?></span>
                 </div>
             </div>
             
             <div class="event-details-container">
                 <div class="event-title">
-                    <h1>ABU DHABI CHAPTER</h1>
-                    <p>Team Name: BlackHats</p>
-                    <p>School Name: American School of Creative Science</p>
-                    <p>Category: Jr_Cadet</p>
+                    <h1><?php echo $eventTitle; ?></h1>
+                    <?php if ($result1['is_team']==1): ?>
+                        <p> Team Name: <?php echo ucfirst($result['TName']);?></p> 
+                        <p> School Name: <?php echo $result['TSchool'];?></p> 
+                    <?php elseif ($result1['is_team']==0): ?>
+                        <p> Name: <?php echo $result['PName'];?></p> 
+                        <p> School Name: <?php echo $result['PSchool'];?></p> 
+                        <p> Email: <?php echo $result['PEmail'];?></p> 
+                    <?php endif; ?>   
+                    <p>Category: <?php echo $CName ?></p>
                     <p>Location: Tech Village, Global Square, Abu Dhabi</p>
                 </div>
 
-                <div class="team-members">
-                    <h2>Team Members:</h2>
-                    <ul>
-                        <li>Greg Thomas</li>
-                        <li>Ameri Khaleej</li>
-                        <li>John Saz</li>
-                        <li>Greg Had</li>
-                        <li>Hamdan Khwarizmi</li>
-
-                    </ul>
-                </div>
-
-                
+                <?php if ($result1['is_team']==1): ?>
+                    <div class="team-members">
+                        <h2>Team Members:</h2>
+                            <?php if ($result2): ?>
+                                <ul>
+                                <?php foreach ($result2 as $mem): ?>
+                                    <li><?php echo($mem['PName']); ?></li>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <p>No members found.</p>
+                            <?php endif; ?>
+                    </div>   
+                <?php endif ?>           
             </div>
             <div class="image-container">
-                <img src="../Images/eventreg/event1.jpg" alt="Event-Image">
+                <img src="<?php echo getImage($result1['HImage']); ?>" alt="Event-Image">
                 <div class="cd-logo">
                     <img src="../images/codebattlelogo.png" alt="Logo">
                 </div>
                 <div class="print-icon" id="printButton"><i class="fas fa-print"></i> </div>
-                <div class="qr-code-container">
-                    <img src="../Images/qr_code1.png" alt="QR Code">
-                </div>
+                <div id="qrcode" class="qr-code-container"> </div>
                 
             </div>
             
