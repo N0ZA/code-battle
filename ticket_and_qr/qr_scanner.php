@@ -67,7 +67,7 @@
             max-width: 350px;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5); 
             color: #000000; 
-            text-align: left; 
+            text-align: center; 
             display: flex;
             flex-direction: column;
             align-items: center; 
@@ -298,7 +298,10 @@
             text-align: center;
             color: white;
         }
-
+        .label-red {
+    color: #f44134; /* Red color */
+    font-weight: bold;
+}
         .scan-title2 {
             background-color:#f44134 ;   /*rgba(255, 255, 255, 0.8);*/
             padding: 10px 50px;
@@ -356,13 +359,14 @@
 
     <?php if (!isset($_GET['status']) || ($_GET['status']!='checked_in' && $_GET['status']!='already_checked_in')): ?>
         <div class="content-container">
-            <?php if (!isset($_SESSION['details'])):?>
+            <?php if (!isset($_SESSION['details']) || !isset($_SESSION['mem_details'])):?>
                 <div id="camera-view">
                     <video id="camera" autoplay></video>
                     <div id="loading">Scanning...</div>
                 </div>
             <?php else :?>
                 <div id="camera-view">
+                    
                     <div id="camera-blocked" color:black>Camera Blocked</div>
                 </div>
             <?php endif; ?>
@@ -372,16 +376,23 @@
                         $id=isset($details['T_id']) ? 'T'.$details['T_id']: 'P'.$details['P_id'];
                         $Name= isset($details['TName']) ? $details['TName']: $details['PName'];
                         $School= isset($details['TSchool']) ? $details['TSchool']: $details['PSchool'];
-                        $members= isset($details['TMembers']) ? $details['TMembers']: '';?>
-                        <p id="qr-data">  Name: <?php echo  $Name?> </p>
-                        <p id="qr-data"> School: <?php echo  $School?> </p>
-                        <?php if ($members):?> <p id="qr-data">Members Count: <?php echo $members; ?> Members</p> <?php endif; ?>
+                        $members= isset($_SESSION['mem_details'])? $_SESSION['mem_details']: '';?>
+                        <p id="qr-data"><span class="label-red">Name: </span><?php echo  $Name?> </p>
+                        <p id="qr-data"> <span class="label-red">School: </span><?php echo  $School?> </p>
+                        <?php if (isset($_SESSION['mem_details'])): ?> 
+                            <p id="qr-data"><span class="label-red">Members: </span>
+                            <?php foreach ($members as $i => $mem): ?>
+                                <?php echo($mem['PName']); ?>
+                                <?php if ($i < count($members) - 1): ?>, <?php endif; ?>
+                            <?php endforeach; ?>
+                        <?php endif; ?>
                         <form action="process_qr.php" method="GET">
                             <input type="hidden" name="Data" value="<?php echo $id;?>">
                             <button type="submit" style="cursor: pointer;">CHECK IN</button>
                         </form>
                         <?php
-                            unset($_SESSION['details']);}
+                            unset($_SESSION['details']);
+                            unset($_SESSION['mem_details']);}
                     else{
                         echo '<p id="qr-data">Waiting for QR Code...</p>';
                     }?>
