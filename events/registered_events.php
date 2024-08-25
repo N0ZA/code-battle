@@ -63,12 +63,7 @@
             });
         </script>
     </head>
-    <style>
-        .welcome-container {
-            margin-top: -80px; 
-        }
 
-    </style>
     <body>
         <div class="preloader">
             <div class="loader"></div>
@@ -147,6 +142,9 @@
         </div>
         </div>
     </body>
+     <footer class="footer">
+        <p>Code Battle © 2024. All rights reserved. Made with <span class="heart">❤</span> in U.A.E</p>
+    </footer>
     </html>
     
                 
