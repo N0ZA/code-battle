@@ -18,6 +18,13 @@
             $stmt->bindParam(":T_id",$T_id);
             $stmt->execute();
             $result=$stmt->fetch();
+            //getting members data
+            $query2 = "SELECT * FROM solo_data WHERE T_id=:T_id";
+            $stmt2=$pdo->prepare($query2);
+            $stmt2->bindParam(":T_id",$T_id);
+            $stmt2->execute();
+            $result2=$stmt2->fetchAll();
+
             if ($result['Tchecked_in']==1) {
                 header("Location: qr_scanner.php?status=already_checked_in");
                 exit();
@@ -37,8 +44,9 @@
                 header("Location: qr_scanner.php?status=checked_in");
                 exit();
             }
-            else{   //to display details
+            else{   //to display team and their details
                 $_SESSION['details']=$result;
+                $_SESSION['mem_details']=$result2;
                 header("Location: qr_scanner.php");
                 exit();
             }
@@ -66,7 +74,7 @@
                 header("Location: qr_scanner.php?status=checked_in");
                 exit();
             }
-            else{   //to display details
+            else{   //to display solo member details
                 $_SESSION['details']=$result;
                 header("Location: qr_scanner.php");
                 exit();

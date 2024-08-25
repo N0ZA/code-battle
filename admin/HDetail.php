@@ -54,13 +54,102 @@ require_once '../includes/config_session.inc.php';
             text-decoration: none;
         }
 
-     .button-container {
-    text-align: center; 
+    .header {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center; 
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f44134;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 40px;
+    margin-right: 20px;
+}
+
+.nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav li {
+    display: inline;
+    margin: 0 15px;
+}
+
+.nav li a {
+    color: white;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.nav li a:hover {
+    text-decoration: underline;
+}
+
+.header-right {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 30px;
+}
+
+.profile-icon {
+    height: 40px;
+    cursor: pointer;
+    padding-right: 30px;
+}
+
+.show {
+    display: block;
+}
+.dropdown-container {
+    position: relative;
+    display: inline-block;
+}
+.dropbtn {
     background-color: #F73634;
-    padding: 15px;
+    color: white;
+    border: none;
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-content a:hover {
+    background-color: #f1f1f1;
+}
+
+.dropdown-container:hover .dropdown-content {
+    display: block;
 }
         
         button {
@@ -207,10 +296,6 @@ require_once '../includes/config_session.inc.php';
         display: block;
     }
 
-    #profile-dropdown{
-      margin-left: 10px;
-    }
-
         footer {
             background-color: #000000;
             color: #ffffff;
@@ -335,18 +420,25 @@ document.addEventListener("DOMContentLoaded", function() {
 <div class="preloader">
   <div class="loader"></div>
 </div>
-<div class="button-container">
-        <button class="navButtons" onClick="window.location.href='admin.php';">Home</button>
-        <button class="navButtons" onClick="window.location.href='HDetail.php';">View Hackathon</button>
-        <button class="navButtons" onClick="window.location.href='create.php';">Create Hackathon</button>
-        <div class="scoreboard-dropdown-container" id ="profile-container">
-        <button class="dropbtn"><i class="fas fa-user"></i>&#x25BC;</button>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-        <div id ="profile-dropdown" class="score-dropdown">
-            <a onclick="window.location.href='../logout.php';">Logout</a>
+<div class="header">
+            <div class="header-left">
+                <img src="../images/codebattlelogo.png" alt="Logo" class="logo">
+                <ul class="nav">
+                    <button type="submit" onClick="window.location.href='admin.php';">Home</button>
+                    <button type="submit" onClick="window.location.href='HDetail.php';">View Hackathon</button>
+                    <button type="submit" name="create_hackathon" onClick="window.location.href='create.php';">Create Hackathon</button>
+                </ul>
+            </div>
+            <div class="header-right">
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+                <div class="dropdown-container">
+                    <button class="dropbtn"><i class="fas fa-user"></i>&#x25BC;</button>
+                    <div id="profile-dropdown" class="dropdown-content">
+                        <a onclick="window.location.href='../logout.php';">Logout</a>
+                    </div>
+                </div>
+            </div>
         </div>
-        </div>
-    </div>
     <h1 id="Details">Hackathon <font color="#F73634">Details</font>
     </h1>
 <div class="search-bar">

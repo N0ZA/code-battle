@@ -167,7 +167,7 @@
                                 </ul>
                                 <?php if ($team['Tchecked_in']==0): ?> 
                                     <div class="card-actions">
-                                        <a href="../ticket_and_qr/ticket.php?Ttick=<?php echo $team['T_id']; ?>" class="icon-link" style="font-size:20px;">
+                                        <a href="../ticket_and_qr/ticket-new.php?Ttick=<?php echo $team['T_id']; ?>" class="icon-link" style="font-size:20px;">
                                         <i class="fas fa-ticket-alt"></i> Download Ticket </a> 
                                     </div>
                                 <?php endif; ?>

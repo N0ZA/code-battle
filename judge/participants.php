@@ -14,6 +14,13 @@ $val=$stmt1->fetchColumn();
 
 if ($_SESSION['is_team']==1){
 
+    $query2="SELECT COUNT(*) FROM team_data WHERE C_id=:C_id AND H_id = :H_id AND Tchecked_in=1";
+    $stmt2=$pdo->prepare($query2);
+    $stmt2->bindParam(":C_id",$val);
+    $stmt2->bindParam(":H_id", $_SESSION['H_id']);
+    $stmt2->execute();
+    $checkedin=$stmt2->fetchColumn();
+
     $query3 = "SELECT SQL_NO_CACHE  td.T_id, td.TName, IFNULL(SUM(ts.Score), 0) AS score
     FROM team_data td
     LEFT JOIN team_scores ts ON td.T_id = ts.T_id AND ts.J_id = :J_id
@@ -21,7 +28,13 @@ if ($_SESSION['is_team']==1){
 
 }
 else{
-   
+    $query2="SELECT COUNT(*) FROM solo_data WHERE C_id=:C_id AND H_id = :H_id AND Pchecked_in=1";
+    $stmt2=$pdo->prepare($query2);
+    $stmt2->bindParam(":C_id",$val);
+    $stmt2->bindParam(":H_id", $_SESSION['H_id']);
+    $stmt2->execute();
+    $checkedin=$stmt2->fetchColumn();
+
     $query3 = "SELECT SQL_NO_CACHE sd.P_id, sd.PName, IFNULL(SUM(ss.Score), 0) AS score
     FROM solo_data sd
     LEFT JOIN solo_scores ss ON sd.P_id = ss.P_id AND ss.J_id = :J_id
@@ -324,11 +337,13 @@ $result3=$stmt3->fetchAll(PDO::FETCH_ASSOC);
                 <?php }?>
             <?php } ?>
         </div>
+    <?php } else if (!$checkedin){ ?>
+        <h2 style="text-align: center;">No Teams Have Checked in Yet</h2>
     <?php } else { ?>
         <h2 style="text-align: center;">Everyone under this category has been graded.</h2>
     <?php } ?>
     <footer>
-        <p>Code Battle &copy; 2024. All rights reserved. Made with ❤️ in U.A.E</p>
+        <p>Code Battle &copy; 2024. All rights reserved. Made with ❤ in U.A.E</p>
     </footer>
 </body>
 </html>

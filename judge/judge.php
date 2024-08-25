@@ -3,22 +3,7 @@
     require_once '../includes/dbh.inc.php';
     require_once '../includes/config_session.inc.php';
     if ((isset($_SESSION['user_isadmin'])) &&  $_SESSION['user_isadmin']==0) {
-
-    //finding out if this hackathon is for teams or individuals
-
-    $q0 = "SELECT is_team FROM hackathon_data WHERE H_id=:H_id;";
-    $stmt0 = $pdo->prepare($q0);
-    $stmt0->bindParam(":H_id", $_SESSION['H_id']);
-    $stmt0->execute(); // You need to execute the prepared statement
-    $val = $stmt0->fetchColumn();
-
-    if ($val) {
-        $_SESSION['is_team'] = 1;
-    } else {
-        $_SESSION['is_team'] = 0;
-    }
-
-  
+ 
     //setting session j and h ids
     $query1 = "SELECT H_id, J_id FROM judges_category WHERE username=:username;";
     $stmt1 = $pdo->prepare($query1);
@@ -32,6 +17,18 @@
     $_SESSION['H_id'] = $H_id;
     $_SESSION['J_id'] = $J_id;
    
+    //finding out if this hackathon is for teams or individuals
+    $q0 = "SELECT is_team FROM hackathon_data WHERE H_id=:H_id;";
+    $stmt0 = $pdo->prepare($q0);
+    $stmt0->bindParam(":H_id", $_SESSION['H_id']);
+    $stmt0->execute(); // You need to execute the prepared statement
+    $val = $stmt0->fetchColumn();
+
+    if ($val) {
+        $_SESSION['is_team'] = 1;
+    } else {
+        $_SESSION['is_team'] = 0;
+    }
 
     //fetch categories judged by this judge
     $query2="SELECT * FROM `judges_category` where H_id=:H_id AND J_id=:J_id group by C_id;";
