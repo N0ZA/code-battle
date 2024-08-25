@@ -617,15 +617,16 @@
 
                 <?php if ($result1['is_team']==1): ?>
                     <div class="team-members">
-                        <h2>Team Members:</h2>
+                        <h3>Team Members:
                             <?php if ($result2): ?>
-                                <ul>
-                                <?php foreach ($result2 as $mem): ?>
-                                    <li><?php echo($mem['PName']); ?></li>
+                                <?php foreach ($result2 as $i => $mem): ?>
+                                    <?php echo($mem['PName']); ?>
+                                    <?php if ($i < count($result2) - 1): ?>, <?php endif; ?>
                                 <?php endforeach; ?>
                             <?php else : ?>
                                 <p>No members found.</p>
                             <?php endif; ?>
+                        </h3>
                     </div>   
                 <?php endif ?>           
             </div>
