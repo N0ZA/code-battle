@@ -353,26 +353,32 @@ if(isset($_SESSION['H_judges_added'])){
                 container.appendChild(document.createElement("br")); 
 
                 judgePass = document.createElement("input");
-                judgePass.required=true;
+                judgePass.required = true;
                 judgePass.type = "password";
                 judgePass.placeholder = " Password";
-                judgePass.name = "JPass_"+(i+1)
+                judgePass.name = "JPass_" + (i + 1);
+                judgePass.id = "JPass_" + (i + 1);
                 container.appendChild(judgePass);
                 // Validate Password
                 judgePass.addEventListener('input', function() {
                     var password = this.value;
-                    var policyPattern = /^(?=.\d)(?=.[a-z])(?=.[A-Z])(?=.\W).{8,}$/;
-
+                    var policyPattern = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*\W).{8,}$/;
                     if (!policyPattern.test(password)) {
-                        this.setCustomValidity("Password must be at least 8 characters long, contain at least one uppercase letter, one lowercase letter, one number, and one special character.");
-                        this.reportValidity();
-                    } else {
-                        this.setCustomValidity("");
-                   }
+    this.setCustomValidity(
+        "Password must:\n" +
+        "• Be at least 8 characters long\n" +
+        "• Contain at least one uppercase letter\n" +
+        "• Contain at least one lowercase letter\n" +
+        "• Contain at least one number\n" +
+        "• Contain at least one special character."
+    );
+    this.reportValidity();
+} else {
+    this.setCustomValidity("");
+}
                 });
 
                 container.appendChild(document.createElement("br")); 
-
                 //checkbox starts here
 
                 jr_cadet = document.createElement("input");

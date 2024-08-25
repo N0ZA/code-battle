@@ -184,6 +184,44 @@
 .navbar-toggler span {
   color: #ffffff;
 }
+
+.tooltip-container {
+    position: relative;
+}
+
+.tooltip-container .tooltip-text {
+    visibility: hidden;
+    width: 500px;
+    background-color: #555;
+    color: #fff;
+    text-align: left;
+    border-radius: 5px;
+    padding: 10px;
+    position: absolute;
+    z-index: 1;
+    bottom: 125%; /* Position above the input field */
+    left: 50%;
+    margin-left: -110px; /* Center the tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip-container .tooltip-text::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+}
+
+.tooltip-container:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
   </style>
   <title>CodeBattle - Sign up</title>
 </head>
@@ -243,7 +281,19 @@
           </div>
           <div class="form-group">
             <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required pattern="(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,}" title="Password must be at least 8 characters long, contain at least one number, one uppercase letter, and one lowercase letter">
+            <div class="tooltip-container">
+    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required 
+           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}">
+    <span class="tooltip-text">
+        • Password must be at least 8 characters long<br>
+        • Contain at least one number<br>
+        • Contain at least one uppercase letter<br>
+        • Contain at least one lowercase letter<br>
+        • Contain at least one special character (e.g., @$!%*?&)
+    </span>
+</div>
+
+
           </div>
           <?php
               check_signup_errors();
@@ -284,7 +334,17 @@
           </div>
           <div class="form-group">
             <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required pattern="(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,}" title="Password must be at least 8 characters long, contain at least one number, one uppercase letter, and one lowercase letter">
+            <div class="tooltip-container">
+    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required 
+           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}">
+    <span class="tooltip-text">
+        • Password must be at least 8 characters long<br>
+        • Contain at least one number<br>
+        • Contain at least one uppercase letter<br>
+        • Contain at least one lowercase letter<br>
+        • Contain at least one special character (e.g., @$!%*?&)
+    </span>
+</div>
           </div>
           <?php
               check_signup_errors();
@@ -325,7 +385,17 @@
           </div>
           <div class="form-group">
             <label for="pwd">Password:</label>
-            <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required pattern="(?=.\d)(?=.[a-z])(?=.*[A-Z]).{8,}" title="Password must be at least 8 characters long, contain at least one number, one uppercase letter, and one lowercase letter">
+            <div class="tooltip-container">
+    <input type="password" class="form-control" id="pwd" name="pwd" placeholder="Choose a password" required 
+           pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}">
+    <span class="tooltip-text">
+        • Password must be at least 8 characters long<br>
+        • Contain at least one number<br>
+        • Contain at least one uppercase letter<br>
+        • Contain at least one lowercase letter<br>
+        • Contain at least one special character (e.g., @$!%*?&)
+    </span>
+</div>
           </div>
           <?php
               check_signup_errors();
