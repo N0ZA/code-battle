@@ -323,12 +323,12 @@ if(isset($_SESSION['H_created'])){
 <header>
 <div class="header">
             <div class="header-left">
-                <img src="../images/Logo.png" alt="Logo" class="logo">
+                <img src="../../images/Logo.png" alt="Logo" class="logo">
 
                 <ul class="nav">
-                    <button type="submit" onClick="window.location.href='admin.php';">Home</button>
-                    <button type="submit" onClick="window.location.href='HDetail.php';">View Hackathon</button>
-                    <button type="submit" name="create_hackathon" onClick="window.location.href='create.php';">Create Hackathon</button>
+                    <button type="submit" onClick="window.location.href='../admin.php';">Home</button>
+                    <button type="submit" onClick="window.location.href='../HDetail.php';">View Hackathon</button>
+                    <button type="submit" name="create_hackathon" onClick="window.location.href='../create.php';">Create Hackathon</button>
                 </ul>
             </div>
             <div class="header-right">
@@ -336,7 +336,7 @@ if(isset($_SESSION['H_created'])){
                 <div class="dropdown-container">
                     <button class="dropbtn"><i class="fas fa-user"></i>&#x25BC;</button>
                     <div id="profile-dropdown" class="dropdown-content">
-                        <a onclick="window.location.href='../logout.php';">Logout</a>
+                        <a onclick="window.location.href='../../logout.php';">Logout</a>
                     </div>
                 </div>
             </div>
