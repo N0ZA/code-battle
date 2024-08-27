@@ -10,7 +10,7 @@
             margin: 0;
             padding: 0;
             font-family: Arial, sans-serif;
-            background: url(https://github.com/N0ZA/Code-Battle-Project/blob/main/Images/grids.jpeg?raw=true) no-repeat center center fixed;
+            background: url(./Images/grids.jpeg) no-repeat center center fixed;
             background-size: cover;
         }
         .navbar {

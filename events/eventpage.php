@@ -82,7 +82,7 @@
 
         body {
             font-family: Montserrat, Lalezar, sans-serif;
-            background: url(https://github.com/N0ZA/code-battle/blob/main/Images/grids.jpeg?raw=true) no-repeat center center fixed;
+            background: url(../Images/grids.jpeg) no-repeat center center fixed;
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;

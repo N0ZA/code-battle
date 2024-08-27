@@ -26,7 +26,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
     <style>
         body {
-            background: url(https://github.com/N0ZA/code-battle/blob/main/Images/grids.jpeg?raw=true) no-repeat center center fixed;
+            background: url(../Images/grids.jpeg) no-repeat center center fixed;
             background-size: cover;
             color: #272727;
             margin: 0;
@@ -327,7 +327,7 @@
     <header>
         <div class="header">
             <div class="header-left">
-                <img src="https://github.com/N0ZA/code-battle/blob/main/Images/Logo.png?raw=true" alt="Logo" class="logo">
+                <img src="../Images/Logo.png" alt="Logo" class="logo">
                 <ul class="nav">
                     <li><a href="../events/registered_events.php">Registered Events</a></li> 
                 </ul>

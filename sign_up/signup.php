@@ -44,7 +44,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
   <style>
     body {
-      background-image: url(https://github.com/N0ZA/code-battle/blob/main/Images/grids.jpeg?raw=true);
+      background-image: url(../Images/grids.jpeg);
       background-size: cover;
       display: flex;
       flex-direction: column;
@@ -231,7 +231,7 @@
 </div>
 <header>
         <nav class="navbar navbar-expand-lg navbar-dark">
-            <a class="navbar-brand" href="#"><img src="https://github.com/N0ZA/code-battle/blob/main/Images/Logo.png?raw=true" alt="Code Battle" style="height: 60px;"></a>
+            <a class="navbar-brand" href="#"><img src="../Images/Logo.png" alt="Code Battle" style="height: 60px;"></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span><i class="fas fa-user"></i>&#x25BC;</span>      
             </button>
