@@ -26,17 +26,45 @@ if(isset($_SESSION['H_created'])){
 
     <style>
       body {
-            width: 100%;
-            height: 100vh;
-            margin: 0;
-            background-color: #E3E3E3;
-            background-image: url(../../images/grids.jpeg);
-            background-size: cover;
-            color: black;
-            font-family: Tahoma;
-            font-size: 16px;
-        }
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+    background-color: #E3E3E3;
+    background-image: url(../../images/grids.jpeg);
+    background-size: cover;
+    color: black;
+    font-family: Tahoma;
+    font-size: 16px;
+}
 
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f44134;
+    padding: 10px 20px;
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1;
+}
+
+.content {
+    margin-top: 80px; 
+}
+
+
+        button {
+            background-color: #F73634;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            font-size: large;
+            padding: 5px 30px; 
+            margin-left: 1em;
+            border-radius: 18px;
+            font-weight: bold;
+        }
         h1, #instruction {
             margin: 1em auto;
             text-align: center;
@@ -112,7 +140,7 @@ if(isset($_SESSION['H_created'])){
         .category-item input[type="number"] {
             width: 50px;
     margin-top: 5px;
-    text-align: center; /* Center the text */
+    text-align: center; 
     padding-left: 20px;
         }
 
@@ -122,17 +150,6 @@ if(isset($_SESSION['H_created'])){
             margin-top: 1em;
         }
 
-            .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #f44134;
-    padding: 10px 20px;
-    position: fixed;
-    top: 0;
-    width: 100%;
-    z-index: 1;
-}
 
 .header-left {
     display: flex;
@@ -143,6 +160,7 @@ if(isset($_SESSION['H_created'])){
     height: 40px;
     margin-right: 20px;
 }
+
 
 .nav {
     list-style-type: none;
@@ -218,7 +236,7 @@ if(isset($_SESSION['H_created'])){
 
 .dropdown-container:hover .dropdown-content {
     display: block;
-}adding: 15px;
+    padding: 15px;
         }
 
         button {
@@ -302,10 +320,11 @@ if(isset($_SESSION['H_created'])){
 <div class="preloader">
     <div class="loader"></div>
 </div>
-
+<header>
 <div class="header">
             <div class="header-left">
-                <img src="../images/codebattlelogo.png" alt="Logo" class="logo">
+                <img src="../images/Logo.png" alt="Logo" class="logo">
+
                 <ul class="nav">
                     <button type="submit" onClick="window.location.href='admin.php';">Home</button>
                     <button type="submit" onClick="window.location.href='HDetail.php';">View Hackathon</button>
@@ -322,7 +341,8 @@ if(isset($_SESSION['H_created'])){
                 </div>
             </div>
         </div>
-
+</header>
+<div class="content">
 <h1>Hackathon <font color="#F73634">Details</font></h1>
 <h2 id="instruction">Please fill out the required information</h2>
 
@@ -376,6 +396,7 @@ if(isset($_SESSION['H_created'])){
     <label for="reg_per_user">Registration per User: <input id="reg_per_user" name="reg_per_user" type="number" min="0" placeholder=" Registration per User" required/></label>
     <button type="submit" id="nextButton">Next</button>
     </form>
+</div>
 
 <script>
     function team() {
@@ -431,7 +452,6 @@ if(isset($_SESSION['H_created'])){
 
     window.addEventListener('load', load);
 </script>
-
 <footer>
     <p>Code Battle &copy; 2024. All rights reserved. Made with ❤️ in U.A.E</p>
 </footer>

@@ -271,7 +271,7 @@ if(isset($_SESSION['H_added_criteria'])){
 <body>
 <div class="header">
             <div class="header-left">
-                <img src="../images/codebattlelogo.png" alt="Logo" class="logo">
+                <img src="https://github.com/N0ZA/code-battle/blob/main/Images/Logo.png?raw=true" alt="Logo" class="logo">
                 <ul class="nav">
                     <button type="submit" onClick="window.location.href='admin.php';">Home</button>
                     <button type="submit" onClick="window.location.href='HDetail.php';">View Hackathon</button>

@@ -458,7 +458,7 @@ if(isset($_SESSION['H_judges_added'])){
 <body>
 <div class="header">
             <div class="header-left">
-                <img src="../images/codebattlelogo.png" alt="Logo" class="logo">
+                <img src="../images/Logo.png" alt="Logo" class="logo">
                 <ul class="nav">
                     <button type="submit" onClick="window.location.href='admin.php';">Home</button>
                     <button type="submit" onClick="window.location.href='HDetail.php';">View Hackathon</button>
